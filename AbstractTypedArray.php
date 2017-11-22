@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace steevanb\PhpTypedArray;
 
-abstract class AbstractTypedArray implements \ArrayAccess, \Iterator
+abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
 {
     abstract protected function assertValue($value): self;
 
@@ -15,6 +15,8 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator
 
     protected $values = [];
 
+    protected $valid = true;
+
     public function __construct(array $values = [], bool $autoCast = false)
     {
         foreach ($values as $key => $value) {
@@ -23,19 +25,23 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator
             }
             $this->offsetSet($key, $value);
         }
+        reset($this->values);
     }
 
     /** @return string|int|null */
     public function key()
     {
-        return key($this->values);
+        return $this->valid() ? key($this->values) : null;
+    }
+
+    public function valid(): bool
+    {
+        return $this->valid;
     }
 
     public function next()
     {
-        $return = next($this->values);
-
-        return $return === false ? null : $return;
+        $this->valid = next($this->values) !== false;
     }
 
     public function current()
@@ -45,16 +51,9 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator
         return $return === false ? null : $return;
     }
 
-    public function valid(): bool
+    public function rewind(): void
     {
-        return is_int($this->current());
-    }
-
-    public function rewind()
-    {
-        $return = prev($this->values);
-
-        return $return === false ? null : $return;
+        reset($this->values);
     }
 
     public function offsetExists($offset): bool
@@ -81,6 +80,11 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator
         if ($this->offsetExists($offset)) {
             unset($this->values[$offset]);
         }
+    }
+
+    public function count(): int
+    {
+        return count($this->values);
     }
 
     public function asArray(): array

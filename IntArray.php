@@ -6,19 +6,9 @@ namespace steevanb\PhpTypedArray;
 
 class IntArray extends AbstractTypedArray
 {
-    public function next(): ?int
-    {
-        return parent::next();
-    }
-
     public function current(): ?int
     {
         return parent::current();
-    }
-
-    public function rewind(): ?int
-    {
-        return parent::rewind();
     }
 
     public function offsetGet($offset): int

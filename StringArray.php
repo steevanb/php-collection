@@ -6,19 +6,9 @@ namespace steevanb\PhpTypedArray;
 
 class StringArray extends AbstractTypedArray
 {
-    public function next(): ?string
-    {
-        return parent::next();
-    }
-
     public function current(): ?string
     {
         return parent::current();
-    }
-
-    public function rewind(): ?string
-    {
-        return parent::rewind();
     }
 
     public function offsetGet($offset): string
