@@ -13,11 +13,7 @@ class IntArray extends AbstractTypedArray
 
     public function offsetGet($offset): int
     {
-        if ($this->offsetExists($offset)) {
-            throw new \Exception('Unknown key "' . $offset . '".');
-        }
-
-        return $this->values[$offset];
+        return parent::offsetGet($offset);
     }
 
     protected function assertValue($value): AbstractTypedArray

@@ -8,8 +8,6 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
 {
     abstract protected function assertValue($value): self;
 
-    abstract protected function cast($value);
-
     /** @var int */
     protected $nextIntKey = 0;
 
@@ -75,6 +73,15 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
         $this->values[$offset] = $value;
     }
 
+    public function offsetGet($offset)
+    {
+        if ($this->offsetExists($offset)) {
+            throw new \Exception('Unknown key "' . $offset . '".');
+        }
+
+        return $this->values[$offset];
+    }
+
     public function offsetUnset($offset): void
     {
         if ($this->offsetExists($offset)) {
@@ -90,5 +97,10 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
     public function asArray(): array
     {
         return $this->values;
+    }
+
+    protected function cast($value)
+    {
+        return $value;
     }
 }
