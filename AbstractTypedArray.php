@@ -52,6 +52,7 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
     public function rewind(): void
     {
         reset($this->values);
+        $this->valid = count($this->values) > 0;
     }
 
     public function offsetExists($offset): bool
