@@ -76,7 +76,7 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
 
     public function offsetGet($offset)
     {
-        if ($this->offsetExists($offset)) {
+        if ($this->offsetExists($offset) === false) {
             throw new \Exception('Unknown key "' . $offset . '".');
         }
 
