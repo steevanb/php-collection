@@ -2,7 +2,6 @@
     "name": "steevanb/php-typed-array",
     "license": "MIT",
     "description": "Add IntArray, StringArray, ObjectArray etc",
-    "minimum-stability": "dev",
     "autoload": {
         "psr-4": { "steevanb\\PhpTypedArray\\": "" }
     },
