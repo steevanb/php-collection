@@ -21,6 +21,17 @@ composer require steevanb/php-typed-array ^1.0
 
 ### Usage
 
+/!\ DO NOT USE WITH `array_key_exists()` /!\
+
+As PHP have a bug with `\ArrayAccess`, `offsetExists()` is not called by `array_key_exists()`:
+```php
+$intArray = new IntArray(['foo' => 18);
+// will always return false, although key exist
+array_key_exists('foo', $intArray);
+// use isset() instead, who call \ArrayAccess::offsetExists() properly
+isset($intArray['foo']);
+```
+
 Simple usage:
 ```php
 $intArray = new IntArray([1, 2]);
