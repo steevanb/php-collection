@@ -85,7 +85,7 @@ Or you can extend `\ObjectArray` and configure it internaly:
 ```php
 class DateTimeArray extends \ObjectArray
 {
-    public function __construct(array $values = [])
+    public function __construct(iterable $values = [])
     {
         parent::__construct($values, \DateTime::class);
     }

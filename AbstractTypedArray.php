@@ -15,7 +15,7 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
 
     protected $valid = true;
 
-    public function __construct(array $values = [], bool $autoCast = false)
+    public function __construct(iterable $values = [], bool $autoCast = false)
     {
         foreach ($values as $key => $value) {
             if ($autoCast) {

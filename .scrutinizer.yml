@@ -1,0 +1,7 @@
+build:
+    environment:
+        php: '7.1.12'
+checks:
+    php:
+        code_rating: true
+        duplication: true
