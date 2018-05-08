@@ -9,11 +9,15 @@ class ObjectArray extends AbstractTypedArray
     /** @var ?string */
     protected $instanceOf;
 
-    public function __construct(array $values = [], string $instanceOf = null)
-    {
+    public function __construct(
+        array $values = [],
+        string $instanceOf = null,
+        bool $uniqueValues = false,
+        bool $exceptionOnNonUniqueValue = false
+    ) {
         $this->instanceOf = $instanceOf;
 
-        parent::__construct($values, false);
+        parent::__construct($values, false, $uniqueValues, $exceptionOnNonUniqueValue);
     }
 
     protected function assertValue($value): AbstractTypedArray

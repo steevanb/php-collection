@@ -11,12 +11,28 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
     /** @var int */
     protected $nextIntKey = 0;
 
+    /** @var array */
     protected $values = [];
 
+    /** @var bool */
     protected $valid = true;
 
-    public function __construct(iterable $values = [], bool $autoCast = false)
-    {
+    /** @var bool */
+    protected $uniqueValues = false;
+
+    /** @var bool */
+    protected $exceptionOnNonUniqueValue = false;
+
+    public function __construct(
+        iterable $values = [],
+        bool $autoCast = false,
+        bool $uniqueValues = false,
+        bool $exceptionOnNonUniqueValue = false
+    ) {
+        $this
+            ->setUniqueValues($uniqueValues)
+            ->setExceptionOnNonUniqueValue($exceptionOnNonUniqueValue);
+
         foreach ($values as $key => $value) {
             if ($autoCast) {
                 $value = $this->cast($value);
@@ -64,6 +80,18 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
     {
         $this->assertValue($value);
 
+        if ($this->isUniqueValues()) {
+            foreach ($this->values as $internalValue) {
+                if ($value === $internalValue) {
+                    if ($this->isExceptionOnNonUniqueValue()) {
+                        throw new NonUniqueValueException($value . ' already exist.');
+                    }
+
+                    return;
+                }
+            }
+        }
+
         if ($offset === null) {
             $offset = $this->nextIntKey;
             $this->nextIntKey++;
@@ -98,6 +126,40 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
     public function asArray(): array
     {
         return $this->values;
+    }
+
+    /** @return $this */
+    public function merge(iterable $values): self
+    {
+        foreach ($values as $value) {
+            $this->offsetSet(null, $value);
+        }
+
+        return $this;
+    }
+
+    public function setUniqueValues(bool $uniqueValues): self
+    {
+        $this->uniqueValues = $uniqueValues;
+
+        return $this;
+    }
+
+    public function isUniqueValues(): bool
+    {
+        return $this->uniqueValues;
+    }
+
+    public function setExceptionOnNonUniqueValue(bool $exceptionOnNonUniqueValue): self
+    {
+        $this->exceptionOnNonUniqueValue = $exceptionOnNonUniqueValue;
+
+        return $this;
+    }
+
+    public function isExceptionOnNonUniqueValue(): bool
+    {
+        return $this->exceptionOnNonUniqueValue;
     }
 
     protected function cast($value)
