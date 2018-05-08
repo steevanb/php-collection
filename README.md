@@ -1,8 +1,7 @@
-[![version](https://img.shields.io/badge/version-1.0.0-green.svg)](https://github.com/steevanb/php-typed-array/tree/1.0.0)
+[![version](https://img.shields.io/badge/version-1.0.1-green.svg)](https://github.com/steevanb/php-typed-array/tree/1.0.1)
 [![php](https://img.shields.io/badge/php-^7.1-blue.svg)](https://php.net)
-![Lines](https://img.shields.io/badge/code%20lines-384-green.svg)
+![Lines](https://img.shields.io/badge/code%20lines-407-green.svg)
 ![Total Downloads](https://poser.pugx.org/steevanb/php-typed-array/downloads)
-[![SensionLabsInsight](https://img.shields.io/badge/SensionLabsInsight-platinum-brightgreen.svg)](https://insight.sensiolabs.com/projects/6446d0f7-4925-4fa2-b34a-4d00204290f9/analyses/1)
 [![Scrutinizer](https://scrutinizer-ci.com/g/steevanb/php-typed-array/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/steevanb/php-typed-array/)
 
 ### php-typed-array
