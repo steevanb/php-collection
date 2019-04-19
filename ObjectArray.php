@@ -10,7 +10,7 @@ class ObjectArray extends AbstractTypedArray
     protected $instanceOf;
 
     public function __construct(
-        array $values = [],
+        iterable $values = [],
         string $instanceOf = null,
         bool $uniqueValues = false,
         bool $exceptionOnNonUniqueValue = false
