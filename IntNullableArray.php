@@ -18,7 +18,7 @@ class IntNullableArray extends AbstractTypedArray
 
     protected function assertValue($value): AbstractTypedArray
     {
-        if (is_int($value) === false && is_null($value) === false) {
+        if (is_int($value) === false && $value !== null) {
             throw new \Exception('$value should be of type int or null.');
         }
 
@@ -31,6 +31,6 @@ class IntNullableArray extends AbstractTypedArray
             throw new \Exception('"' . $value . '" is not numeric or null.');
         }
 
-        return $value === null ? null : (int) $value;
+        return ($value === null) ? null : (int) $value;
     }
 }
