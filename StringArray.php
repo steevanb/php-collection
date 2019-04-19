@@ -25,7 +25,7 @@ class StringArray extends AbstractTypedArray
         return $this;
     }
 
-    protected function cast($value)
+    protected function cast($value): ?string
     {
         return ($value === null) ? null : (string) $value;
     }
