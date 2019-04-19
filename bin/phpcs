@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+docker run \
+    --rm \
+    -e PHPCS_PARAMETERS="--warning-severity=0 -s" \
+    -e PHPCS_BOOTSTRAP=/var/phpcs-bootstrap.php \
+    -v $(pwd)/$(dirname $0)/../.circleci/phpcs/bootstrap.php:/var/phpcs-bootstrap.php:ro \
+    -v $(pwd)/$(dirname $0)/../:/var/phpcs/:ro \
+    steevanb/php-code-sniffs:2.0.1

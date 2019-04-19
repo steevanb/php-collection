@@ -62,7 +62,7 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
     {
         $return = current($this->values);
 
-        return $return === false ? null : $return;
+        return ($return === false) ? null : $return;
     }
 
     public function rewind(): void
