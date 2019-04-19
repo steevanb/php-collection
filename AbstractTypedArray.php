@@ -118,6 +118,14 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
         }
     }
 
+    public function resetKeys(): self
+    {
+        $this->values = array_values($this->values);
+        $this->nextIntKey = count($this->values);
+
+        return $this;
+    }
+
     public function count(): int
     {
         return count($this->values);
