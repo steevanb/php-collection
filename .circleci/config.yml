@@ -3,7 +3,7 @@ version: '2.1'
 jobs:
     phpcs:
         docker:
-            - image: steevanb/php-code-sniffs:2.0.1
+            - image: steevanb/php-code-sniffs:2.0.3
               environment:
                   PHPCS_BOOTSTRAP: /var/phpcs/.circleci/phpcs/bootstrap.php
                   PHPCS_PARAMETERS: --warning-severity=0

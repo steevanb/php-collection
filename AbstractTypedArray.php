@@ -82,9 +82,11 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
 
         if ($this->isUniqueValues()) {
             foreach ($this->values as $internalValue) {
-                if ($value === $internalValue) {
+                if ($this->isSameValues($value, $internalValue)) {
                     if ($this->isExceptionOnNonUniqueValue()) {
-                        throw new NonUniqueValueException($value . ' already exist.');
+                        throw new NonUniqueValueException(
+                            'Value "' . $this->convertValueToString($value) . '" already exist.'
+                        );
                     }
 
                     return;
@@ -170,8 +172,24 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
         return $this->exceptionOnNonUniqueValue;
     }
 
+    /** @return mixed */
     protected function cast($value)
     {
         return $value;
+    }
+
+    /**
+     * @param mixed $firstValue
+     * @param mixed $secondValue
+     */
+    protected function isSameValues($firstValue, $secondValue): bool
+    {
+        return $firstValue === $secondValue;
+    }
+
+    /** @param mixed $value */
+    protected function convertValueToString($value): ?string
+    {
+        return (string) $value;
     }
 }
