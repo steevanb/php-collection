@@ -6,7 +6,7 @@
 
 ### php-typed-array
 
-Bored of not knowing value type in array ? You are at right spot !
+Bored of not knowing value type in array ? You are at the right spot !
 
 With `php-typed-array`, you can type your array values. How ? Cause now you will use object instead of array, who can control their values.
 
@@ -22,11 +22,7 @@ composer require steevanb/php-typed-array ^1.0
 
 `IntArray`: can store `int`
 
-`IntNullableArray`: can store `int` and `null`
-
 `StringArray`: can store `string`
-
-`StringNullableArray`: can store `string` and `null`
 
 `ObjectArray`: can store `object`
 
