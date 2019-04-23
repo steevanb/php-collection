@@ -31,7 +31,7 @@ class ObjectArray extends AbstractTypedArray
             ->setClassName($className)
             ->setComparisonMode($comparisonMode);
 
-        parent::__construct($values, false, $uniqueValues, $exceptionOnNonUniqueValue);
+        parent::__construct($values, $uniqueValues, $exceptionOnNonUniqueValue);
     }
 
     public function setClassName(?string $className): self

@@ -6,7 +6,7 @@ namespace steevanb\PhpTypedArray\ScalarArray;
 
 use steevanb\PhpTypedArray\AbstractTypedArray;
 
-class StringArray extends AbstractTypedArray
+class StringArray extends AbstractScalarArray
 {
     public function current(): ?string
     {
