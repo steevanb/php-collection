@@ -6,7 +6,7 @@ namespace steevanb\PhpTypedArray\ScalarArray;
 
 use steevanb\PhpTypedArray\AbstractTypedArray;
 
-class IntNullableArray extends AbstractTypedArray
+class IntNullableArray extends AbstractScalarArray
 {
     public function current(): ?int
     {

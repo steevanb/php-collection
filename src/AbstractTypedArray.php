@@ -27,7 +27,6 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
 
     public function __construct(
         iterable $values = [],
-        bool $autoCast = false,
         bool $uniqueValues = false,
         bool $exceptionOnNonUniqueValue = false
     ) {
@@ -36,9 +35,6 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
             ->setExceptionOnNonUniqueValue($exceptionOnNonUniqueValue);
 
         foreach ($values as $key => $value) {
-            if ($autoCast) {
-                $value = $this->cast($value);
-            }
             $this->offsetSet($key, $value);
         }
         reset($this->values);
@@ -172,12 +168,6 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
     public function isExceptionOnNonUniqueValue(): bool
     {
         return $this->exceptionOnNonUniqueValue;
-    }
-
-    /** @return mixed */
-    protected function cast($value)
-    {
-        return $value;
     }
 
     /**
