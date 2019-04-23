@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace steevanb\PhpTypedArray\ScalarArray;
 
-use steevanb\PhpTypedArray\AbstractTypedArray;
-
 class IntArray extends AbstractScalarArray
 {
     public function current(): ?int
@@ -13,26 +11,32 @@ class IntArray extends AbstractScalarArray
         return parent::current();
     }
 
+    /** @param mixed $offset */
     public function offsetGet($offset): int
     {
         return parent::offsetGet($offset);
     }
 
-    protected function assertValue($value): AbstractTypedArray
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     */
+    protected function canAddValue($offset, $value): bool
     {
-        if (is_int($value) === false) {
-            throw new \Exception('$value should be of type int.');
+        if (is_int($value) === false && $value !== null) {
+            throw new \Exception('$value should be of type int or null.');
         }
 
-        return $this;
+        return parent::canAddValue($offset, $value);
     }
 
-    protected function cast($value)
+    /** @param mixed $value */
+    protected function cast($value): ?int
     {
         if ($value === null || is_numeric($value) === false) {
             throw new \Exception('"' . $value . '" is not numeric.');
         }
 
-        return (int) $value;
+        return ($value === null) ? null : (int) $value;
     }
 }

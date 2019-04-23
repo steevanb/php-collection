@@ -58,23 +58,29 @@ class ObjectArray extends AbstractTypedArray
         return $this->comparisonMode;
     }
 
-    protected function assertValue($value): AbstractTypedArray
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     */
+    protected function canAddValue($offset, $value): bool
     {
-        if (
-            is_object($value) === false
-            || (
-                is_string($this->instanceOf)
-                && $value instanceof $this->instanceOf === false
-            )
-        ) {
-            throw new \Exception(
-                '$value should be '
-                . (is_string($this->instanceOf) ? 'instance of "' . $this->instanceOf . '"' : 'an object')
-                . '.'
-            );
+        if ($value !== null) {
+            if (
+                is_object($value) === false
+                || (
+                    is_string($this->instanceOf)
+                    && $value instanceof $this->instanceOf === false
+                )
+            ) {
+                throw new \Exception(
+                    '$value should be '
+                    . (is_string($this->instanceOf) ? 'instance of "' . $this->instanceOf . '"' : 'an object')
+                    . '.'
+                );
+            }
         }
 
-        return $this;
+        return parent::canAddValue($offset, $value);
     }
 
     /**
@@ -85,8 +91,8 @@ class ObjectArray extends AbstractTypedArray
     {
         if ($this->getComparisonMode() === static::COMPARISON_STRING) {
             $return = parent::isSameValues(
-                $this->convertValueToString($firstValue),
-                $this->convertValueToString($secondValue)
+                $this->castValueToString($firstValue),
+                $this->castValueToString($secondValue)
             );
         } elseif ($this->getComparisonMode() === static::COMPARISON_OBJECT_HASH) {
             $return = parent::isSameValues(
@@ -101,10 +107,10 @@ class ObjectArray extends AbstractTypedArray
     }
 
     /** @param mixed $value */
-    protected function convertValueToString($value): ?string
+    protected function castValueToString($value): string
     {
         try {
-            $return = parent::convertValueToString($value);
+            $return = parent::castValueToString($value);
         } catch (\ErrorException $exception) {
             throw new \Exception('Error while converting object to string. Add __toString() to do it.');
         }

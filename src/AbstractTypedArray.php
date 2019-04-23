@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace steevanb\PhpTypedArray;
 
-use steevanb\PhpTypedArray\Exception\NonUniqueValueException;
+use steevanb\PhpTypedArray\{
+    Exception\NonUniqueValueException,
+    Exception\NullValueException
+};
 
 abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
 {
-    abstract protected function assertValue($value): self;
+    public const NULL_VALUE_ALLOW = 1;
+    public const NULL_VALUE_REMOVE = 2;
+    public const NULL_VALUE_EXCEPTION = 3;
 
     /** @var int */
     protected $nextIntKey = 0;
@@ -24,6 +29,9 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
 
     /** @var bool */
     protected $exceptionOnNonUniqueValue = false;
+
+    /** @var int */
+    protected $nullValueMode = self::NULL_VALUE_ALLOW;
 
     public function __construct(
         iterable $values = [],
@@ -76,30 +84,22 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
 
     public function offsetSet($offset, $value): void
     {
-        $this->assertValue($value);
-
-        if ($this->isUniqueValues()) {
-            foreach ($this->values as $internalValue) {
-                if ($this->isSameValues($value, $internalValue)) {
-                    if ($this->isExceptionOnNonUniqueValue()) {
-                        throw new NonUniqueValueException(
-                            'Value "' . $this->convertValueToString($value) . '" already exist.'
-                        );
-                    }
-
-                    return;
-                }
-            }
-        }
-
         if ($offset === null) {
             $offset = $this->nextIntKey;
-            $this->nextIntKey++;
-        } elseif (is_int($offset) && $offset >= $this->nextIntKey) {
-            $this->nextIntKey = $offset + 1;
+            $offsetWasNull = true;
+        } else {
+            $offsetWasNull = false;
         }
 
-        $this->values[$offset] = $value;
+        if ($this->canAddValue($offset, $value)) {
+            if ($offsetWasNull) {
+                $this->nextIntKey++;
+            } elseif (is_int($offset) && $offset >= $this->nextIntKey) {
+                $this->nextIntKey = $offset + 1;
+            }
+
+            $this->values[$offset] = $value;
+        }
     }
 
     public function offsetGet($offset)
@@ -170,6 +170,18 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
         return $this->exceptionOnNonUniqueValue;
     }
 
+    public function setNullValueMode(int $mode): self
+    {
+        $this->nullValueMode = $mode;
+
+        return $this;
+    }
+
+    public function getNullValueMode(): int
+    {
+        return $this->nullValueMode;
+    }
+
     /**
      * @param mixed $firstValue
      * @param mixed $secondValue
@@ -180,8 +192,39 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
     }
 
     /** @param mixed $value */
-    protected function convertValueToString($value): ?string
+    protected function castValueToString($value): string
     {
-        return (string) $value;
+        return ($value === null) ? 'NULL' : (string) $value;
+    }
+
+    protected function canAddValue($offset, $value): bool
+    {
+        $return = true;
+
+        if ($value === null) {
+            if ($this->getNullValueMode() === static::NULL_VALUE_REMOVE) {
+                $return = false;
+            } elseif ($this->getNullValueMode() === static::NULL_VALUE_EXCEPTION) {
+                throw new NullValueException('NULL value is not allowed for offset ' . $offset . '.');
+            }
+        }
+
+        if ($return === true) {
+            if ($this->isUniqueValues()) {
+                foreach ($this->values as $internalValue) {
+                    if ($this->isSameValues($value, $internalValue)) {
+                        if ($this->isExceptionOnNonUniqueValue()) {
+                            throw new NonUniqueValueException(
+                                'Value "' . $this->castValueToString($value) . '" already exist.'
+                            );
+                        }
+
+                        $return = false;
+                    }
+                }
+            }
+        }
+
+        return $return;
     }
 }
