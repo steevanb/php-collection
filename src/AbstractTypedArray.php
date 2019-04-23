@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace steevanb\PhpTypedArray;
 
+use steevanb\PhpTypedArray\Exception\NonUniqueValueException;
+
 abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
 {
     abstract protected function assertValue($value): self;

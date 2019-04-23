@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray;
+namespace steevanb\PhpTypedArray\ScalarArray;
+
+use steevanb\PhpTypedArray\AbstractTypedArray;
 
 class StringNullableArray extends AbstractTypedArray
 {

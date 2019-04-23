@@ -20,19 +20,19 @@ composer require steevanb/php-typed-array ^1.0
 
 ### Typed array available
 
-`\IntArray`: can only store `int`
+`IntArray`: can store `int`
 
-`\IntNullableArray`: can store `int` and `null`
+`IntNullableArray`: can store `int` and `null`
 
-`\StringArray`: can only store `string`
+`StringArray`: can store `string`
 
-`\StringNullableArray`: can only `string` and `null`
+`StringNullableArray`: can store `string` and `null`
 
-`\ObjectArray`: can only store `object`
+`ObjectArray`: can store `object`
 
 ### Usage
 
-/!\ See [Limitations](https://github.com/steevanb/php-typed-array#limitations) before using it, PHP have a lot of limitations with Object as Array /!\
+/!\ See [Limitations](https://github.com/steevanb/php-typed-array#limitations) before using it, PHP have a lot of limitations with objects as array /!\
 
 Simple usage:
 ```php
@@ -55,7 +55,7 @@ foreach (returnInts() as $key => $int) {
 }
 ```
 
-Will throw `\Exception`, cause `'foo'` is not allowed:
+Will throw an `\Exception`, cause `'foo'` is not allowed:
 ```php
 $intArray = new IntArray([1, 2, 'foo']);
 ```
@@ -99,20 +99,20 @@ $foo->merge([3]);
 $foo->merge(new IntArray([4]);
 ```
 
-### \ObjectArray
+### ObjectArray
 
-If you need to store objects in array, you can use `\ObjectArray`.
+If you need to store objects in array, you can use `ObjectArray`.
 
 But if you need to be sure each objects are an instance of something, you can configure it in `__construct()`:
 
 ```php
-$dateTimeArray = new \ObjectArray([new \DateTime()], \DateTime::class);
+$dateTimeArray = new ObjectArray([new \DateTime()], \DateTime::class);
 ```
 
-Or you can extend `\ObjectArray` and configure it internally:
+Or you can extend `ObjectArray` and configure it internally:
 
 ```php
-class DateTimeArray extends \ObjectArray
+class DateTimeArray extends ObjectArray
 {
     public function __construct(iterable $values = [], bool $uniqueValues = false, bool $exceptionOnNonUniqueValue = false)
     {

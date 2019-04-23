@@ -1,3 +1,9 @@
+### 2.0.0 - In dev
+
+- Move `steevanb\PhpTypedArray\IntArray`, `steevanb\PhpTypedArray\IntNullableArray`, `steevanb\PhpTypedArray\StringArray` and `steevanb\PhpTypedArray\StringNullableArray` into `steevanb\PhpTypedArray\ScalarArray` namespace.
+- Move `steevanb\PhpTypedArray\ObjectArray` into `steevanb\PhpTypedArray\ObjectArray` namespace.
+- Move `steevanb\PhpTypedArray\NonUniqueValueException` into `steevanb\PhpTypedArray\Exception` namespace.
+
 ### [1.1.0](../../compare/1.0.1...1.1.0) - 2018-08-05
 
 - Add `AbstractTypedArray::merge()`

@@ -1,17 +1,13 @@
 {
     "name": "steevanb/php-typed-array",
     "license": "MIT",
-    "description": "Add IntArray, StringArray, ObjectArray etc",
+    "description": "Add IntArray, StringArray, ObjectArray etc.",
     "autoload": {
-        "psr-4": { "steevanb\\PhpTypedArray\\": "" }
+        "psr-4": {
+            "steevanb\\PhpTypedArray\\": "src/"
+        }
     },
     "require": {
         "php" : "^7.1"
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/steevanb/php-typed-array.git"
-        }
-    ]
+    }
 }
