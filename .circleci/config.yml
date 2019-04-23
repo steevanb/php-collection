@@ -1,21 +1,57 @@
 version: '2.1'
 
 jobs:
+    composer:
+        docker:
+            - image: circleci/php:7.2
+        working_directory: ~/php-typed-array
+        steps:
+            - checkout
+            - restore_cache:
+                  key: vendor-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}
+            - run: composer install --classmap-authoritative
+            - save_cache:
+                  key: vendor-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}
+                  paths:
+                      - ./vendor
+            - persist_to_workspace:
+                  root: .
+                  paths:
+                      - vendor
     phpcs:
         docker:
-            - image: steevanb/php-code-sniffs:2.0.3
+            - image: steevanb/php-code-sniffs:2.0.4
               environment:
                   PHPCS_BOOTSTRAP: /var/phpcs/.circleci/phpcs/bootstrap.php
-                  PHPCS_PARAMETERS: --warning-severity=0
+                  PHPCS_PARAMETERS: --warning-severity=0 --ignore=/vendor/
         working_directory: /var/phpcs
         steps:
             - checkout
+            - attach_workspace:
+                  at: .
             - run:
                 name: phpcs
                 command: /var/entrypoint.sh
+    phpunit:
+        docker:
+            - image: php:7.2-fpm-alpine3.9
+        working_directory: ~/php-typed-array
+        steps:
+            - checkout
+            - attach_workspace:
+                  at: .
+            - run:
+                  name: phpunit
+                  command: ./bin/phpunit
 
 workflows:
     version: '2.1'
     build:
         jobs:
-            - phpcs
+            - composer
+            - phpcs:
+                  requires:
+                      - composer
+            - phpunit:
+                  requires:
+                      - composer

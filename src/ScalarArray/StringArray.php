@@ -14,7 +14,7 @@ class StringArray extends AbstractScalarArray
     }
 
     /** @param mixed $offset */
-    public function offsetGet($offset): string
+    public function offsetGet($offset): ?string
     {
         return parent::offsetGet($offset);
     }
