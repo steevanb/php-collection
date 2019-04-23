@@ -3,10 +3,13 @@
     "license": "MIT",
     "description": "Add IntArray, StringArray, ObjectArray etc",
     "autoload": {
-        "psr-4": { "steevanb\\PhpTypedArray\\": "" }
+        "psr-4": { "steevanb\\PhpTypedArray\\": "src/" }
     },
     "require": {
         "php" : "^7.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0"
     },
     "repositories": [
         {

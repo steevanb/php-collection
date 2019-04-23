@@ -1,6 +1,19 @@
 version: '2.1'
 
 jobs:
+    composer:
+        docker:
+            - image: circleci/php:7.1
+        working_directory: /var/phpcs
+        steps:
+            - checkout
+            - restore_cache:
+                keys: vendor-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}
+            - run: composer install --classmap-authoritative
+            - save_cache:
+                keys: vendor-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}
+                paths:
+                    - ./vendor
     phpcs:
         docker:
             - image: steevanb/php-code-sniffs:2.0.3
@@ -9,13 +22,22 @@ jobs:
                   PHPCS_PARAMETERS: --warning-severity=0
         working_directory: /var/phpcs
         steps:
-            - checkout
             - run:
                 name: phpcs
                 command: /var/entrypoint.sh
+    phpunit:
+        docker:
+            - image: php:7.2-fpm-alpine3.9
+        working_directory: /var/phpcs
+        steps:
+            - run:
+                name: phpunit
+                command: /var/phpcs/bin/phpunit
 
 workflows:
     version: '2.1'
     build:
         jobs:
+            - composer
             - phpcs
+            - phpunit
