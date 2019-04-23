@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace steevanb\PhpTypedArray;
 
 use steevanb\PhpTypedArray\{
-    Exception\NonUniqueValueException,
-    Exception\NullValueException,
-    Exception\PhpTypedArrayException
+    Exception\KeyNotFoundException,
+    Exception\ValueAlreadyExistException,
+    Exception\NullValueException
 };
 
 abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
 {
     public const NULL_VALUE_ALLOW = 1;
-    public const NULL_VALUE_REMOVE = 2;
+    public const NULL_VALUE_DO_NOT_ADD = 2;
     public const NULL_VALUE_EXCEPTION = 3;
 
     public const VALUE_ALREADY_EXIST_ADD = 1;
@@ -63,7 +63,7 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
         return $this->valid;
     }
 
-    public function next()
+    public function next(): void
     {
         $this->valid = next($this->values) !== false;
     }
@@ -109,7 +109,7 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
     public function offsetGet($offset)
     {
         if ($this->offsetExists($offset) === false) {
-            throw new PhpTypedArrayException('Unknown key "' . $offset . '".');
+            throw new KeyNotFoundException('Key "' . $offset . '" not found.');
         }
 
         return $this->values[$offset];
@@ -138,16 +138,6 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
     public function toArray(): array
     {
         return $this->values;
-    }
-
-    /** @return $this */
-    public function merge(iterable $values): self
-    {
-        foreach ($values as $value) {
-            $this->offsetSet(null, $value);
-        }
-
-        return $this;
     }
 
     public function setValueAlreadyExistMode(int $valueAlreadyExistMode): self
@@ -194,7 +184,7 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
         $return = true;
 
         if ($value === null) {
-            if ($this->getNullValueMode() === static::NULL_VALUE_REMOVE) {
+            if ($this->getNullValueMode() === static::NULL_VALUE_DO_NOT_ADD) {
                 $return = false;
             } elseif ($this->getNullValueMode() === static::NULL_VALUE_EXCEPTION) {
                 throw new NullValueException('NULL value is not allowed for offset ' . $offset . '.');
@@ -211,7 +201,7 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
             foreach ($this->values as $internalValue) {
                 if ($this->isSameValues($value, $internalValue)) {
                     if ($this->getValueAlreadyExistMode() === static::VALUE_ALREADY_EXIST_EXCEPTION) {
-                        throw new NonUniqueValueException(
+                        throw new ValueAlreadyExistException(
                             'Value "' . $this->castValueToString($value) . '" already exist.'
                         );
                     }

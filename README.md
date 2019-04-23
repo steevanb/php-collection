@@ -67,7 +67,7 @@ $foo = (new IntArray())
     ->setValueAlreadyExistMode(IntArray::VALUE_ALREADY_EXIST_ADD)
     ->setValues([1, 2, 2]);
 
-// a steevanb\PhpTypedArray\Exception\NonUniqueValueException will be thrown
+// a steevanb\PhpTypedArray\Exception\ValueAlreadyExistException will be thrown
 $foo = (new IntArray())
     // default behavior, code here is just for the example
     ->setValueAlreadyExistMode(IntArray::VALUE_ALREADY_EXIST_EXCEPTION)
@@ -96,22 +96,22 @@ $foo->merge(new IntArray([4]);
 
 ### ObjectArray
 
-If you need to store objects in array, you can use `ObjectArray`.
+If you need to store objects in array, you can use `steevanb\PhpTypedArray\ObjectArray\ObjectArray`.
 
-But if you need to be sure each objects are an instance of something, you can configure it in `__construct()`:
+To be sure each objects are an instance of something, you can configure it in `__construct()`:
 
 ```php
 $dateTimeArray = new ObjectArray([new \DateTime()], \DateTime::class);
 ```
 
-Or you can extend `ObjectArray` and configure it internally:
+Or you can extends `ObjectArray` and configure it internally:
 
 ```php
 class DateTimeArray extends ObjectArray
 {
-    public function __construct(iterable $values = [], bool $uniqueValues = false, bool $exceptionOnNonUniqueValue = false)
+    public function __construct(iterable $values = [])
     {
-        parent::__construct($values, \DateTime::class, $uniqueValues, $exceptionOnNonUniqueValue);
+        parent::__construct($values, \DateTime::class);
     }
 }
 ```
@@ -129,9 +129,10 @@ array_key_exists('foo', $intArray);
 isset($intArray['foo']);
 ```
 
-As `\Iterator` PHP interface need `next()` method, and we have to use `next()` PHP function here, who return `false` : `BoolArray` could not exists.
+As `\Iterator` PHP interface need `next()` method, and we have to use `next()` PHP function here, who return `false`: `BoolArray` could not exists.
 
-PHP array functions who use internal pointer could not be used with AbstractTypedArray : `key()`, `prev()`, `current()`, `next()` and `end()`,
+PHP array functions who use internal pointer could not be used with AbstractTypedArray: `key()`, `prev()`, `current()`, `next()` and `end()`,
 because PHP do not provide a callback when this functions are called.
 
-Some PHP functions will not work, cause they only allow `array` (should be `iterable`) : `array_merge()` for example. Use `TypedArray::merge()` instead.
+Some PHP functions will not work, cause they only allow `array` (it should be `iterable`).
+You can use `$typedArray->toArray()` to use them.

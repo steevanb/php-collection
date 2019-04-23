@@ -7,7 +7,15 @@
             "steevanb\\PhpTypedArray\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "steevanb\\PhpTypedArray\\Tests\\": "tests/"
+        }
+    },
     "require": {
         "php" : "^7.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.1"
     }
 }

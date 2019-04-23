@@ -14,7 +14,7 @@ class IntArray extends AbstractScalarArray
     }
 
     /** @param mixed $offset */
-    public function offsetGet($offset): int
+    public function offsetGet($offset): ?int
     {
         return parent::offsetGet($offset);
     }

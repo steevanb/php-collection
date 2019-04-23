@@ -10,6 +10,8 @@
 - Renamed `AbstractTypedArray::asArray()` to `toArray()`.
 - All throwned exceptions are instance of `steevanb\PhpTypedArray\PhpTypedArrayException` instead of `\Exception`.
 - Create `steevanb\PhpTypedArray\InvalidTypeException` throwned instead of `\Exception` when trying to add a value into a AbstractTypedArray.
+- Renamed `steevanb\PhpTypedArray\NonUniqueValueException` to `steevanb\PhpTypedArray\ValueAlreadyExistException`.
+- Removed `steevanb\PhpTypedArray\AbstractTypedArray::merge()`, too much differences with PHP `array_merge()` function and it could be called directly: `array_merge($typedArray1->toArray(), $typedArray2->toArray())`.
 
 ### [1.1.0](../../compare/1.0.1...1.1.0) - 2018-08-05
 
