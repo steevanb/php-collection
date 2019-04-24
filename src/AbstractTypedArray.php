@@ -15,6 +15,10 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
     public const NULL_VALUE_REMOVE = 2;
     public const NULL_VALUE_EXCEPTION = 3;
 
+    public const VALUE_ALREADY_EXIST_ADD = 1;
+    public const VALUE_ALREADY_EXIST_DO_NOT_ADD = 2;
+    public const VALUE_ALREADY_EXIST_EXCEPTION = 3;
+
     /** @var int */
     protected $nextIntKey = 0;
 
@@ -24,28 +28,27 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
     /** @var bool */
     protected $valid = true;
 
-    /** @var bool */
-    protected $uniqueValues = false;
-
-    /** @var bool */
-    protected $exceptionOnNonUniqueValue = false;
+    /** @var int */
+    protected $valueAlreadyExistMode = self::VALUE_ALREADY_EXIST_ADD;
 
     /** @var int */
     protected $nullValueMode = self::NULL_VALUE_ALLOW;
 
-    public function __construct(
-        iterable $values = [],
-        bool $uniqueValues = false,
-        bool $exceptionOnNonUniqueValue = false
-    ) {
-        $this
-            ->setUniqueValues($uniqueValues)
-            ->setExceptionOnNonUniqueValue($exceptionOnNonUniqueValue);
+    public function __construct(iterable $values = [])
+    {
+        $this->setValues($values);
+    }
 
+    public function setValues(iterable $values): self
+    {
+        $this->values = [];
+        $this->nextIntKey = 0;
         foreach ($values as $key => $value) {
             $this->offsetSet($key, $value);
         }
         reset($this->values);
+
+        return $this;
     }
 
     /** @return string|int|null */
@@ -146,28 +149,16 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
         return $this;
     }
 
-    public function setUniqueValues(bool $uniqueValues): self
+    public function setValueAlreadyExistMode(int $valueAlreadyExistMode): self
     {
-        $this->uniqueValues = $uniqueValues;
+        $this->valueAlreadyExistMode = $valueAlreadyExistMode;
 
         return $this;
     }
 
-    public function isUniqueValues(): bool
+    public function getValueAlreadyExistMode(): int
     {
-        return $this->uniqueValues;
-    }
-
-    public function setExceptionOnNonUniqueValue(bool $exceptionOnNonUniqueValue): self
-    {
-        $this->exceptionOnNonUniqueValue = $exceptionOnNonUniqueValue;
-
-        return $this;
-    }
-
-    public function isExceptionOnNonUniqueValue(): bool
-    {
-        return $this->exceptionOnNonUniqueValue;
+        return $this->valueAlreadyExistMode;
     }
 
     public function setNullValueMode(int $mode): self
@@ -209,18 +200,22 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
             }
         }
 
-        if ($return === true) {
-            if ($this->isUniqueValues()) {
-                foreach ($this->values as $internalValue) {
-                    if ($this->isSameValues($value, $internalValue)) {
-                        if ($this->isExceptionOnNonUniqueValue()) {
-                            throw new NonUniqueValueException(
-                                'Value "' . $this->castValueToString($value) . '" already exist.'
-                            );
-                        }
-
-                        $return = false;
+        if (
+            $return === true
+            && in_array(
+                $this->getValueAlreadyExistMode(),
+                [static::VALUE_ALREADY_EXIST_DO_NOT_ADD, static::VALUE_ALREADY_EXIST_EXCEPTION]
+            )
+        ) {
+            foreach ($this->values as $internalValue) {
+                if ($this->isSameValues($value, $internalValue)) {
+                    if ($this->getValueAlreadyExistMode() === static::VALUE_ALREADY_EXIST_EXCEPTION) {
+                        throw new NonUniqueValueException(
+                            'Value "' . $this->castValueToString($value) . '" already exist.'
+                        );
                     }
+
+                    $return = false;
                 }
             }
         }
