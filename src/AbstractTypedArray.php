@@ -6,7 +6,8 @@ namespace steevanb\PhpTypedArray;
 
 use steevanb\PhpTypedArray\{
     Exception\NonUniqueValueException,
-    Exception\NullValueException
+    Exception\NullValueException,
+    Exception\PhpTypedArrayException
 };
 
 abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
@@ -108,7 +109,7 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
     public function offsetGet($offset)
     {
         if ($this->offsetExists($offset) === false) {
-            throw new \Exception('Unknown key "' . $offset . '".');
+            throw new PhpTypedArrayException('Unknown key "' . $offset . '".');
         }
 
         return $this->values[$offset];

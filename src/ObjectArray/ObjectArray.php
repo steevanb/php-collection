@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace steevanb\PhpTypedArray\ObjectArray;
 
-use steevanb\PhpTypedArray\AbstractTypedArray;
+use steevanb\PhpTypedArray\{
+    AbstractTypedArray,
+    Exception\InvalidTypeException,
+    Exception\PhpTypedArrayException
+};
 
 class ObjectArray extends AbstractTypedArray
 {
@@ -65,7 +69,7 @@ class ObjectArray extends AbstractTypedArray
                     && $value instanceof $this->instanceOf === false
                 )
             ) {
-                throw new \Exception(
+                throw new InvalidTypeException(
                     '$value should be '
                     . (is_string($this->instanceOf) ? 'instance of "' . $this->instanceOf . '"' : 'an object')
                     . '.'
@@ -93,7 +97,7 @@ class ObjectArray extends AbstractTypedArray
                 is_object($secondValue) ? spl_object_hash($secondValue) : null
             );
         } else {
-            throw new \Exception('Unknown comparison mode "' . $this->getComparisonMode() . '".');
+            throw new PhpTypedArrayException('Unknown comparison mode "' . $this->getComparisonMode() . '".');
         }
 
         return $return;
@@ -105,7 +109,7 @@ class ObjectArray extends AbstractTypedArray
         try {
             $return = parent::castValueToString($value);
         } catch (\ErrorException $exception) {
-            throw new \Exception('Error while converting object to string. Add __toString() to do it.');
+            throw new PhpTypedArrayException('Error while converting object to string. Add __toString() to do it.');
         }
 
         return $return;
