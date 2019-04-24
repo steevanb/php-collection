@@ -134,7 +134,7 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
         return count($this->values);
     }
 
-    public function asArray(): array
+    public function toArray(): array
     {
         return $this->values;
     }
