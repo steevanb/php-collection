@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace steevanb\PhpTypedArray\ScalarArray;
 
+use steevanb\PhpTypedArray\Exception\InvalidTypeException;
+
 class StringArray extends AbstractScalarArray
 {
     public function current(): ?string
@@ -24,7 +26,7 @@ class StringArray extends AbstractScalarArray
     protected function canAddValue($offset, $value): bool
     {
         if (is_string($value) === false && $value !== null) {
-            throw new \Exception('$value should be of type string or null.');
+            throw new InvalidTypeException('$value should be of type string or null.');
         }
 
         return parent::canAddValue($offset, $value);

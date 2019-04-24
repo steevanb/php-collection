@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace steevanb\PhpTypedArray\ScalarArray;
 
+use steevanb\PhpTypedArray\Exception\InvalidTypeException;
+
 class IntArray extends AbstractScalarArray
 {
     public function current(): ?int
@@ -24,7 +26,7 @@ class IntArray extends AbstractScalarArray
     protected function canAddValue($offset, $value): bool
     {
         if (is_int($value) === false && $value !== null) {
-            throw new \Exception('$value should be of type int or null.');
+            throw new InvalidTypeException('$value should be of type int or null.');
         }
 
         return parent::canAddValue($offset, $value);
@@ -34,7 +36,7 @@ class IntArray extends AbstractScalarArray
     protected function cast($value): ?int
     {
         if ($value === null || is_numeric($value) === false) {
-            throw new \Exception('"' . $value . '" is not numeric.');
+            throw new InvalidTypeException('"' . $value . '" is not numeric.');
         }
 
         return ($value === null) ? null : (int) $value;
