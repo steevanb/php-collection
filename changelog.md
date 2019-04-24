@@ -6,6 +6,7 @@
 - `steevanb\PhpTypedArray\Exception\NonUniqueValueException` extends `steevanb\PhpTypedArray\Exception\PhpTypedArrayException` instead of `\Exception`.
 - `steevanb\PhpTypedArray\AbstractTypedArray::castValueToString` renamed to `castValueToString`.
 - Removed `steevanb\PhpTypedArray\IntNullableArray` and `steevanb\PhpTypedArray\StringNullableArray`, use `setNullValueMode()` instead.
+- Replaced `AbstractTypedArray::setUniqueValues()`, `isUniqueValues()`, `setExceptionOnNonUniqueValue()` and `isExceptionOnNonUniqueValue()` by `setValueAlreadyExistMode()`. 
 
 ### [1.1.0](../../compare/1.0.1...1.1.0) - 2018-08-05
 

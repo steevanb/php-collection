@@ -11,12 +11,8 @@ abstract class AbstractScalarArray extends AbstractTypedArray
     /** @return mixed */
     abstract protected function cast($value);
 
+    /** @var bool */
     protected $castValues = false;
-
-    public function __construct(iterable $values = [])
-    {
-        parent::__construct($values);
-    }
 
     public function offsetSet($offset, $value): void
     {

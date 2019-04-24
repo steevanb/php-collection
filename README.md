@@ -58,27 +58,26 @@ $intArray = new IntArray([1, 2, 'foo']);
 
 ### Filter values to be uniques
 
-If you want to be sure a value is unique inside your TypedArray, you can use `__construct()` `$uniqueValues` and `$exceptionOnNonUniqueValue` parameters,
-or call `setUniqueValues()` and `setExceptionOnNonUniqueValue()` (apply only on new values, don't check older ones).
+If you want to be sure a value is unique inside your TypedArray, you have to configure `valueAlreadyExistMode`:
 
 ```php
+// $foo will contain [1, 2, ]
+$foo = (new IntArray())
+    // default behavior, code here is just for the example
+    ->setValueAlreadyExistMode(IntArray::VALUE_ALREADY_EXIST_ADD)
+    ->setValues([1, 2, 2]);
+
+// a steevanb\PhpTypedArray\Exception\NonUniqueValueException will be thrown
+$foo = (new IntArray())
+    // default behavior, code here is just for the example
+    ->setValueAlreadyExistMode(IntArray::VALUE_ALREADY_EXIST_EXCEPTION)
+    ->setValues([1, 2, 2]);
+
 // $foo will contain [1, 2]
-$foo = new IntArray([1, 2, 2], false, true);
-
-// a steevanb\PhpTypedArray\NonUniqueValueException will be thrown
-$foo = new IntArray([1, 2, 2], false, true, true);
-
-// $foo will contain [1, 2, 2]
-$foo = new IntArray([1, 2, 2]);
-$foo->setUniqueValues(true);
-// $foo will contain [1, 2, 2]
-$foo[] = 1;
-
-// $foo will contain [1, 2, 2]
-$foo = new IntArray([1, 2, 2]);
-$foo->setExceptionOnNonUniqueValue(true);
-// a steevanb\PhpTypedArray\NonUniqueValueException will be thrown
-$foo[] = 1;
+$foo = (new IntArray())
+    // default behavior, code here is just for the example
+    ->setValueAlreadyExistMode(IntArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
+    ->setValues([1, 2, 2]);
 ```
 
 ### Merge values

@@ -20,18 +20,11 @@ class ObjectArray extends AbstractTypedArray
     /** @var ?string */
     protected $instanceOf;
 
-    public function __construct(
-        iterable $values = [],
-        string $className = null,
-        bool $uniqueValues = false,
-        bool $exceptionOnNonUniqueValue = false,
-        int $comparisonMode = self::COMPARISON_STRING
-    ) {
-        $this
-            ->setClassName($className)
-            ->setComparisonMode($comparisonMode);
+    public function __construct(iterable $values = [], string $className = null)
+    {
+        $this->setClassName($className);
 
-        parent::__construct($values, $uniqueValues, $exceptionOnNonUniqueValue);
+        parent::__construct($values);
     }
 
     public function setClassName(?string $className): self
