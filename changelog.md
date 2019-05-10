@@ -1,3 +1,7 @@
+### [2.0.1](../../compare/2.0.0...2.0.1) - 2018-05-10
+
+- Add `/** @return $this */` when a method return self for PHPStorm autocompletion.
+
 ### [2.0.0](../../compare/1.1.0...2.0.0) - 2018-04-27
 
 - Moved `steevanb\PhpTypedArray\IntArray`, `steevanb\PhpTypedArray\IntNullableArray`, `steevanb\PhpTypedArray\StringArray` and `steevanb\PhpTypedArray\StringNullableArray` into `steevanb\PhpTypedArray\ScalarArray` namespace.

@@ -1,6 +1,6 @@
-[![version](https://img.shields.io/badge/version-2.0.0-green.svg)](https://github.com/steevanb/php-typed-array/tree/2.0.0)
+[![version](https://img.shields.io/badge/version-2.0.1-green.svg)](https://github.com/steevanb/php-typed-array/tree/2.0.1)
 [![php](https://img.shields.io/badge/php-^7.1-blue.svg)](https://php.net)
-![Lines](https://img.shields.io/badge/code%20lines-1268-green.svg)
+![Lines](https://img.shields.io/badge/code%20lines-1267-green.svg)
 ![Total Downloads](https://poser.pugx.org/steevanb/php-typed-array/downloads)
 [![Scrutinizer](https://scrutinizer-ci.com/g/steevanb/php-typed-array/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/steevanb/php-typed-array/)
 
@@ -80,19 +80,7 @@ $foo = (new IntArray())
     ->setValues([1, 2, 2]);
 ```
 
-### Merge values
-
-As PHP badly hint parameters as `array` instead of `iterable` for some internals functions, you can't use `array_merge()` on TypedArray.
-
-Use `TypedArray::merge()` instead.
-
-```php
-$foo = new IntArray([1, 2);
-// $foo will contain [1, 2, 3];
-$foo->merge([3]);
-// $foo will contain [1, 2, 3, 4];
-$foo->merge(new IntArray([4]);
-```
+/!\ Calling `setValueAlreadyExistMode()` will NOT apply new mode to data already defined. It will only be applied on new values. 
 
 ### ObjectArray
 

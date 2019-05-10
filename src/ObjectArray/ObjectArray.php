@@ -31,6 +31,7 @@ class ObjectArray extends AbstractTypedArray
         parent::__construct($values);
     }
 
+    /** @return $this */
     public function setClassName(?string $className): self
     {
         $this->instanceOf = $className;
@@ -43,6 +44,7 @@ class ObjectArray extends AbstractTypedArray
         return $this->instanceOf;
     }
 
+    /** @return $this */
     public function setComparisonMode(int $mode): self
     {
         $this->comparisonMode = $mode;
