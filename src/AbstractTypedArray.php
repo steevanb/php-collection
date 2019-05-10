@@ -40,6 +40,7 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
         $this->setValues($values);
     }
 
+    /** @return $this */
     public function setValues(iterable $values): self
     {
         $this->values = [];
@@ -122,6 +123,7 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
         }
     }
 
+    /** @return $this */
     public function resetKeys(): self
     {
         $this->values = array_values($this->values);
@@ -140,6 +142,7 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
         return $this->values;
     }
 
+    /** @return $this */
     public function setValueAlreadyExistMode(int $valueAlreadyExistMode): self
     {
         $this->valueAlreadyExistMode = $valueAlreadyExistMode;
@@ -152,6 +155,7 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
         return $this->valueAlreadyExistMode;
     }
 
+    /** @return $this */
     public function setNullValueMode(int $mode): self
     {
         $this->nullValueMode = $mode;

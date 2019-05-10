@@ -22,6 +22,7 @@ abstract class AbstractScalarArray extends AbstractTypedArray
         );
     }
 
+    /** @return $this */
     public function setCastValues(bool $castValues): self
     {
         $this->castValues = $castValues;
