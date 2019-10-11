@@ -58,7 +58,7 @@ final class ByteStringArrayTest extends TestCase
         static::assertSame('bar', (string) $array[1]);
     }
 
-    public function testComparidonModeString(): void
+    public function testComparisonModeString(): void
     {
         $array = (new ByteStringArray())
             ->setValueAlreadyExistMode(ByteStringArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
@@ -76,7 +76,7 @@ final class ByteStringArrayTest extends TestCase
         static::assertSame('bar', (string) $array[2]);
     }
 
-    public function testComparidonModeObjectHas(): void
+    public function testComparisonModeObjectHas(): void
     {
         $array = (new ByteStringArray())
             ->setComparisonMode(ByteStringArray::COMPARISON_OBJECT_HASH)
