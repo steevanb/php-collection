@@ -1,0 +1,10 @@
+{
+    "symbol-whitelist" : [
+        "null", "true", "false",
+        "static", "self", "parent",
+        "array", "string", "int", "float", "bool", "iterable", "callable", "void", "object",
+        "Symfony\\Component\\String\\UnicodeString",
+        "Symfony\\Component\\String\\ByteString",
+        "Symfony\\Component\\String\\CodePointString"
+    ]
+}
