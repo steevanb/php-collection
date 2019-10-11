@@ -58,7 +58,7 @@ final class UnicodeStringArrayTest extends TestCase
         static::assertSame('bar', (string) $array[1]);
     }
 
-    public function testComparidonModeString(): void
+    public function testComparisonModeString(): void
     {
         $array = (new UnicodeStringArray())
             ->setValueAlreadyExistMode(UnicodeStringArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
@@ -76,7 +76,7 @@ final class UnicodeStringArrayTest extends TestCase
         static::assertSame('bar', (string) $array[2]);
     }
 
-    public function testComparidonModeObjectHas(): void
+    public function testComparisonModeObjectHas(): void
     {
         $array = (new UnicodeStringArray())
             ->setComparisonMode(UnicodeStringArray::COMPARISON_OBJECT_HASH)

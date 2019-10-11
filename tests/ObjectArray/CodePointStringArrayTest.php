@@ -58,7 +58,7 @@ final class CodePointStringArrayTest extends TestCase
         static::assertSame('bar', (string) $array[1]);
     }
 
-    public function testComparidonModeString(): void
+    public function testComparisonModeString(): void
     {
         $array = (new CodePointStringArray())
             ->setValueAlreadyExistMode(CodePointStringArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
@@ -76,7 +76,7 @@ final class CodePointStringArrayTest extends TestCase
         static::assertSame('bar', (string) $array[2]);
     }
 
-    public function testComparidonModeObjectHas(): void
+    public function testComparisonModeObjectHas(): void
     {
         $array = (new CodePointStringArray())
             ->setComparisonMode(CodePointStringArray::COMPARISON_OBJECT_HASH)

@@ -69,7 +69,7 @@ final class ObjectArrayTest extends TestCase
         static::assertSame(\DateTime::class, get_class($array[2]));
     }
 
-    public function testComparidonModeString(): void
+    public function testComparisonModeString(): void
     {
         $array = (new ObjectArray())
             ->setValueAlreadyExistMode(ObjectArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
@@ -87,7 +87,7 @@ final class ObjectArrayTest extends TestCase
         static::assertSame('bar', (string) $array[2]);
     }
 
-    public function testComparidonModeObjectHas(): void
+    public function testComparisonModeObjectHas(): void
     {
         $array = (new ObjectArray())
             ->setComparisonMode(ObjectArray::COMPARISON_OBJECT_HASH)
