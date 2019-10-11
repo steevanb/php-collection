@@ -1,3 +1,11 @@
+### [2.1.2](../../compare/2.1.1...2.1.2) - 2019-10-11
+
+- Documentation
+
+### [2.1.1](../../compare/2.1.0...2.1.1) - 2019-10-11
+
+- Documentation
+
 ### [2.1.0](../../compare/2.0.1...2.1.0) - 2019-10-11
 
 - [[BaBeuloula](https://github.com/babeuloula)] Add `steevanb\PhpTypedArray\ObjectArray\ByteStringArray`
