@@ -23,7 +23,7 @@ jobs:
         docker:
             - image: steevanb/php-code-sniffs:2.0.10
               environment:
-                  PHPCS_BOOTSTRAP: /var/phpcs/.circleci/phpcs/bootstrap.php
+                  PHPCS_BOOTSTRAP: /var/phpcs/phpcs.bootstrap.php
                   PHPCS_PARAMETERS: --warning-severity=0 --ignore=/vendor/
         working_directory: /var/phpcs
         steps:
@@ -32,7 +32,7 @@ jobs:
                   at: .
             - run:
                 name: phpcs
-                command: /var/entrypoint.sh
+                command: bin/phpcs
     phpunit:
         docker:
             # phpunit requires PHP ^7.2 so we can't use PHP 7.1 as required in composer.json
@@ -44,7 +44,7 @@ jobs:
                   at: .
             - run:
                   name: phpunit
-                  command: ./bin/phpunit
+                  command: bin/phpunit
 
     phpstan:
         docker:
@@ -56,7 +56,7 @@ jobs:
                   at: .
             - run:
                   name: phpstan
-                  command: ./bin/phpstan
+                  command: bin/phpstan
 
     phpcf:
         docker:
@@ -68,7 +68,19 @@ jobs:
                   at: .
             - run:
                   name: phpcf
-                  command: ./bin/phpcf
+                  command: bin/phpcf
+
+    composerRequireChecker:
+        docker:
+            - image: php:7.3.8-cli-alpine3.10
+        working_directory: /var/php-typed-array
+        steps:
+            - checkout
+            - attach_workspace:
+                  at: .
+            - run:
+                  name: composerRequireChecker
+                  command: bin/composerRequireChecker
 
 workflows:
     version: '2.1'
@@ -76,6 +88,9 @@ workflows:
         jobs:
             - composer
             - phpcf
+            - composerRequireChecker:
+                  requires:
+                      - composer
             - phpcs:
                   requires:
                       - composer
