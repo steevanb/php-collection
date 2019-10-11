@@ -39,6 +39,6 @@ class IntArray extends AbstractScalarArray
             throw new InvalidTypeException('"' . $value . '" is not numeric.');
         }
 
-        return ($value === null) ? null : (int) $value;
+        return (int) $value;
     }
 }

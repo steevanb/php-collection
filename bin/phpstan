@@ -1,0 +1,16 @@
+#!/bin/sh
+
+readonly PROJECT_DIRECTORY=$(realpath $(dirname $(realpath $0))/..)
+
+set -e
+
+if [ $(which docker || false) ]; then
+    docker run \
+        --rm \
+        -v ${PROJECT_DIRECTORY}:/var/php-typed-array:ro \
+        -w /var/php-typed-array \
+        php:7.3.8-cli-alpine3.10 \
+        bin/phpstan
+else
+   ${PROJECT_DIRECTORY}/vendor/bin/phpstan analyse --ansi -c phpstan.neon
+fi
