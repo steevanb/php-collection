@@ -58,11 +58,24 @@ jobs:
                   name: phpstan
                   command: ./bin/phpstan
 
+    phpcf:
+        docker:
+            - image: steevanb/php-code-fixer:2.0.19
+        working_directory: /var/php-typed-array
+        steps:
+            - checkout
+            - attach_workspace:
+                  at: .
+            - run:
+                  name: phpcf
+                  command: ./bin/phpcf
+
 workflows:
     version: '2.1'
     build:
         jobs:
             - composer
+            - phpcf
             - phpcs:
                   requires:
                       - composer

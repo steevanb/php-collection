@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+readonly PROJECT_DIRECTORY=$(realpath $(dirname $(realpath $0))/..)
+
+set -e
+
+if [ $(which docker || false) ]; then
+    docker run \
+        --rm \
+        -t \
+        -v ${PROJECT_DIRECTORY}:/var/php-typed-array:ro \
+        -w /var/php-typed-array \
+        steevanb/php-code-fixer:2.0.19 \
+        bin/phpcf
+else
+    phpcf --exclude=,/vendor/ .
+fi
