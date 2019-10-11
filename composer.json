@@ -17,7 +17,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^8.1",
-        "symfony/string": "dev-master"
+        "symfony/string": "dev-master",
+        "phpstan/phpstan": "0.11.*"
     },
     "suggest": {
         "symfony/string": "Needed to use UnicodeStringArray, ByteStringArray or CodePointStringArray."
