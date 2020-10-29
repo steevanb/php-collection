@@ -24,6 +24,7 @@ class ObjectArray extends AbstractTypedArray
     /** @var ?string */
     protected $instanceOf;
 
+    /** @param iterable<object> $values */
     public function __construct(iterable $values = [], string $className = null)
     {
         $this->setClassName($className);

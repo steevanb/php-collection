@@ -23,7 +23,7 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
     /** @var int */
     protected $nextIntKey = 0;
 
-    /** @var array */
+    /** @var array<mixed> */
     protected $values = [];
 
     /** @var bool */
@@ -35,12 +35,16 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
     /** @var int */
     protected $nullValueMode = self::NULL_VALUE_ALLOW;
 
+    /** @param iterable<mixed> $values */
     public function __construct(iterable $values = [])
     {
         $this->setValues($values);
     }
 
-    /** @return $this */
+    /**
+     * @param iterable<mixed> $values
+     * @return $this
+     */
     public function setValues(iterable $values): self
     {
         $this->values = [];
@@ -69,6 +73,7 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
         $this->valid = next($this->values) !== false;
     }
 
+    /** @return mixed */
     public function current()
     {
         $return = current($this->values);
@@ -82,11 +87,16 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
         $this->valid = count($this->values) > 0;
     }
 
+    /** @param mixed $offset */
     public function offsetExists($offset): bool
     {
         return array_key_exists($offset, $this->values);
     }
 
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     */
     public function offsetSet($offset, $value): void
     {
         if ($offset === null) {
@@ -107,6 +117,10 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
         }
     }
 
+    /**
+     * @param mixed $offset
+     * @return mixed
+     */
     public function offsetGet($offset)
     {
         if ($this->offsetExists($offset) === false) {
@@ -116,6 +130,7 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
         return $this->values[$offset];
     }
 
+    /** @param mixed $offset */
     public function offsetUnset($offset): void
     {
         if ($this->offsetExists($offset)) {
@@ -137,6 +152,7 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
         return count($this->values);
     }
 
+    /** @return array<mixed> */
     public function toArray(): array
     {
         return $this->values;
@@ -168,6 +184,11 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
         return $this->nullValueMode;
     }
 
+    protected function doMerge(AbstractTypedArray $typedArray): self
+    {
+        return $this->setValues(array_merge($this->values, $typedArray->toArray()));
+    }
+
     /**
      * @param mixed $firstValue
      * @param mixed $secondValue
@@ -183,6 +204,10 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
         return ($value === null) ? 'NULL' : (string) $value;
     }
 
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     */
     protected function canAddValue($offset, $value): bool
     {
         $return = true;
@@ -199,7 +224,8 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
             $return === true
             && in_array(
                 $this->getValueAlreadyExistMode(),
-                [static::VALUE_ALREADY_EXIST_DO_NOT_ADD, static::VALUE_ALREADY_EXIST_EXCEPTION]
+                [static::VALUE_ALREADY_EXIST_DO_NOT_ADD, static::VALUE_ALREADY_EXIST_EXCEPTION],
+                true
             )
         ) {
             foreach ($this->values as $internalValue) {

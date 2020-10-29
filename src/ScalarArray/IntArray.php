@@ -19,6 +19,13 @@ class IntArray extends AbstractScalarArray
         return parent::offsetGet($offset);
     }
 
+    public function merge(IntArray $typedArray): self
+    {
+        parent::doMerge($typedArray);
+
+        return $this;
+    }
+
     /**
      * @param mixed $offset
      * @param mixed $value

@@ -12,4 +12,11 @@ class CodePointStringArray extends ObjectArray
     {
         parent::__construct($values, CodePointString::class);
     }
+
+    public function merge(CodePointStringArray $typedArray): self
+    {
+        parent::doMerge($typedArray);
+
+        return $this;
+    }
 }

@@ -1,18 +1,18 @@
 #!/usr/bin/env sh
 
+set -eu
+
 readonly PROJECT_DIRECTORY=$(realpath $(dirname $(realpath $0))/..)
 
-set -e
-
 if [ $(which docker || false) ]; then
-    docker run \
+    docker \
+        run \
+        -it \
         --rm \
-        -e PHPCS_PARAMETERS="--warning-severity=0 --ignore=/vendor/" \
-        -e PHPCS_BOOTSTRAP=/var/phpcs-bootstrap.php \
-        -v $(pwd)/$(dirname $0)/../phpcs.bootstrap.php:/var/phpcs-bootstrap.php:ro \
-        -v $(pwd)/$(dirname $0)/..:/var/phpcs:ro \
-        steevanb/php-code-sniffs:2.0.10 \
-        ${PROJECT_DIRECTORY}/bin/phpcs
+        -v ${PROJECT_DIRECTORY}:/app:ro \
+        --entrypoint /app/bin/phpcs \
+        steevanb/php-code-sniffs:4.0.2
 else
-    /var/entrypoint.sh
+    PHPCS_PARAMETERS="-p --warning-severity=0 --ignore=/vendor/"
+    /var/php-code-sniffs/docker/entrypoint.sh
 fi

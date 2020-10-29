@@ -1,16 +1,16 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
-readonly PROJECT_DIRECTORY=$(realpath $(dirname $(realpath $0))/..)
+set -eu
 
-set -e
+readonly projectDir=$(realpath $(dirname $(realpath $0))/..)
 
 if [ $(which docker || false) ]; then
     docker run \
         --rm \
-        -v ${PROJECT_DIRECTORY}:/var/php-typed-array:ro \
-        -w /var/php-typed-array \
-        php:7.3.8-cli-alpine3.10 \
+        -v ${projectDir}:/app:ro \
+        -w /app \
+        php:7.4.11-cli-buster \
         bin/phpstan
 else
-   ${PROJECT_DIRECTORY}/vendor/bin/phpstan analyse --ansi -c phpstan.neon
+    ${projectDir}/vendor/bin/phpstan analyse --ansi -c phpstan.neon
 fi

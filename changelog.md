@@ -1,3 +1,8 @@
+### [2.2.0](../../compare/2.1.1...2.1.2) - 2020-10-29
+
+- Add merge() function to all but ObjectArray
+- Update CI
+
 ### [2.1.2](../../compare/2.1.1...2.1.2) - 2019-10-11
 
 - Documentation

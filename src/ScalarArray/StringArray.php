@@ -19,6 +19,13 @@ class StringArray extends AbstractScalarArray
         return parent::offsetGet($offset);
     }
 
+    public function merge(StringArray $typedArray): self
+    {
+        parent::doMerge($typedArray);
+
+        return $this;
+    }
+
     /**
      * @param mixed $offset
      * @param mixed $value
