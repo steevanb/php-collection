@@ -1,16 +1,15 @@
 #!/bin/sh
 
-readonly PROJECT_DIRECTORY=$(realpath $(dirname $(realpath $0))/..)
-
-set -e
+set -eu
 
 if [ $(which docker || false) ]; then
+    readonly projectDir=$(realpath $(dirname $(realpath $0))/..)
     docker run \
+        -it \
         --rm \
-        -v ${PROJECT_DIRECTORY}:/var/php-typed-array:ro \
-        -w /var/php-typed-array \
-        php:7.3.8-cli-alpine3.10 \
-        bin/composerRequireChecker
+        -v ${projectDir}:/app:ro \
+        --entrypoint=bin/composerRequireChecker \
+        steevanb/composer-require-checker:2.1.0
 else
-    vendor/bin/composer-require-checker --ansi --config-file=composerRequireChecker.json
+    composer-require-checker --config-file=composerRequireChecker.json
 fi

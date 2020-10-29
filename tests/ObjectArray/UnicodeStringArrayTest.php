@@ -7,6 +7,7 @@ namespace steevanb\PhpTypedArray\Tests\ObjectArray;
 use PHPUnit\Framework\TestCase;
 use steevanb\PhpTypedArray\{
     Exception\InvalidTypeException,
+    Exception\ValueAlreadyExistException,
     ObjectArray\UnicodeStringArray
 };
 use Symfony\Component\String\UnicodeString;
@@ -36,6 +37,7 @@ final class UnicodeStringArrayTest extends TestCase
     public function testCanAddValueException(): void
     {
         static::expectException(InvalidTypeException::class);
+        /** @phpstan-ignore-next-line */
         new UnicodeStringArray(
             [
                 new UnicodeString('foo'),
@@ -93,5 +95,39 @@ final class UnicodeStringArrayTest extends TestCase
         static::assertSame('foo', (string) $array[0]);
         static::assertSame('foo', (string) $array[1]);
         static::assertSame('bar', (string) $array[2]);
+    }
+
+    public function testMergeValueAlreadyExistsAdd(): void
+    {
+        $array = (new UnicodeStringArray([new UnicodeString('foo'), new UnicodeString('bar')]))
+            ->setValueAlreadyExistMode(UnicodeStringArray::VALUE_ALREADY_EXIST_ADD)
+            ->merge(new UnicodeStringArray([new UnicodeString('bar'), new UnicodeString('baz')]));
+
+        static::assertCount(4, $array);
+        static::assertSame('foo', (string) $array[0]);
+        static::assertSame('bar', (string) $array[1]);
+        static::assertSame('bar', (string) $array[2]);
+        static::assertSame('baz', (string) $array[3]);
+    }
+
+    public function testMergeValueAlreadyExistsDoNotAdd(): void
+    {
+        $array = (new UnicodeStringArray([new UnicodeString('foo'), new UnicodeString('bar')]))
+            ->setValueAlreadyExistMode(UnicodeStringArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
+            ->merge(new UnicodeStringArray([new UnicodeString('bar'), new UnicodeString('baz')]));
+
+        static::assertCount(3, $array);
+        static::assertSame('foo', (string) $array[0]);
+        static::assertSame('bar', (string) $array[1]);
+        // @see https://github.com/steevanb/php-typed-array/issues/15
+        static::assertSame('baz', (string) $array[3]);
+    }
+
+    public function testMergeValueAlreadyExistsException(): void
+    {
+        static::expectException(ValueAlreadyExistException::class);
+        (new UnicodeStringArray([new UnicodeString('foo'), new UnicodeString('bar')]))
+            ->setValueAlreadyExistMode(UnicodeStringArray::VALUE_ALREADY_EXIST_EXCEPTION)
+            ->merge(new UnicodeStringArray([new UnicodeString('bar'), new UnicodeString('baz')]));
     }
 }

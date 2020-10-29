@@ -7,7 +7,9 @@ namespace steevanb\PhpTypedArray\Tests\ObjectArray;
 use PHPUnit\Framework\TestCase;
 use steevanb\PhpTypedArray\{
     Exception\InvalidTypeException,
-    ObjectArray\CodePointStringArray
+    Exception\ValueAlreadyExistException,
+    ObjectArray\CodePointStringArray,
+    ObjectArray\UnicodeStringArray
 };
 use Symfony\Component\String\CodePointString;
 
@@ -93,5 +95,39 @@ final class CodePointStringArrayTest extends TestCase
         static::assertSame('foo', (string) $array[0]);
         static::assertSame('foo', (string) $array[1]);
         static::assertSame('bar', (string) $array[2]);
+    }
+
+    public function testMergeValueAlreadyExistsAdd(): void
+    {
+        $array = (new CodePointStringArray([new CodePointString('foo'), new CodePointString('bar')]))
+            ->setValueAlreadyExistMode(UnicodeStringArray::VALUE_ALREADY_EXIST_ADD)
+            ->merge(new CodePointStringArray([new CodePointString('bar'), new CodePointString('baz')]));
+
+        static::assertCount(4, $array);
+        static::assertSame('foo', (string) $array[0]);
+        static::assertSame('bar', (string) $array[1]);
+        static::assertSame('bar', (string) $array[2]);
+        static::assertSame('baz', (string) $array[3]);
+    }
+
+    public function testMergeValueAlreadyExistsDoNotAdd(): void
+    {
+        $array = (new CodePointStringArray([new CodePointString('foo'), new CodePointString('bar')]))
+            ->setValueAlreadyExistMode(UnicodeStringArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
+            ->merge(new CodePointStringArray([new CodePointString('bar'), new CodePointString('baz')]));
+
+        static::assertCount(3, $array);
+        static::assertSame('foo', (string) $array[0]);
+        static::assertSame('bar', (string) $array[1]);
+        // @see https://github.com/steevanb/php-typed-array/issues/15
+        static::assertSame('baz', (string) $array[3]);
+    }
+
+    public function testMergeValueAlreadyExistsException(): void
+    {
+        static::expectException(ValueAlreadyExistException::class);
+        (new CodePointStringArray([new CodePointString('foo'), new CodePointString('bar')]))
+            ->setValueAlreadyExistMode(UnicodeStringArray::VALUE_ALREADY_EXIST_EXCEPTION)
+            ->merge(new CodePointStringArray([new CodePointString('bar'), new CodePointString('baz')]));
     }
 }

@@ -7,7 +7,9 @@ namespace steevanb\PhpTypedArray\Tests\ObjectArray;
 use PHPUnit\Framework\TestCase;
 use steevanb\PhpTypedArray\{
     Exception\InvalidTypeException,
-    ObjectArray\ByteStringArray
+    Exception\ValueAlreadyExistException,
+    ObjectArray\ByteStringArray,
+    ObjectArray\UnicodeStringArray
 };
 use Symfony\Component\String\ByteString;
 
@@ -93,5 +95,39 @@ final class ByteStringArrayTest extends TestCase
         static::assertSame('foo', (string) $array[0]);
         static::assertSame('foo', (string) $array[1]);
         static::assertSame('bar', (string) $array[2]);
+    }
+
+    public function testMergeValueAlreadyExistsAdd(): void
+    {
+        $array = (new ByteStringArray([new ByteString('foo'), new ByteString('bar')]))
+            ->setValueAlreadyExistMode(UnicodeStringArray::VALUE_ALREADY_EXIST_ADD)
+            ->merge(new ByteStringArray([new ByteString('bar'), new ByteString('baz')]));
+
+        static::assertCount(4, $array);
+        static::assertSame('foo', (string) $array[0]);
+        static::assertSame('bar', (string) $array[1]);
+        static::assertSame('bar', (string) $array[2]);
+        static::assertSame('baz', (string) $array[3]);
+    }
+
+    public function testMergeValueAlreadyExistsDoNotAdd(): void
+    {
+        $array = (new ByteStringArray([new ByteString('foo'), new ByteString('bar')]))
+            ->setValueAlreadyExistMode(UnicodeStringArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
+            ->merge(new ByteStringArray([new ByteString('bar'), new ByteString('baz')]));
+
+        static::assertCount(3, $array);
+        static::assertSame('foo', (string) $array[0]);
+        static::assertSame('bar', (string) $array[1]);
+        // @see https://github.com/steevanb/php-typed-array/issues/15
+        static::assertSame('baz', (string) $array[3]);
+    }
+
+    public function testMergeValueAlreadyExistsException(): void
+    {
+        static::expectException(ValueAlreadyExistException::class);
+        (new ByteStringArray([new ByteString('foo'), new ByteString('bar')]))
+            ->setValueAlreadyExistMode(UnicodeStringArray::VALUE_ALREADY_EXIST_EXCEPTION)
+            ->merge(new ByteStringArray([new ByteString('bar'), new ByteString('baz')]));
     }
 }

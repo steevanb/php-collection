@@ -12,4 +12,11 @@ class ByteStringArray extends ObjectArray
     {
         parent::__construct($values, ByteString::class);
     }
+
+    public function merge(ByteStringArray $typedArray): self
+    {
+        parent::doMerge($typedArray);
+
+        return $this;
+    }
 }

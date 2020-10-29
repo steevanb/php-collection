@@ -1,3 +1,15 @@
 #!/usr/bin/env sh
 
-./vendor/bin/phpunit --bootstrap vendor/autoload.php tests/
+set -eu
+
+if [ $(which docker || false) ]; then
+    readonly projectDir=$(realpath $(dirname $(realpath $0))/..)
+    docker run \
+        --rm \
+        -v ${projectDir}:/app:ro \
+        -w /app \
+        php:7.2.34-cli-alpine3.12 \
+        bin/phpunit
+else
+    vendor/bin/phpunit --bootstrap vendor/autoload.php --do-not-cache-result --colors=always tests
+fi
