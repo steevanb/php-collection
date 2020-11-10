@@ -32,7 +32,7 @@ class IntArray extends AbstractScalarArray
      */
     protected function canAddValue($offset, $value): bool
     {
-        if (is_int($value) === false && $value !== null) {
+        if (is_null($value) === false && is_int($value) === false) {
             throw new InvalidTypeException('$value should be of type int or null.');
         }
 
@@ -42,10 +42,14 @@ class IntArray extends AbstractScalarArray
     /** @param mixed $value */
     protected function cast($value): ?int
     {
-        if ($value === null || is_numeric($value) === false) {
+        if (
+            is_numeric($value) === false
+            && is_bool($value) === false
+            && is_null($value) === false
+        ) {
             throw new InvalidTypeException('"' . $value . '" is not numeric.');
         }
 
-        return (int) $value;
+        return is_null($value) ? null : (int) $value;
     }
 }

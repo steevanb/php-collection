@@ -1,3 +1,10 @@
+### [2.3.0](../../compare/2.2.0...2.3.0) - 2020-11-10
+
+- Add `steevanb\PhpTypedArray\ScalarArray\BoolArray`
+- Add `steevanb\PhpTypedArray\ScalarArray\FloatArray`
+- Add `steevanb\PhpTypedArray\ScalarArray\ScalarArray`
+- Add some unit tests
+
 ### [2.2.0](../../compare/2.1.1...2.1.2) - 2020-10-29
 
 - Add merge() function to all but ObjectArray

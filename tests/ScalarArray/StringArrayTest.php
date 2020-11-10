@@ -7,6 +7,7 @@ namespace steevanb\PhpTypedArray\Tests\ScalarArray;
 use PHPUnit\Framework\TestCase;
 use steevanb\PhpTypedArray\{
     Exception\InvalidTypeException,
+    Exception\NullValueException,
     Exception\ValueAlreadyExistException,
     ScalarArray\StringArray
 };
@@ -17,17 +18,68 @@ final class StringArrayTest extends TestCase
     {
         $array = (new StringArray())
             ->setCastValues(true)
-            ->setValues([1, '2', null]);
+            ->setValues([1, 2.0, 3.1, '4', true, false, null]);
 
+        static::assertCount(7, $array);
         static::assertSame('1', $array[0]);
         static::assertSame('2', $array[1]);
-        static::assertSame(null, $array[2]);
+        static::assertSame('3.1', $array[2]);
+        static::assertSame('4', $array[3]);
+        static::assertSame('1', $array[4]);
+        static::assertSame('', $array[5]);
+        static::assertSame(null, $array[6]);
     }
 
-    public function testDoNotCastValues(): void
+    public function testAllowString(): void
+    {
+        $array = new StringArray(['4']);
+
+        static::assertCount(1, $array);
+        static::assertSame('4', $array[0]);
+    }
+
+    public function testAllowNull(): void
+    {
+        $array = new StringArray([null]);
+
+        static::assertCount(1, $array);
+        static::assertSame(null, $array[0]);
+    }
+
+    public function testNullValueModeDoNotAdd(): void
+    {
+        $array = (new StringArray())
+            ->setNullValueMode(StringArray::NULL_VALUE_DO_NOT_ADD)
+            ->setValues(['4', null]);
+
+        static::assertCount(1, $array);
+        static::assertSame('4', $array[0]);
+    }
+
+    public function testNullValueModeException(): void
+    {
+        static::expectException(NullValueException::class);
+        (new StringArray())
+            ->setNullValueMode(StringArray::NULL_VALUE_EXCEPTION)
+            ->setValues([null]);
+    }
+
+    public function testDoNotCastInt(): void
     {
         static::expectException(InvalidTypeException::class);
-        new StringArray([1, '2']);
+        new StringArray([1]);
+    }
+
+    public function testDoNotCastFloat(): void
+    {
+        static::expectException(InvalidTypeException::class);
+        new StringArray([3.1]);
+    }
+
+    public function testDoNotCastBool(): void
+    {
+        static::expectException(InvalidTypeException::class);
+        new StringArray([true]);
     }
 
     public function testMergeValueAlreadyExistsAdd(): void

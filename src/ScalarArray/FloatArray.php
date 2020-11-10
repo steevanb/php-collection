@@ -6,7 +6,7 @@ namespace steevanb\PhpTypedArray\ScalarArray;
 
 use steevanb\PhpTypedArray\Exception\InvalidTypeException;
 
-class StringArray extends AbstractScalarArray
+class FloatArray extends AbstractScalarArray
 {
     public function current(): ?string
     {
@@ -14,12 +14,12 @@ class StringArray extends AbstractScalarArray
     }
 
     /** @param mixed $offset */
-    public function offsetGet($offset): ?string
+    public function offsetGet($offset): ?float
     {
         return parent::offsetGet($offset);
     }
 
-    public function merge(StringArray $typedArray): self
+    public function merge(FloatArray $typedArray): self
     {
         parent::doMerge($typedArray);
 
@@ -32,16 +32,16 @@ class StringArray extends AbstractScalarArray
      */
     protected function canAddValue($offset, $value): bool
     {
-        if (is_null($value) === false && is_string($value) === false) {
-            throw new InvalidTypeException('$value should be of type string or null.');
+        if (is_null($value) === false && is_float($value) === false) {
+            throw new InvalidTypeException('$value should be of type float or null.');
         }
 
         return parent::canAddValue($offset, $value);
     }
 
     /** @param mixed $value */
-    protected function cast($value): ?string
+    protected function cast($value): ?float
     {
-        return is_null($value) ? null : (string) $value;
+        return is_null($value) ? null : (float) $value;
     }
 }
