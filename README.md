@@ -1,4 +1,4 @@
-[![version](https://img.shields.io/badge/version-2.2.0-green.svg)](https://github.com/steevanb/php-typed-array/tree/2.2.0)
+[![version](https://img.shields.io/badge/version-2.3.0-green.svg)](https://github.com/steevanb/php-typed-array/tree/2.3.0)
 [![php](https://img.shields.io/badge/php-^7.1-blue.svg)](https://php.net)
 ![Lines](https://img.shields.io/badge/code%20lines-1738-green.svg)
 ![Total Downloads](https://poser.pugx.org/steevanb/php-typed-array/downloads)
@@ -15,22 +15,20 @@ With `php-typed-array`, you can type your array values. How ? Cause now you will
 ### Installation
 
 ```
-composer require steevanb/php-typed-array ^2.2
+composer require steevanb/php-typed-array ^2.3
 ```
 
 ### Typed array available
 
-`IntArray`: can store `int`
-
-`StringArray`: can store `string`
-
-`ObjectArray`: can store `object`
-
-`ByteStringArray`: can store `Symfony\Component\String\ByteString` (need `symfony/string` to work)
-
-`CodePointStringArray`: can store `Symfony\Component\String\CodePointStringArray` (need `symfony/string` to work)
-
-`UnicodeStringArray`: can store `Symfony\Component\String\UnicodeStringArray` (need `symfony/string` to work)
+ * `BoolArray`: can store `bool`
+ * `FloatArray`: can store `float`
+ * `IntArray`: can store `int`
+ * `ScalarArray`: can store `string|int|float|bool`
+ * `StringArray`: can store `string`
+ * `ObjectArray`: can store `object`
+ * `ByteStringArray`: can store `Symfony\Component\String\ByteString` (need `symfony/string` to work)
+ * `CodePointStringArray`: can store `Symfony\Component\String\CodePointStringArray` (need `symfony/string` to work)
+ * `UnicodeStringArray`: can store `Symfony\Component\String\UnicodeStringArray` (need `symfony/string` to work)
 
 ### Usage
 

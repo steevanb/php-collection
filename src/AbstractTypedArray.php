@@ -99,7 +99,7 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
      */
     public function offsetSet($offset, $value): void
     {
-        if ($offset === null) {
+        if (is_null($offset)) {
             $offset = $this->nextIntKey;
             $offsetWasNull = true;
         } else {
@@ -201,7 +201,7 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
     /** @param mixed $value */
     protected function castValueToString($value): string
     {
-        return ($value === null) ? 'NULL' : (string) $value;
+        return is_null($value) ? 'NULL' : (string) $value;
     }
 
     /**
@@ -212,7 +212,7 @@ abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
     {
         $return = true;
 
-        if ($value === null) {
+        if (is_null($value)) {
             if ($this->getNullValueMode() === static::NULL_VALUE_DO_NOT_ADD) {
                 $return = false;
             } elseif ($this->getNullValueMode() === static::NULL_VALUE_EXCEPTION) {

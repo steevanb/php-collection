@@ -64,7 +64,7 @@ class ObjectArray extends AbstractTypedArray
      */
     protected function canAddValue($offset, $value): bool
     {
-        if ($value !== null) {
+        if (is_null($value) === false) {
             if (
                 is_object($value) === false
                 || (
