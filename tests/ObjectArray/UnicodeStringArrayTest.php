@@ -37,8 +37,8 @@ final class UnicodeStringArrayTest extends TestCase
     public function testCanAddValueException(): void
     {
         static::expectException(InvalidTypeException::class);
-        /** @phpstan-ignore-next-line */
         new UnicodeStringArray(
+            /** @phpstan-ignore-next-line */
             [
                 new UnicodeString('foo'),
                 new UnicodeString('bar'),

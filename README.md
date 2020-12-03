@@ -128,3 +128,72 @@ because PHP do not provide a callback when this functions are called.
 
 Some PHP functions will not work, cause they only allow `array` (it should be `iterable`).
 You can use `$typedArray->toArray()` to use them.
+
+### Integration with Symfony
+
+#### Installation
+
+Add this dependencies to your project:
+
+```bash
+composer require symfony/config symfony/dependency-injection symfony/http-kernel
+```
+
+Add `PhpTypedArrayBundle` to `config/bundles.php`:
+```php
+# config/bundles.php
+return [
+    steevanb\PhpTypedArray\Bridge\Symfony\PhpTypedArrayBundle::class => ['all' => true]
+];
+```
+
+Add bridge to your autoload into `composer.json`:
+```json
+{
+    "autoload": {
+        "psr-4": {
+            "steevanb\\PhpTypedArray\\Bridge\\": "vendor/steevanb/php-typed-array/bridge"
+        }
+    }
+}
+```
+#### Denormalize array into TypedArray with Symfony serializer
+
+```php
+use ScalarArray\BoolArray;
+
+// $array will be and instance of BoolArray with values: true, false
+$array = $serializer->denormalize([true, false], BoolArray::class);
+```
+
+#### Create your own ObjectArrayDenormalizer
+
+```php
+namespace App\Serializer;
+
+use steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\ObjectArray\AbstractObjectArrayDenormalizer;
+
+class FooArrayDenormalizer extends AbstractObjectArrayDenormalizer
+{
+    protected function getObjectArrayFqcn(): string
+    {
+        return FooArray::class;
+    }
+}
+```
+
+#### Create your own ScalarArrayDenormalizer
+
+```php
+namespace App\Serializer;
+
+use steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\ScalarArray\AbstractScalarArrayDenormalizer;
+
+class FooArrayDenormalizer extends AbstractScalarArrayDenormalizer
+{
+    protected function getObjectArrayFqcn(): string
+    {
+        return FooArray::class;
+    }
+}
+```

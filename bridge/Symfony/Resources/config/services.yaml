@@ -1,0 +1,8 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\:
+        resource: ../../Normalizer/**/*Denormalizer.php
+        exclude: ../../Normalizer/**/Abstract*.php
