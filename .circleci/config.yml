@@ -8,15 +8,15 @@ jobs:
         steps:
             - checkout
             - restore_cache:
-                key: vendor-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}-3
+                key: vendor-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}
             - run: composer install --ansi
             - save_cache:
-                key: vendor-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}-3
+                key: vendor-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}
                 paths:
                     - ./vendor
     phpcs:
         docker:
-            - image: steevanb/php-code-sniffs:4.0.2
+            - image: steevanb/php-code-sniffs:4.0.3
         working_directory: /app
         steps:
             - checkout
@@ -31,7 +31,7 @@ jobs:
         steps:
             - checkout
             - restore_cache:
-                  key: vendor-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}-3
+                  key: vendor-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}
             - run:
                 name: phpunit
                 command: bin/phpunit
@@ -43,7 +43,7 @@ jobs:
         steps:
             - checkout
             - restore_cache:
-                  key: vendor-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}-3
+                  key: vendor-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}
             - run:
                 name: phpstan
                 command: bin/phpstan
@@ -55,7 +55,7 @@ jobs:
         steps:
             - checkout
             - restore_cache:
-                key: vendor-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}-3
+                key: vendor-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}
             - run:
                 name: phpcf
                 command: bin/phpcf
@@ -67,14 +67,14 @@ jobs:
         steps:
             - checkout
             - restore_cache:
-                key: vendor-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}-3
+                key: vendor-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}
             - run:
                 name: composerRequireChecker
                 command: bin/composerRequireChecker
 
 workflows:
     version: '2.1'
-    build:
+    CI:
         jobs:
             - composer
             - phpcf

@@ -11,8 +11,9 @@ if [ $(which docker || false) ]; then
         --rm \
         -v ${PROJECT_DIRECTORY}:/app:ro \
         --entrypoint /app/bin/phpcs \
-        steevanb/php-code-sniffs:4.0.2
+        steevanb/php-code-sniffs:4.0.3
 else
     PHPCS_PARAMETERS="-p --warning-severity=0 --ignore=/vendor/"
+    PHPCS_BOOTSTRAP="/app/phpcs.bootstrap.php"
     /var/php-code-sniffs/docker/entrypoint.sh
 fi
