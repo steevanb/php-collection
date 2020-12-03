@@ -1,3 +1,8 @@
+### [2.4.0](../../compare/2.3.0...2.4.0) - 2020-12-03
+
+- Add Symdony bridge
+- Add Denormalizer for [symfony/serializer](https://github.com/symfony/serializer) component
+
 ### [2.3.0](../../compare/2.2.0...2.3.0) - 2020-11-10
 
 - Add `steevanb\PhpTypedArray\ScalarArray\BoolArray`
