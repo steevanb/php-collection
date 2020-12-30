@@ -8,7 +8,7 @@ if [ $(which docker || false) ]; then
         --rm \
         -v ${projectDir}:/app:ro \
         -w /app \
-        php:7.2.34-cli-alpine3.12 \
+        php:7.4.13-cli-buster \
         bin/phpunit
 else
     vendor/bin/phpunit --bootstrap vendor/autoload.php --do-not-cache-result --colors=always tests

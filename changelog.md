@@ -1,3 +1,8 @@
+### [2.5.0](../../compare/2.4.0...2.5.0) - 2020-12-30
+
+- Add `TypedArrayInterface` and use it in `AbstractTypedArray`
+- Add `DisallowTypedArrayRule` for phpstan
+
 ### [2.4.0](../../compare/2.3.0...2.4.0) - 2020-12-03
 
 - Add Symdony bridge
