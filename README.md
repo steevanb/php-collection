@@ -1,10 +1,10 @@
-[![version](https://img.shields.io/badge/version-2.4.0-green.svg)](https://github.com/steevanb/php-typed-array/tree/2.4.0)
+[![version](https://img.shields.io/badge/version-2.5.0-green.svg)](https://github.com/steevanb/php-typed-array/tree/2.5.0)
 [![php](https://img.shields.io/badge/php-^7.1-blue.svg)](https://php.net)
 ![Lines](https://img.shields.io/badge/code%20lines-3183-green.svg)
 ![Total Downloads](https://poser.pugx.org/steevanb/php-typed-array/downloads)
 [![Scrutinizer](https://scrutinizer-ci.com/g/steevanb/php-typed-array/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/steevanb/php-typed-array/)
 
-### php-typed-array
+## php-typed-array
 
 Bored of not knowing value type in array ? You are at the right spot !
 
@@ -12,13 +12,13 @@ With `php-typed-array`, you can type your array values. How ? Cause now you will
 
 [Changelog](changelog.md)
 
-### Installation
+## Installation
 
 ```
-composer require steevanb/php-typed-array ^2.4
+composer require steevanb/php-typed-array ^2.5
 ```
 
-### Typed array available
+## Typed array available
 
  * `BoolArray`: can store `bool`
  * `FloatArray`: can store `float`
@@ -30,9 +30,9 @@ composer require steevanb/php-typed-array ^2.4
  * `CodePointStringArray`: can store `Symfony\Component\String\CodePointStringArray` (need `symfony/string` to work)
  * `UnicodeStringArray`: can store `Symfony\Component\String\UnicodeStringArray` (need `symfony/string` to work)
 
-### Usage
+## Usage
 
-/!\ See [Limitations](https://github.com/steevanb/php-typed-array#limitations) before using it, PHP have a lot of limitations with objects as array /!\
+/!\ See [Limitations](documentation/Limitations.md) before using it, PHP have a some limitations with objects as array /!\
 
 Simple usage:
 ```php
@@ -50,8 +50,8 @@ function returnInts(): \IntArray
     return new \IntArray([1, 2, 3]); 
 }
 
-foreach (returnInts() as $key => $int) {
-    // do your stuff, you are SURE $int is integer !
+foreach (returnInts()->toArray() as $key => $int) {
+    // do your stuff, you are SURE $int is an integer !
 }
 ```
 
@@ -108,92 +108,14 @@ class DateTimeArray extends ObjectArray
 }
 ```
 
-### Limitations
+## Limitations
 
-/!\ DO NOT USE WITH `array_key_exists()` /!\
+PHP as some issues or limitations with their own implementation of `\ArrayAccess`, `iterable` etc.
 
-As PHP have a bug with `\ArrayAccess`, `offsetExists()` is not called by `array_key_exists()`:
-```php
-$intArray = new IntArray(['foo' => 18);
-// will always return false, although key exist
-array_key_exists('foo', $intArray);
-// use isset() instead, who call \ArrayAccess::offsetExists() properly
-isset($intArray['foo']);
-```
+[Limitations](documentation/Limitations.md)
 
-As `\Iterator` PHP interface need `next()` method, and we have to use `next()` PHP function here, who return `false`: `BoolArray` could not exists.
+## Bridges
 
-PHP array functions who use internal pointer could not be used with AbstractTypedArray: `key()`, `prev()`, `current()`, `next()` and `end()`,
-because PHP do not provide a callback when this functions are called.
-
-Some PHP functions will not work, cause they only allow `array` (it should be `iterable`).
-You can use `$typedArray->toArray()` to use them.
-
-### Integration with Symfony
-
-#### Installation
-
-Add this dependencies to your project:
-
-```bash
-composer require symfony/config symfony/dependency-injection symfony/http-kernel
-```
-
-Add `PhpTypedArrayBundle` to `config/bundles.php`:
-```php
-# config/bundles.php
-return [
-    steevanb\PhpTypedArray\Bridge\Symfony\PhpTypedArrayBundle::class => ['all' => true]
-];
-```
-
-Add bridge to your autoload into `composer.json`:
-```json
-{
-    "autoload": {
-        "psr-4": {
-            "steevanb\\PhpTypedArray\\Bridge\\": "vendor/steevanb/php-typed-array/bridge"
-        }
-    }
-}
-```
-#### Denormalize array into TypedArray with Symfony serializer
-
-```php
-use ScalarArray\BoolArray;
-
-// $array will be and instance of BoolArray with values: true, false
-$array = $serializer->denormalize([true, false], BoolArray::class);
-```
-
-#### Create your own ObjectArrayDenormalizer
-
-```php
-namespace App\Serializer;
-
-use steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\ObjectArray\AbstractObjectArrayDenormalizer;
-
-class FooArrayDenormalizer extends AbstractObjectArrayDenormalizer
-{
-    protected function getObjectArrayFqcn(): string
-    {
-        return FooArray::class;
-    }
-}
-```
-
-#### Create your own ScalarArrayDenormalizer
-
-```php
-namespace App\Serializer;
-
-use steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\ScalarArray\AbstractScalarArrayDenormalizer;
-
-class FooArrayDenormalizer extends AbstractScalarArrayDenormalizer
-{
-    protected function getObjectArrayFqcn(): string
-    {
-        return FooArray::class;
-    }
-}
-```
+You can easily integrate `php-typed-array` in your projects with this bridges:
+* [Symfony](documentation/BridgeSymfony.md)
+* [phpstan](documentation/BridgePhpstan.md)

@@ -10,7 +10,7 @@ use steevanb\PhpTypedArray\{
     Exception\NullValueException
 };
 
-abstract class AbstractTypedArray implements \ArrayAccess, \Iterator, \Countable
+abstract class AbstractTypedArray implements TypedArrayInterface
 {
     public const NULL_VALUE_ALLOW = 1;
     public const NULL_VALUE_DO_NOT_ADD = 2;
