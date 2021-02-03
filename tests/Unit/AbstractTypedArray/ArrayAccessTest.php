@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray\Tests\AbstractTypedArray;
+namespace steevanb\PhpTypedArray\Tests\Unit\AbstractTypedArray;
 
 use PHPUnit\Framework\TestCase;
 use steevanb\PhpTypedArray\Exception\KeyNotFoundException;

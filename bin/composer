@@ -4,4 +4,4 @@ set -eu
 
 readonly projectDir=$(realpath $(dirname $(realpath $0))/..)
 
-docker run -it --user $(id -u):$(id -g) -v ${projectDir}:/app composer:2.0.4 $@
+docker run -it --user $(id -u):$(id -g) -v ${projectDir}:/app composer:1.10.20 $@

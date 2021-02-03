@@ -45,7 +45,7 @@ abstract class AbstractTypedArray implements TypedArrayInterface
      * @param iterable<mixed> $values
      * @return $this
      */
-    public function setValues(iterable $values): self
+    public function setValues(iterable $values): TypedArrayInterface
     {
         $this->values = [];
         $this->nextIntKey = 0;
@@ -139,7 +139,7 @@ abstract class AbstractTypedArray implements TypedArrayInterface
     }
 
     /** @return $this */
-    public function resetKeys(): self
+    public function resetKeys(): TypedArrayInterface
     {
         $this->values = array_values($this->values);
         $this->nextIntKey = count($this->values);
@@ -159,7 +159,7 @@ abstract class AbstractTypedArray implements TypedArrayInterface
     }
 
     /** @return $this */
-    public function setValueAlreadyExistMode(int $valueAlreadyExistMode): self
+    public function setValueAlreadyExistMode(int $valueAlreadyExistMode): TypedArrayInterface
     {
         $this->valueAlreadyExistMode = $valueAlreadyExistMode;
 
@@ -172,7 +172,7 @@ abstract class AbstractTypedArray implements TypedArrayInterface
     }
 
     /** @return $this */
-    public function setNullValueMode(int $mode): self
+    public function setNullValueMode(int $mode): TypedArrayInterface
     {
         $this->nullValueMode = $mode;
 

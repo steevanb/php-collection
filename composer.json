@@ -17,18 +17,24 @@
         "php": "^7.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "8.4.*",
-        "symfony/string": "5.1.*",
+        "maglnet/composer-require-checker": "2.1.*",
         "phpstan/phpstan": "0.12.*",
-        "maglnet/composer-require-checker": "2.0.*",
         "phpstan/phpstan-deprecation-rules": "0.12.*",
         "phpstan/phpstan-strict-rules": "0.12.*",
-        "symfony/serializer": "^5.0"
+        "phpunit/phpunit": "7.5.*",
+        "symfony/serializer": "^4.0 || ^5.0",
+        "symfony/string": "^4.0 || ^5.0"
     },
     "suggest": {
         "symfony/config": "Needed to use Symfony bridge PhpTypedArrayBundle",
         "symfony/dependency-injection": "Needed to use Symfony bridge PhpTypedArrayBundle",
         "symfony/http-kernel": "Needed to use Symfony bridge PhpTypedArrayBundle",
         "symfony/string": "Needed to use UnicodeStringArray, ByteStringArray or CodePointStringArray."
+    },
+    "config": {
+        "sort-packages": true,
+        "platform": {
+            "php": "7.2.5"
+        }
     }
 }

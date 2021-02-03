@@ -2,14 +2,20 @@
 
 set -eu
 
-if [ $(which docker || false) ]; then
-    readonly projectDir=$(realpath $(dirname $(realpath $0))/..)
-    docker run \
-        --rm \
-        -v ${projectDir}:/app:ro \
-        -w /app \
-        php:7.4.13-cli-buster \
-        bin/phpunit
-else
-    vendor/bin/phpunit --bootstrap vendor/autoload.php --do-not-cache-result --colors=always tests
-fi
+readonly binDir="$(realpath $(dirname $(realpath $0))/..)/bin"
+
+title() {
+    echo "\n\e[34m${1}\e[0m"
+}
+
+title "PHP 7.1"
+${binDir}/phpunit71
+
+title "PHP 7.2"
+${binDir}/phpunit72
+
+title "PHP 7.3"
+${binDir}/phpunit73
+
+title "PHP 7.4"
+${binDir}/phpunit74

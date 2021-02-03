@@ -1,3 +1,10 @@
+### [2.6.0](../../compare/2.5.0...2.6.0) - 2021-02-03
+
+- Add `ObjectArrayDenormalizer` to denormalize all instances of `ObjectArray`
+- Deprecate `ByteStringArrayDenormalizer`, `CodePointStringArrayDenormalizer` and `UnicodeStringArrayDenormalizer` (replaced by `ObjectArrayDenormalizer`)
+- Launch unit tests with PHP 7.1, 7.2, 7.3 and 7.4 (only 7.4 before)
+- Fix `AbstractTypedArray` return types for PHP 7.1, 7.2 and 7.3
+
 ### [2.5.0](../../compare/2.4.0...2.5.0) - 2020-12-30
 
 - Add `TypedArrayInterface` and use it in `AbstractTypedArray`

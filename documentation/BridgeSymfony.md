@@ -35,6 +35,12 @@ $array = $serializer->denormalize([true, false], BoolArray::class);
 
 ## Create your own ObjectArrayDenormalizer
 
+You should not need to do it as
+[ObjectArrayDenormalizer](../bridge/Symfony/Normalizer/ObjectArray/ObjectArrayDenormalizer.php)
+do it for you.
+
+In case you need to change the behavior, you can create your own `ObjectArrayDenormalizer`:
+
 ```php
 namespace App\Serializer;
 

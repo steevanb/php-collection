@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray\Tests\ScalarArray;
+namespace steevanb\PhpTypedArray\Tests\Unit\ScalarArray;
 
 use PHPUnit\Framework\TestCase;
 use steevanb\PhpTypedArray\{
