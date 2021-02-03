@@ -3,13 +3,13 @@ version: '2.1'
 jobs:
     composer:
         docker:
-            - image: composer:2.0.4
+            - image: composer:1.10.20
         working_directory: /app
         steps:
             - checkout
             - restore_cache:
                 key: vendor-{{ checksum "composer.json" }}
-            - run: composer install --ansi
+            - run: composer update --ansi
             - save_cache:
                 key: vendor-{{ checksum "composer.json" }}
                 paths:
@@ -23,7 +23,43 @@ jobs:
             - run:
                 name: phpcs
                 command: bin/phpcs
-    phpunit:
+    phpunit71:
+        docker:
+            - image: php:7.1.33-cli-buster
+        working_directory: /app
+        steps:
+            - checkout
+            - restore_cache:
+                  key: vendor-{{ checksum "composer.json" }}
+            - run:
+                name: phpunit
+                command: bin/phpunit71
+
+    phpunit72:
+        docker:
+            - image: php:7.2.34-cli-buster
+        working_directory: /app
+        steps:
+            - checkout
+            - restore_cache:
+                  key: vendor-{{ checksum "composer.json" }}
+            - run:
+                  name: phpunit
+                  command: bin/phpunit72
+
+    phpunit73:
+        docker:
+            - image: php:7.3.26-cli-buster
+        working_directory: /app
+        steps:
+            - checkout
+            - restore_cache:
+                  key: vendor-{{ checksum "composer.json" }}
+            - run:
+                  name: phpunit
+                  command: bin/phpunit73
+
+    phpunit74:
         docker:
             - image: php:7.4.13-cli-buster
         working_directory: /app
@@ -32,8 +68,8 @@ jobs:
             - restore_cache:
                   key: vendor-{{ checksum "composer.json" }}
             - run:
-                name: phpunit
-                command: bin/phpunit
+                  name: phpunit
+                  command: bin/phpunit74
 
     phpstan:
         docker:
@@ -79,10 +115,19 @@ workflows:
             - phpcs
             - composerRequireChecker:
                 requires:
-                - composer
+                    - composer
             - phpstan:
                 requires:
                     - composer
-            - phpunit:
+            - phpunit71:
+                requires:
+                    - composer
+            - phpunit72:
+                requires:
+                    - composer
+            - phpunit73:
+                requires:
+                    - composer
+            - phpunit74:
                 requires:
                     - composer

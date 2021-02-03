@@ -2,32 +2,32 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray\Tests\ObjectArray;
+namespace steevanb\PhpTypedArray\Tests\Bridge\Symfony;
 
 use PHPUnit\Framework\TestCase;
 use steevanb\PhpTypedArray\{
     Exception\InvalidTypeException,
     Exception\ValueAlreadyExistException,
-    ObjectArray\CodePointStringArray,
+    ObjectArray\ByteStringArray,
     ObjectArray\UnicodeStringArray
 };
-use Symfony\Component\String\CodePointString;
+use Symfony\Component\String\ByteString;
 
-final class CodePointStringArrayTest extends TestCase
+final class ByteStringArrayTest extends TestCase
 {
     public function testConstructor(): void
     {
-        $array = new CodePointStringArray([]);
+        $array = new ByteStringArray([]);
 
-        static::assertSame(CodePointString::class, $array->getClassName());
+        static::assertSame(ByteString::class, $array->getClassName());
     }
 
     public function testCanAddValue(): void
     {
-        $array = new CodePointStringArray(
+        $array = new ByteStringArray(
             [
-                new CodePointString('foo'),
-                new CodePointString('bar'),
+                new ByteString('foo'),
+                new ByteString('bar'),
             ]
         );
 
@@ -38,10 +38,10 @@ final class CodePointStringArrayTest extends TestCase
     public function testCanAddValueException(): void
     {
         static::expectException(InvalidTypeException::class);
-        new CodePointStringArray(
+        new ByteStringArray(
             [
-                new CodePointString('foo'),
-                new CodePointString('bar'),
+                new ByteString('foo'),
+                new ByteString('bar'),
                 new \DateTime(),
             ]
         );
@@ -49,10 +49,10 @@ final class CodePointStringArrayTest extends TestCase
 
     public function testCanAddValueObject(): void
     {
-        $array = new CodePointStringArray(
+        $array = new ByteStringArray(
             [
-                new CodePointString('foo'),
-                new CodePointString('bar'),
+                new ByteString('foo'),
+                new ByteString('bar'),
             ]
         );
 
@@ -62,13 +62,13 @@ final class CodePointStringArrayTest extends TestCase
 
     public function testComparisonModeString(): void
     {
-        $array = (new CodePointStringArray())
-            ->setValueAlreadyExistMode(CodePointStringArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
+        $array = (new ByteStringArray())
+            ->setValueAlreadyExistMode(ByteStringArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
             ->setValues(
                 [
-                    new CodePointString('foo'),
-                    new CodePointString('foo'),
-                    new CodePointString('bar'),
+                    new ByteString('foo'),
+                    new ByteString('foo'),
+                    new ByteString('bar'),
                 ]
             );
 
@@ -80,14 +80,14 @@ final class CodePointStringArrayTest extends TestCase
 
     public function testComparisonModeObjectHas(): void
     {
-        $array = (new CodePointStringArray())
-            ->setComparisonMode(CodePointStringArray::COMPARISON_OBJECT_HASH)
-            ->setValueAlreadyExistMode(CodePointStringArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
+        $array = (new ByteStringArray())
+            ->setComparisonMode(ByteStringArray::COMPARISON_OBJECT_HASH)
+            ->setValueAlreadyExistMode(ByteStringArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
             ->setValues(
                 [
-                    new CodePointString('foo'),
-                    new CodePointString('foo'),
-                    new CodePointString('bar'),
+                    new ByteString('foo'),
+                    new ByteString('foo'),
+                    new ByteString('bar'),
                 ]
             );
 
@@ -99,9 +99,9 @@ final class CodePointStringArrayTest extends TestCase
 
     public function testMergeValueAlreadyExistsAdd(): void
     {
-        $array = (new CodePointStringArray([new CodePointString('foo'), new CodePointString('bar')]))
+        $array = (new ByteStringArray([new ByteString('foo'), new ByteString('bar')]))
             ->setValueAlreadyExistMode(UnicodeStringArray::VALUE_ALREADY_EXIST_ADD)
-            ->merge(new CodePointStringArray([new CodePointString('bar'), new CodePointString('baz')]));
+            ->merge(new ByteStringArray([new ByteString('bar'), new ByteString('baz')]));
 
         static::assertCount(4, $array);
         static::assertSame('foo', (string) $array[0]);
@@ -112,9 +112,9 @@ final class CodePointStringArrayTest extends TestCase
 
     public function testMergeValueAlreadyExistsDoNotAdd(): void
     {
-        $array = (new CodePointStringArray([new CodePointString('foo'), new CodePointString('bar')]))
+        $array = (new ByteStringArray([new ByteString('foo'), new ByteString('bar')]))
             ->setValueAlreadyExistMode(UnicodeStringArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
-            ->merge(new CodePointStringArray([new CodePointString('bar'), new CodePointString('baz')]));
+            ->merge(new ByteStringArray([new ByteString('bar'), new ByteString('baz')]));
 
         static::assertCount(3, $array);
         static::assertSame('foo', (string) $array[0]);
@@ -126,8 +126,8 @@ final class CodePointStringArrayTest extends TestCase
     public function testMergeValueAlreadyExistsException(): void
     {
         static::expectException(ValueAlreadyExistException::class);
-        (new CodePointStringArray([new CodePointString('foo'), new CodePointString('bar')]))
+        (new ByteStringArray([new ByteString('foo'), new ByteString('bar')]))
             ->setValueAlreadyExistMode(UnicodeStringArray::VALUE_ALREADY_EXIST_EXCEPTION)
-            ->merge(new CodePointStringArray([new CodePointString('bar'), new CodePointString('baz')]));
+            ->merge(new ByteStringArray([new ByteString('bar'), new ByteString('baz')]));
     }
 }

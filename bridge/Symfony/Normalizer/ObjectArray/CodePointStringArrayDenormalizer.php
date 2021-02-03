@@ -6,6 +6,7 @@ namespace steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\ObjectArray;
 
 use steevanb\PhpTypedArray\ObjectArray\CodePointStringArray;
 
+/** @deprecated Replaced by ObjectArrayDenormalizer */
 class CodePointStringArrayDenormalizer extends AbstractObjectArrayDenormalizer
 {
     protected function getObjectArrayFqcn(): string
