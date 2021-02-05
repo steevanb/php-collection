@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray\Tests\Unit\ScalarArray;
+namespace steevanb\PhpTypedArray\Tests\Bridge\Symfony\Normalizer;
 
 use PHPUnit\Framework\TestCase;
 use steevanb\PhpTypedArray\{
-    Bridge\Symfony\Normalizer\ScalarArray\IntArrayDenormalizer,
+    Bridge\Symfony\Normalizer\ScalarArrayDenormalizer,
     ScalarArray\IntArray
 };
 use Symfony\Component\Serializer\Serializer;
@@ -15,7 +15,7 @@ final class IntArrayNormalizerTest extends TestCase
 {
     public function testDenormalize(): void
     {
-        $serializer = new Serializer([new IntArrayDenormalizer()]);
+        $serializer = new Serializer([new ScalarArrayDenormalizer()]);
         /** @var IntArray $array */
         $array = $serializer->denormalize([1, 2], IntArray::class);
 

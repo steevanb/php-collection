@@ -5,5 +5,5 @@ parameters:
         - tests
     checkGenericClassInNonGenericObjectType: false
 includes:
-    - vendor/phpstan/phpstan-deprecation-rules/rules.neon
-    - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - /root/.composer/vendor/phpstan/phpstan-deprecation-rules/rules.neon
+    - /root/.composer/vendor/phpstan/phpstan-strict-rules/rules.neon

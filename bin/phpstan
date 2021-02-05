@@ -2,15 +2,16 @@
 
 set -eu
 
-readonly projectDir=$(realpath $(dirname $(realpath $0))/..)
-
 if [ $(which docker || false) ]; then
-    docker run \
-        --rm \
-        -v ${projectDir}:/app:ro \
-        -w /app \
-        php:7.4.11-cli-buster \
-        bin/phpstan
+    readonly projectDir=$(realpath $(dirname $(realpath $0))/..)
+    docker \
+        run \
+            --rm \
+            -it\
+            -v ${projectDir}:/app:ro \
+            -w /app \
+            steevanb/php-typed-array-ci:3.0.0 \
+            bin/phpstan
 else
-    ${projectDir}/vendor/bin/phpstan analyse --ansi -c phpstan.neon
+    phpstan analyse --ansi -c phpstan.neon
 fi
