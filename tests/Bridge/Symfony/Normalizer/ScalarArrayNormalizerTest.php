@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray\Tests\Unit\ScalarArray;
+namespace steevanb\PhpTypedArray\Tests\Bridge\Symfony\Normalizer;
 
 use PHPUnit\Framework\TestCase;
 use steevanb\PhpTypedArray\{
-    Bridge\Symfony\Normalizer\ScalarArray\ScalarArrayDenormalizer,
+    Bridge\Symfony\Normalizer\ScalarArrayDenormalizer,
     ScalarArray\ScalarArray
 };
 use Symfony\Component\Serializer\Serializer;

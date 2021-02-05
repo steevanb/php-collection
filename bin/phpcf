@@ -4,13 +4,14 @@ set -eu
 
 if [ $(which docker || false) ]; then
     readonly projectDir=$(realpath $(dirname $(realpath $0))/..)
-    docker run \
-        --rm \
-        -t \
-        -v ${projectDir}:/var/php-typed-array:ro \
-        -w /var/php-typed-array \
-        steevanb/php-code-fixer:2.0.23 \
-        bin/phpcf
+    docker \
+        run \
+            --rm \
+            -it \
+            -v ${projectDir}:/var/php-typed-array:ro \
+            -w /var/php-typed-array \
+            steevanb/php-code-fixer:2.0.23 \
+            bin/phpcf
 else
     phpcf --exclude=/vendor/ .
 fi

@@ -4,5 +4,4 @@ services:
         autoconfigure: true
 
     steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\:
-        resource: ../../Normalizer/**/*Denormalizer.php
-        exclude: ../../Normalizer/**/Abstract*.php
+        resource: ../../Normalizer/*Denormalizer.php

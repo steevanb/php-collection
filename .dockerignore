@@ -1,0 +1,12 @@
+/.circleci
+/bin/*
+!/bin/phpunitBridgeSymfony*
+/docker
+/documentation
+/.gitignore
+/.scrutinizer.yml
+/changelog.md
+/composerRequireChecker.json
+/phpcs.bootstrap.php
+/phpstan.neon
+/README.md

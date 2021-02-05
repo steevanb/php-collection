@@ -9,7 +9,8 @@ if [ $(which docker || false) ]; then
         -v ${projectDir}:/app:ro \
         -w /app \
         php:7.2.34-cli-buster \
-        bin/phpunit72
+        bin/phpunit72 \
+        "${@}"
 else
-    vendor/bin/phpunit --bootstrap vendor/autoload.php --colors=always tests
+    vendor/bin/phpunit --bootstrap vendor/autoload.php --colors=always tests "${@}"
 fi

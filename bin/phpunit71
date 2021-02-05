@@ -9,8 +9,9 @@ if [ $(which docker || false) ]; then
         -v ${projectDir}:/app:ro \
         -w /app \
         php:7.1.33-cli-buster \
-        bin/phpunit71
+        bin/phpunit71 \
+        "${@}"
 else
     # Bridge if only for PHP ^7.2 because of symfony/string who require PHP ^7.2
-    vendor/bin/phpunit --bootstrap vendor/autoload.php --colors=always tests/Unit
+    vendor/bin/phpunit --bootstrap vendor/autoload.php --colors=always tests/Unit "${@}"
 fi

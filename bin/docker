@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -eu
+
+readonly projectDir=$(realpath $(dirname $(realpath $0))/..)
+readonly dockerImageTag="steevanb/php-typed-array-ci:1.0.0"
+
+cd "${projectDir}"
+docker \
+    build \
+        -t ${dockerImageTag} \
+        -f docker/Dockerfile \
+        .
+
+push=false
+for param in "$@"; do
+    if [ "${param}" == "--push" ]; then
+        push=true
+    fi
+done
+
+if [ ${push} == true ]; then
+    docker push ${dockerImageTag}
+fi

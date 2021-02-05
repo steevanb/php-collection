@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray\Tests\Bridge\Symfony;
+namespace steevanb\PhpTypedArray\Tests\Bridge\Symfony\ObjectArray;
 
 use PHPUnit\Framework\TestCase;
 use steevanb\PhpTypedArray\{

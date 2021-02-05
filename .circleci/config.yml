@@ -71,9 +71,57 @@ jobs:
                   name: phpunit
                   command: bin/phpunit74
 
+    phpunitBridgeSymfony44:
+        docker:
+            - image: steevanb/php-typed-array-ci:1.0.0
+        working_directory: /app
+        steps:
+            - checkout
+            - restore_cache:
+                  key: vendor-{{ checksum "composer.json" }}
+            - run:
+                  name: phpunitBridgeSymfony44
+                  command: bin/phpunitBridgeSymfony44
+
+    phpunitBridgeSymfony50:
+        docker:
+            - image: steevanb/php-typed-array-ci:1.0.0
+        working_directory: /app
+        steps:
+            - checkout
+            - restore_cache:
+                  key: vendor-{{ checksum "composer.json" }}
+            - run:
+                  name: phpunitBridgeSymfony50
+                  command: bin/phpunitBridgeSymfony50
+
+    phpunitBridgeSymfony51:
+        docker:
+            - image: steevanb/php-typed-array-ci:1.0.0
+        working_directory: /app
+        steps:
+            - checkout
+            - restore_cache:
+                  key: vendor-{{ checksum "composer.json" }}
+            - run:
+                  name: phpunitBridgeSymfony51
+                  command: bin/phpunitBridgeSymfony51
+
+    phpunitBridgeSymfony52:
+        docker:
+            - image: steevanb/php-typed-array-ci:1.0.0
+        working_directory: /app
+        steps:
+            - checkout
+            - restore_cache:
+                  key: vendor-{{ checksum "composer.json" }}
+            - run:
+                  name: phpunitBridgeSymfony52
+                  command: bin/phpunitBridgeSymfony52
+
     phpstan:
         docker:
-            - image: php:7.4.13-cli-buster
+            - image: steevanb/php-typed-array-ci:1.0.0
         working_directory: /app
         steps:
             - checkout
@@ -129,5 +177,17 @@ workflows:
                 requires:
                     - composer
             - phpunit74:
+                requires:
+                    - composer
+            - phpunitBridgeSymfony44:
+                requires:
+                    - composer
+            - phpunitBridgeSymfony50:
+                requires:
+                    - composer
+            - phpunitBridgeSymfony51:
+                requires:
+                    - composer
+            - phpunitBridgeSymfony52:
                 requires:
                     - composer
