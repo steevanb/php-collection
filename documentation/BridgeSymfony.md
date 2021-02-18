@@ -1,3 +1,7 @@
+## Informations
+
+This bridge can be used when your project is a Symfony ^4.4||^5.0 project.
+
 ## Installation
 
 Add this dependencies to your project:

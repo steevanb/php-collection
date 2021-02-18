@@ -1,3 +1,20 @@
+### [3.0.0](../../compare/2.6.0...3.0.0) - 2021-02-03
+
+- Add tests for [symfony/serializer](https://github.com/symfony/serializer) `4.4`, `5.0`, `5.1` and `5.2`
+- [BC break] Removed `steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\ObjectArray\AbstractObjectArrayDenormalizer`
+- [BC break] Removed `steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\ObjectArray\ByteStringArrayDenormalizer`
+- [BC break] Removed `steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\ObjectArray\CodePointStringArrayDenormalizer`
+- [BC break] Removed `steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\ObjectArray\UnicodeStringArrayDenormalizer`
+- Moved `steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\ObjectArray\ObjectArrayDenormalizer` to `steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\ObjectArrayDenormalizer`
+- [BC break] Removed `steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\ScalarArray\AbstractScalarArrayDenormalizer`
+- [BC break] Removed `steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\ScalarArray\BoolArrayDenormalizer`
+- [BC break] Removed `steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\ScalarArray\FloatArrayDenormalizer`
+- [BC break] Removed `steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\ScalarArray\IntArrayDenormalizer`
+- [BC break] Removed `steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\ScalarArray\ScalarArrayDenormalizer`
+- [BC break] Removed `steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\ScalarArray\StringArrayDenormalizer`
+- Add `steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\ScalarArrayDenormalizer` to replace `steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\ScalarArray\*Denormalizer`
+- Create Docker image `steevanb/php-typed-array-ci:1.0.0` who contains [symfony/serializer](https://github.com/symfony/serializer) versions and [phpstan](https://github.com/phpstan/phpstan)
+
 ### [2.6.0](../../compare/2.5.0...2.6.0) - 2021-02-03
 
 - Add `ObjectArrayDenormalizer` to denormalize all instances of `ObjectArray`
