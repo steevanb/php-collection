@@ -1,6 +1,6 @@
-[![version](https://img.shields.io/badge/version-2.6.0-green.svg)](https://github.com/steevanb/php-typed-array/tree/2.6.0)
+[![version](https://img.shields.io/badge/version-3.0.0-green.svg)](https://github.com/steevanb/php-typed-array/tree/3.0.0)
 [![php](https://img.shields.io/badge/php-^7.1-blue.svg)](https://php.net)
-![Lines](https://img.shields.io/badge/code%20lines-4276-green.svg)
+![Lines](https://img.shields.io/badge/code%20lines-3962-green.svg)
 ![Total Downloads](https://poser.pugx.org/steevanb/php-typed-array/downloads)
 [![Scrutinizer](https://scrutinizer-ci.com/g/steevanb/php-typed-array/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/steevanb/php-typed-array/)
 
@@ -15,7 +15,7 @@ With `php-typed-array`, you can type your array values. How ? Cause now you will
 ## Installation
 
 ```
-composer require steevanb/php-typed-array ^2.6
+composer require steevanb/php-typed-array ^3.0
 ```
 
 ## Typed array available
@@ -104,6 +104,27 @@ class DateTimeArray extends ObjectArray
     public function __construct(iterable $values = [])
     {
         parent::__construct($values, \DateTime::class);
+    }
+    
+    /**
+     * This method is not mandatory, but you can create it to typehint $typedArray and the return
+     */
+    public function merge(self $typedArray): self
+    {
+        parent::doMerge($typedArray);
+
+        return $this;
+    }
+    
+    /**
+     * This method is not mandatory, but you can create it to typehint return when you access an item
+     * $data = new DateTimeArray([new \DateTime(), new \DateTime()]);
+     * // Autocompletion should work with the override of current()
+     * $first = $data[0];
+     */
+    public function current(): ?\DateTime
+    {
+        return parent::current();
     }
 }
 ```
