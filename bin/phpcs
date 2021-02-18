@@ -8,7 +8,7 @@ if [ $(which docker || false) ]; then
         run \
             --rm \
             -it \
-            -v ${projectDirectory}:/app:ro \
+            -v ${projectDir}:/app:ro \
             --entrypoint /app/bin/phpcs \
             steevanb/php-code-sniffs:4.0.3
 else

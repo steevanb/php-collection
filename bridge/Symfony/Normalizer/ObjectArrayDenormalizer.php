@@ -26,7 +26,7 @@ class ObjectArrayDenormalizer implements DenormalizerInterface, DenormalizerAwar
      */
     public function denormalize($data, $type, $format = null, array $context = []): ObjectArray
     {
-        $return = $this->createObjectArray($data, $type);
+        $return = $this->createObjectArray($type);
         foreach ($data as $item) {
             $return[] = $this->denormalizeObject($item, $return, $format, $context);
         }
@@ -34,12 +34,9 @@ class ObjectArrayDenormalizer implements DenormalizerInterface, DenormalizerAwar
         return $return;
     }
 
-    protected function createObjectArray(ObjectArray $data, string $type): ObjectArray
+    protected function createObjectArray(string $type): ObjectArray
     {
-        /** @var ObjectArray $return */
-        $return = new $type([], $data->getClassName());
-
-        return $return;
+        return new $type([]);
     }
 
     /** @return object */

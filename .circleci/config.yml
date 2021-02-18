@@ -73,7 +73,7 @@ jobs:
 
     phpunitBridgeSymfony44:
         docker:
-            - image: steevanb/php-typed-array-ci:1.0.0
+            - image: steevanb/php-typed-array-ci:1.0.1
         working_directory: /app
         steps:
             - checkout
@@ -85,7 +85,7 @@ jobs:
 
     phpunitBridgeSymfony50:
         docker:
-            - image: steevanb/php-typed-array-ci:1.0.0
+            - image: steevanb/php-typed-array-ci:1.0.1
         working_directory: /app
         steps:
             - checkout
@@ -97,7 +97,7 @@ jobs:
 
     phpunitBridgeSymfony51:
         docker:
-            - image: steevanb/php-typed-array-ci:1.0.0
+            - image: steevanb/php-typed-array-ci:1.0.1
         working_directory: /app
         steps:
             - checkout
@@ -109,7 +109,7 @@ jobs:
 
     phpunitBridgeSymfony52:
         docker:
-            - image: steevanb/php-typed-array-ci:1.0.0
+            - image: steevanb/php-typed-array-ci:1.0.1
         working_directory: /app
         steps:
             - checkout
@@ -121,7 +121,7 @@ jobs:
 
     phpstan:
         docker:
-            - image: steevanb/php-typed-array-ci:1.0.0
+            - image: steevanb/php-typed-array-ci:1.0.1
         working_directory: /app
         steps:
             - checkout

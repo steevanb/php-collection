@@ -10,7 +10,7 @@ if [ $(which docker || false) ]; then
             -it\
             -v ${projectDir}:/app:ro \
             -w /app \
-            steevanb/php-typed-array-ci:3.0.0 \
+            steevanb/php-typed-array-ci:1.0.1 \
             bin/phpstan
 else
     phpstan analyse --ansi -c phpstan.neon

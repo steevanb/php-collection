@@ -7,20 +7,20 @@ namespace steevanb\PhpTypedArray\Tests\Bridge\Symfony\Normalizer;
 use PHPUnit\Framework\TestCase;
 use steevanb\PhpTypedArray\{
     Bridge\Symfony\Normalizer\ScalarArrayDenormalizer,
-    ScalarArray\IntArray
+    ScalarArray\BoolArray
 };
 use Symfony\Component\Serializer\Serializer;
 
-final class IntArrayNormalizerTest extends TestCase
+final class BoolArrayDenormalizerTest extends TestCase
 {
     public function testDenormalize(): void
     {
         $serializer = new Serializer([new ScalarArrayDenormalizer()]);
-        /** @var IntArray $array */
-        $array = $serializer->denormalize([1, 2], IntArray::class);
+        /** @var BoolArray $array */
+        $array = $serializer->denormalize([true, false], BoolArray::class);
 
         static::assertCount(2, $array);
-        static::assertSame(1, $array[0]);
-        static::assertSame(2, $array[1]);
+        static::assertSame(true, $array[0]);
+        static::assertSame(false, $array[1]);
     }
 }
