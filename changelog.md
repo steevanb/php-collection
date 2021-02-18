@@ -1,4 +1,9 @@
-### [3.0.0](../../compare/2.6.0...3.0.0) - 2021-02-03
+### [3.0.1](../../compare/2.6.0...3.0.0) - 2021-02-18
+
+- Fix `ObjectArrayDenormalizer::createObjectArray()`
+- Fix Symfony bridge tests
+
+### [3.0.0](../../compare/2.6.0...3.0.0) - 2021-02-18
 
 - Add tests for [symfony/serializer](https://github.com/symfony/serializer) `4.4`, `5.0`, `5.1` and `5.2`
 - [BC break] Removed `steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\ObjectArray\AbstractObjectArrayDenormalizer`

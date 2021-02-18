@@ -11,7 +11,7 @@ use steevanb\PhpTypedArray\{
 };
 use Symfony\Component\Serializer\Serializer;
 
-final class ScalarArrayNormalizerTest extends TestCase
+final class ScalarArrayDenormalizerTest extends TestCase
 {
     public function testDenormalize(): void
     {

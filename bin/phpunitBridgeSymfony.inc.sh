@@ -16,8 +16,9 @@ if [ $(which docker || false) ]; then
     docker \
         run \
             --rm \
+            -it \
             -w /app \
-            steevanb/php-typed-array:3.0.0 \
+            steevanb/php-typed-array-ci:1.0.1 \
             "bin/phpunitBridgeSymfony${SYMFONY_VERSION_SHORT}" \
             "${@}"
 else
