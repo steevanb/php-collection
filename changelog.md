@@ -1,3 +1,7 @@
+### [3.1.1](../../compare/3.1.0...3.1.1) - 2021-05-10
+
+- Fix `.gitattributes`
+
 ### [3.1.0](../../compare/3.0.1...3.1.0) - 2021-05-10
 
 - Allow PHP `^8.0` (it was already compatible)
