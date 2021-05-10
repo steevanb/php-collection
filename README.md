@@ -1,4 +1,4 @@
-[![version](https://img.shields.io/badge/version-3.0.1-green.svg)](https://github.com/steevanb/php-typed-array/tree/3.0.1)
+[![version](https://img.shields.io/badge/version-3.1.0-green.svg)](https://github.com/steevanb/php-typed-array/tree/3.1.0)
 [![php](https://img.shields.io/badge/php-^7.1||^8.0-blue.svg)](https://php.net)
 ![Lines](https://img.shields.io/badge/code%20lines-3996-green.svg)
 ![Total Downloads](https://poser.pugx.org/steevanb/php-typed-array/downloads)
@@ -20,7 +20,6 @@ composer require steevanb/php-typed-array ^3.0
 
 ## Typed array available
 
- * `BoolArray`: can store `bool`
  * `FloatArray`: can store `float`
  * `IntArray`: can store `int`
  * `ScalarArray`: can store `string|int|float|bool`
