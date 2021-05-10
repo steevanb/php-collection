@@ -2,10 +2,10 @@
 
 set -eu
 
-readonly projectDir=$(realpath $(dirname $(realpath $0))/..)
-readonly dockerImageTag="steevanb/php-typed-array-ci:1.0.1"
+readonly rootDir=$(realpath $(dirname $(realpath $0))/../..)
+readonly dockerImageTag="steevanb/php-typed-array-ci:1.1.0"
 
-cd "${projectDir}"
+cd "${rootDir}"
 docker \
     build \
         -t ${dockerImageTag} \

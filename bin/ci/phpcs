@@ -3,14 +3,14 @@
 set -eu
 
 if [ $(which docker || false) ]; then
-    readonly projectDir=$(realpath $(dirname $(realpath $0))/..)
+    readonly rootDir=$(realpath $(dirname $(realpath $0))/../..)
     docker \
         run \
             --rm \
             -it \
-            -v ${projectDir}:/app:ro \
-            --entrypoint /app/bin/phpcs \
-            steevanb/php-code-sniffs:4.0.3
+            -v ${rootDir}:/app:ro \
+            --entrypoint /app/bin/ci/phpcs \
+            steevanb/php-code-sniffs:4.1.0
 else
     PHPCS_PARAMETERS="-p --warning-severity=0 --ignore=/vendor/"
     PHPCS_BOOTSTRAP="/app/phpcs.bootstrap.php"

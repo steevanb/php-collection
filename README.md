@@ -1,5 +1,5 @@
 [![version](https://img.shields.io/badge/version-3.0.1-green.svg)](https://github.com/steevanb/php-typed-array/tree/3.0.1)
-[![php](https://img.shields.io/badge/php-^7.1-blue.svg)](https://php.net)
+[![php](https://img.shields.io/badge/php-^7.1||^8.0-blue.svg)](https://php.net)
 ![Lines](https://img.shields.io/badge/code%20lines-3996-green.svg)
 ![Total Downloads](https://poser.pugx.org/steevanb/php-typed-array/downloads)
 [![Scrutinizer](https://scrutinizer-ci.com/g/steevanb/php-typed-array/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/steevanb/php-typed-array/)

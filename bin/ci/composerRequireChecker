@@ -1,14 +1,14 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 set -eu
 
 if [ $(which docker || false) ]; then
-    readonly projectDir=$(realpath $(dirname $(realpath $0))/..)
+    readonly rootDir=$(realpath $(dirname $(realpath $0))/../..)
     docker run \
         -it \
         --rm \
-        -v ${projectDir}:/app:ro \
-        --entrypoint=bin/composerRequireChecker \
+        -v ${rootDir}:/app:ro \
+        --entrypoint=bin/ci/composerRequireChecker \
         steevanb/composer-require-checker:2.1.0
 else
     composer-require-checker --config-file=composerRequireChecker.json
