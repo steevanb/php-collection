@@ -31,10 +31,10 @@ Add bridge to your autoload into `composer.json`:
 ## Denormalize array into TypedArray with Symfony serializer
 
 ```php
-use ScalarArray\BoolArray;
+use ScalarArray\StringArray;
 
-// $array will be and instance of BoolArray with values: true, false
-$array = $serializer->denormalize([true, false], BoolArray::class);
+// $array will be and instance of StringArray with values: 'foo', 'bar'
+$array = $serializer->denormalize(['foo', 'bar'], StringArray::class);
 ```
 
 ## Create your own ObjectArrayDenormalizer

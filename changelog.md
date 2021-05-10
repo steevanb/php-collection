@@ -1,6 +1,7 @@
 ### [3.1.0](../../compare/3.0.1...3.1.0) - 2021-05-10
 
 - Allow PHP `^8.0` (it was already compatible)
+- [BC Break] Removed `steevanb\PhpTypedArray\ScalarArray\BoolArray`: do not work and will never work due to `\Iterator`
 
 ### [3.0.1](../../compare/3.0.0...3.0.1) - 2021-02-18
 
