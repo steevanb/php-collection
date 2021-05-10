@@ -1,6 +1,6 @@
 [![version](https://img.shields.io/badge/version-3.1.0-green.svg)](https://github.com/steevanb/php-typed-array/tree/3.1.0)
 [![php](https://img.shields.io/badge/php-^7.1||^8.0-blue.svg)](https://php.net)
-![Lines](https://img.shields.io/badge/code%20lines-3996-green.svg)
+![Lines](https://img.shields.io/badge/code%20lines-3835-green.svg)
 ![Total Downloads](https://poser.pugx.org/steevanb/php-typed-array/downloads)
 [![Scrutinizer](https://scrutinizer-ci.com/g/steevanb/php-typed-array/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/steevanb/php-typed-array/)
 
@@ -15,7 +15,7 @@ With `php-typed-array`, you can type your array values. How ? Cause now you will
 ## Installation
 
 ```
-composer require steevanb/php-typed-array ^3.0
+composer require steevanb/php-typed-array ^3.1
 ```
 
 ## Typed array available
@@ -49,12 +49,12 @@ function returnInts(): \IntArray
     return new \IntArray([1, 2, 3]); 
 }
 
-foreach (returnInts()->toArray() as $key => $int) {
+foreach (returnInts() as $key => $int) {
     // do your stuff, you are SURE $int is an integer !
 }
 ```
 
-Will throw an `\Exception`, cause `'foo'` is not allowed:
+This will throw an `\Exception`, cause `'foo'` is not allowed:
 ```php
 $intArray = new IntArray([1, 2, 'foo']);
 ```
@@ -70,7 +70,7 @@ $foo = (new IntArray())
     ->setValueAlreadyExistMode(IntArray::VALUE_ALREADY_EXIST_ADD)
     ->setValues([1, 2, 2]);
 
-// a steevanb\PhpTypedArray\Exception\ValueAlreadyExistException will be thrown
+// ValueAlreadyExistException will be thrown
 $foo = (new IntArray())
     // default behavior, code here is just for the example
     ->setValueAlreadyExistMode(IntArray::VALUE_ALREADY_EXIST_EXCEPTION)
@@ -105,9 +105,7 @@ class DateTimeArray extends ObjectArray
         parent::__construct($values, \DateTime::class);
     }
     
-    /**
-     * This method is not mandatory, but you can create it to typehint $typedArray and the return
-     */
+    /** This method is not mandatory, but you can create it to typehint $typedArray and the return */
     public function merge(self $typedArray): self
     {
         parent::doMerge($typedArray);

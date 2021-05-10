@@ -1,0 +1,10 @@
+/.circleci
+/bin
+/docker
+/tests
+/.gitattributes
+/.gitignore
+/.scrutinizer.yml
+/composerRequireChecker.json
+/phpcs.bootstrap.php
+/phpstan.neon
