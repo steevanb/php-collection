@@ -1,4 +1,8 @@
-### [3.0.1](../../compare/2.6.0...3.0.0) - 2021-02-18
+### [3.1.0](../../compare/3.0.1...3.1.0) - 2021-05-10
+
+- Allow PHP `^8.0` (it was already compatible)
+
+### [3.0.1](../../compare/3.0.0...3.0.1) - 2021-02-18
 
 - Fix `ObjectArrayDenormalizer::createObjectArray()`
 - Fix Symfony bridge tests

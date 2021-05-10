@@ -1,9 +1,0 @@
-#!/usr/bin/env sh
-
-set -eu
-
-readonly projectDir=$(realpath $(dirname $(realpath $0))/..)
-
-readonly SYMFONY_VERSION="5.2.3"
-readonly SYMFONY_VERSION_SHORT="52"
-. ${projectDir}/bin/phpunitBridgeSymfony.inc.sh

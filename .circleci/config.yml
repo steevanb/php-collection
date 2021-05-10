@@ -8,128 +8,140 @@ jobs:
         steps:
             - checkout
             - restore_cache:
-                key: vendor-{{ checksum "composer.json" }}
+                key: vendor-{{ checksum "composer.json" }}-3
             - run: composer update --ansi
             - save_cache:
-                key: vendor-{{ checksum "composer.json" }}
+                key: vendor-{{ checksum "composer.json" }}-3
                 paths:
                     - ./vendor
     phpcs:
         docker:
-            - image: steevanb/php-code-sniffs:4.0.3
+            - image: steevanb/php-code-sniffs:4.1.0
         working_directory: /app
         steps:
             - checkout
             - run:
                 name: phpcs
-                command: bin/phpcs
-    phpunit71:
+                command: bin/ci/phpcs
+    phpunitPhp71:
         docker:
             - image: php:7.1.33-cli-buster
         working_directory: /app
         steps:
             - checkout
             - restore_cache:
-                  key: vendor-{{ checksum "composer.json" }}
+                  key: vendor-{{ checksum "composer.json" }}-3
             - run:
                 name: phpunit
-                command: bin/phpunit71
+                command: bin/ci/phpunitPhp71
 
-    phpunit72:
+    phpunitPhp72:
         docker:
             - image: php:7.2.34-cli-buster
         working_directory: /app
         steps:
             - checkout
             - restore_cache:
-                  key: vendor-{{ checksum "composer.json" }}
+                  key: vendor-{{ checksum "composer.json" }}-3
             - run:
                   name: phpunit
-                  command: bin/phpunit72
+                  command: bin/ci/phpunitPhp72
 
-    phpunit73:
+    phpunitPhp73:
         docker:
-            - image: php:7.3.26-cli-buster
+            - image: php:7.3.28-cli-buster
         working_directory: /app
         steps:
             - checkout
             - restore_cache:
-                  key: vendor-{{ checksum "composer.json" }}
+                  key: vendor-{{ checksum "composer.json" }}-3
             - run:
                   name: phpunit
-                  command: bin/phpunit73
+                  command: bin/ci/phpunitPhp73
 
-    phpunit74:
+    phpunitPhp74:
         docker:
-            - image: php:7.4.13-cli-buster
+            - image: php:7.4.19-cli-buster
         working_directory: /app
         steps:
             - checkout
             - restore_cache:
-                  key: vendor-{{ checksum "composer.json" }}
+                  key: vendor-{{ checksum "composer.json" }}-3
             - run:
                   name: phpunit
-                  command: bin/phpunit74
+                  command: bin/ci/phpunitPhp74
+
+    phpunitPhp80:
+        docker:
+            - image: php:8.0.6-cli-buster
+        working_directory: /app
+        steps:
+            - checkout
+            - restore_cache:
+                  key: vendor-{{ checksum "composer.json" }}-3
+            - run:
+                  name: phpunit
+                  command: bin/ci/phpunitPhp80
 
     phpunitBridgeSymfony44:
         docker:
-            - image: steevanb/php-typed-array-ci:1.0.1
+            - image: steevanb/php-typed-array-ci:1.1.0
         working_directory: /app
         steps:
             - checkout
             - restore_cache:
-                  key: vendor-{{ checksum "composer.json" }}
+                  key: vendor-{{ checksum "composer.json" }}-3
             - run:
                   name: phpunitBridgeSymfony44
-                  command: bin/phpunitBridgeSymfony44
+                  command: bin/ci/phpunitBridgeSymfony44
 
     phpunitBridgeSymfony50:
         docker:
-            - image: steevanb/php-typed-array-ci:1.0.1
+            - image: steevanb/php-typed-array-ci:1.1.0
         working_directory: /app
         steps:
             - checkout
             - restore_cache:
-                  key: vendor-{{ checksum "composer.json" }}
+                  key: vendor-{{ checksum "composer.json" }}-3
             - run:
                   name: phpunitBridgeSymfony50
-                  command: bin/phpunitBridgeSymfony50
+                  command: bin/ci/phpunitBridgeSymfony50
 
     phpunitBridgeSymfony51:
         docker:
-            - image: steevanb/php-typed-array-ci:1.0.1
+            - image: steevanb/php-typed-array-ci:1.1.0
         working_directory: /app
         steps:
             - checkout
             - restore_cache:
-                  key: vendor-{{ checksum "composer.json" }}
+                  key: vendor-{{ checksum "composer.json" }}-3
             - run:
                   name: phpunitBridgeSymfony51
-                  command: bin/phpunitBridgeSymfony51
+                  command: bin/ci/phpunitBridgeSymfony51
 
     phpunitBridgeSymfony52:
         docker:
-            - image: steevanb/php-typed-array-ci:1.0.1
+            - image: steevanb/php-typed-array-ci:1.1.0
         working_directory: /app
         steps:
             - checkout
             - restore_cache:
-                  key: vendor-{{ checksum "composer.json" }}
+                  key: vendor-{{ checksum "composer.json" }}-3
             - run:
                   name: phpunitBridgeSymfony52
-                  command: bin/phpunitBridgeSymfony52
+                  command: bin/ci/phpunitBridgeSymfony52
 
     phpstan:
         docker:
-            - image: steevanb/php-typed-array-ci:1.0.1
+            - image: steevanb/php-typed-array-ci:1.1.0
         working_directory: /app
         steps:
             - checkout
             - restore_cache:
-                  key: vendor-{{ checksum "composer.json" }}
+                  key: vendor-{{ checksum "composer.json" }}-3
             - run:
                 name: phpstan
-                command: bin/phpstan
+                command: bin/ci/phpstan
 
     phpcf:
         docker:
@@ -138,10 +150,10 @@ jobs:
         steps:
             - checkout
             - restore_cache:
-                key: vendor-{{ checksum "composer.json" }}
+                key: vendor-{{ checksum "composer.json" }}-3
             - run:
                 name: phpcf
-                command: bin/phpcf
+                command: bin/ci/phpcf
 
     composerRequireChecker:
         docker:
@@ -150,10 +162,10 @@ jobs:
         steps:
             - checkout
             - restore_cache:
-                key: vendor-{{ checksum "composer.json" }}
+                key: vendor-{{ checksum "composer.json" }}-3
             - run:
                 name: composerRequireChecker
-                command: bin/composerRequireChecker
+                command: bin/ci/composerRequireChecker
 
 workflows:
     CI:
@@ -167,18 +179,21 @@ workflows:
             - phpstan:
                 requires:
                     - composer
-            - phpunit71:
+            - phpunitPhp71:
                 requires:
                     - composer
-            - phpunit72:
+            - phpunitPhp72:
                 requires:
                     - composer
-            - phpunit73:
+            - phpunitPhp73:
                 requires:
                     - composer
-            - phpunit74:
+            - phpunitPhp74:
                 requires:
                     - composer
+            - phpunitPhp80:
+                  requires:
+                      - composer
             - phpunitBridgeSymfony44:
                 requires:
                     - composer

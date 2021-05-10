@@ -3,15 +3,15 @@
 set -eu
 
 if [ $(which docker || false) ]; then
-    readonly projectDir=$(realpath $(dirname $(realpath $0))/..)
+    readonly rootDir=$(realpath $(dirname $(realpath $0))/../..)
     docker \
         run \
             --rm \
             -it\
-            -v ${projectDir}:/app:ro \
+            -v ${rootDir}:/app:ro \
             -w /app \
-            steevanb/php-typed-array-ci:1.0.1 \
-            bin/phpstan
+            steevanb/php-typed-array-ci:1.1.0 \
+            bin/ci/phpstan
 else
     phpstan analyse --ansi -c phpstan.neon
 fi

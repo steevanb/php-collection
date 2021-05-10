@@ -17,9 +17,10 @@ if [ $(which docker || false) ]; then
         run \
             --rm \
             -it \
+            -v ${rootDir}:/app \
             -w /app \
-            steevanb/php-typed-array-ci:1.0.1 \
-            "bin/phpunitBridgeSymfony${SYMFONY_VERSION_SHORT}" \
+            steevanb/php-typed-array-ci:1.1.0 \
+            "bin/ci/phpunitBridgeSymfony${SYMFONY_VERSION_SHORT}" \
             "${@}"
 else
     composer require --dev --ansi "symfony/serializer:${SYMFONY_VERSION}"

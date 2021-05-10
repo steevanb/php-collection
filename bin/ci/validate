@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+set -eu
+
+readonly rootDir=$(realpath $(dirname $(realpath $0))/../..)
+
+${rootDir}/bin/ci/composerRequireChecker
+${rootDir}/bin/ci/phpcf
+${rootDir}/bin/ci/phpcs
+${rootDir}/bin/ci/phpstan
+${rootDir}/bin/ci/phpunitPhp
+${rootDir}/bin/ci/phpunitBridgeSymfony
