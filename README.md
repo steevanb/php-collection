@@ -1,4 +1,4 @@
-[![version](https://img.shields.io/badge/version-3.1.1-green.svg)](https://github.com/steevanb/php-typed-array/tree/3.1.1)
+[![version](https://img.shields.io/badge/version-3.2.0-green.svg)](https://github.com/steevanb/php-typed-array/tree/3.2.0)
 [![php](https://img.shields.io/badge/php-^7.1||^8.0-blue.svg)](https://php.net)
 ![Lines](https://img.shields.io/badge/code%20lines-3835-green.svg)
 ![Total Downloads](https://poser.pugx.org/steevanb/php-typed-array/downloads)
@@ -15,7 +15,7 @@ With `php-typed-array`, you can type your array values. How ? Cause now you will
 ## Installation
 
 ```
-composer require steevanb/php-typed-array ^3.1
+composer require steevanb/php-typed-array ^3.2
 ```
 
 ## Typed array available
@@ -64,26 +64,66 @@ $intArray = new IntArray([1, 2, 'foo']);
 If you want to be sure a value is unique inside your TypedArray, you have to configure `valueAlreadyExistMode`:
 
 ```php
-// $foo will contain [1, 2, ]
-$foo = (new IntArray())
-    // default behavior, code here is just for the example
+// IntArray will contain [1, 2, 2]
+(new IntArray())
+    // Default behavior, code here is just for the example
     ->setValueAlreadyExistMode(IntArray::VALUE_ALREADY_EXIST_ADD)
     ->setValues([1, 2, 2]);
 
-// ValueAlreadyExistException will be thrown
-$foo = (new IntArray())
-    // default behavior, code here is just for the example
-    ->setValueAlreadyExistMode(IntArray::VALUE_ALREADY_EXIST_EXCEPTION)
+// IntArray will contain [1, 2]
+(new IntArray())
+    ->setValueAlreadyExistMode(IntArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
     ->setValues([1, 2, 2]);
 
-// $foo will contain [1, 2]
-$foo = (new IntArray())
-    // default behavior, code here is just for the example
-    ->setValueAlreadyExistMode(IntArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
+// ValueAlreadyExistException will be throwned
+(new IntArray())
+    ->setValueAlreadyExistMode(IntArray::VALUE_ALREADY_EXIST_EXCEPTION)
     ->setValues([1, 2, 2]);
 ```
 
 /!\ Calling `setValueAlreadyExistMode()` will NOT apply new mode to data already defined. It will only be applied on new values. 
+
+### Behavior when adding null
+
+You can configure the behavior when `null` value is added:
+
+```php
+// IntArray will contain [1, 2, null]
+(new IntArray())
+    // default behavior, code here is just for the example
+    ->setValueAlreadyExistMode(IntArray::NULL_VALUE_ALLOW)
+    ->setValues([1, 2, null]);
+
+// IntArray will contain [1, 2]
+(new IntArray())
+    ->setValueAlreadyExistMode(IntArray::NULL_VALUE_DO_NOT_ADD)
+    ->setValues([1, 2, null]);
+
+// NullValueException will be throwned
+(new IntArray())
+    ->setValueAlreadyExistMode(IntArray::NULL_VALUE_EXCEPTION)
+    ->setValues([1, 2, null]);
+```
+
+### Read only
+
+Sometimes when you add values in your TypedArray, once you have finished you don't want this object to be modified.
+
+You can have this behavior with read only:
+
+```php
+$foo = new IntArray([1, 2]);
+// By default you can add values after object creation
+$foo[] = 3;
+// Now set read only
+$foo->setReadOnly(); // you don't need to define first parameter to true: it's default value
+// ReadOnlyException will be throwned
+$foo[] = 4;
+
+// You can disable readonly
+$foo->setReadOnly(false);
+$foo[] = 3;
+```
 
 ### ObjectArray
 
