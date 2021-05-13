@@ -1,3 +1,8 @@
+### [3.2.0](../../compare/3.1.1...3.2.0) - 2021-05-13
+
+- Add `ReadOnlyInterface`
+- Add `AbstractTypedArray::setReadOnly()` and `AbstractTypedArray::isReadOnly()`
+
 ### [3.1.1](../../compare/3.1.0...3.1.1) - 2021-05-10
 
 - Fix `.gitattributes`

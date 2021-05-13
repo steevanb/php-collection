@@ -6,11 +6,12 @@ namespace steevanb\PhpTypedArray;
 
 use steevanb\PhpTypedArray\{
     Exception\KeyNotFoundException,
+    Exception\ReadOnlyException,
     Exception\ValueAlreadyExistException,
     Exception\NullValueException
 };
 
-abstract class AbstractTypedArray implements TypedArrayInterface
+abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterface
 {
     public const NULL_VALUE_ALLOW = 1;
     public const NULL_VALUE_DO_NOT_ADD = 2;
@@ -35,6 +36,9 @@ abstract class AbstractTypedArray implements TypedArrayInterface
     /** @var int */
     protected $nullValueMode = self::NULL_VALUE_ALLOW;
 
+    /** @var bool */
+    protected $readOnly = false;
+
     /** @param iterable<mixed> $values */
     public function __construct(iterable $values = [])
     {
@@ -47,6 +51,8 @@ abstract class AbstractTypedArray implements TypedArrayInterface
      */
     public function setValues(iterable $values): TypedArrayInterface
     {
+        $this->assertIsNotReadOnly();
+
         $this->values = [];
         $this->nextIntKey = 0;
         foreach ($values as $key => $value) {
@@ -99,6 +105,8 @@ abstract class AbstractTypedArray implements TypedArrayInterface
      */
     public function offsetSet($offset, $value): void
     {
+        $this->assertIsNotReadOnly();
+
         if (is_null($offset)) {
             $offset = $this->nextIntKey;
             $offsetWasNull = true;
@@ -133,6 +141,8 @@ abstract class AbstractTypedArray implements TypedArrayInterface
     /** @param mixed $offset */
     public function offsetUnset($offset): void
     {
+        $this->assertIsNotReadOnly();
+
         if ($this->offsetExists($offset)) {
             unset($this->values[$offset]);
         }
@@ -141,6 +151,8 @@ abstract class AbstractTypedArray implements TypedArrayInterface
     /** @return $this */
     public function resetKeys(): TypedArrayInterface
     {
+        $this->assertIsNotReadOnly();
+
         $this->values = array_values($this->values);
         $this->nextIntKey = count($this->values);
 
@@ -150,6 +162,19 @@ abstract class AbstractTypedArray implements TypedArrayInterface
     public function count(): int
     {
         return count($this->values);
+    }
+
+    /** @return $this */
+    public function setReadOnly(bool $readOnly = true): ReadOnlyInterface
+    {
+        $this->readOnly = $readOnly;
+
+        return $this;
+    }
+
+    public function isReadOnly(): bool
+    {
+        return $this->readOnly;
     }
 
     /** @return array<mixed> */
@@ -182,6 +207,15 @@ abstract class AbstractTypedArray implements TypedArrayInterface
     public function getNullValueMode(): int
     {
         return $this->nullValueMode;
+    }
+
+    protected function assertIsNotReadOnly(): self
+    {
+        if ($this->isReadOnly()) {
+            throw new ReadOnlyException();
+        }
+
+        return $this;
     }
 
     protected function doMerge(AbstractTypedArray $typedArray): self
