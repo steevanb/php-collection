@@ -3,7 +3,7 @@ version: '2.1'
 jobs:
     composer:
         docker:
-            - image: composer:1.10.20
+            - image: composer:1.10.22
         working_directory: /app
         steps:
             - checkout
@@ -131,6 +131,18 @@ jobs:
                   name: phpunitBridgeSymfony52
                   command: bin/ci/phpunitBridgeSymfony52
 
+    phpunitBridgeSymfony53:
+        docker:
+            - image: steevanb/php-typed-array-ci:1.1.0
+        working_directory: /app
+        steps:
+            - checkout
+            - restore_cache:
+                  key: vendor-{{ checksum "composer.json" }}-3
+            - run:
+                  name: phpunitBridgeSymfony53
+                  command: bin/ci/phpunitBridgeSymfony53
+
     phpstan:
         docker:
             - image: steevanb/php-typed-array-ci:1.1.0
@@ -206,3 +218,6 @@ workflows:
             - phpunitBridgeSymfony52:
                 requires:
                     - composer
+            - phpunitBridgeSymfony53:
+                  requires:
+                      - composer

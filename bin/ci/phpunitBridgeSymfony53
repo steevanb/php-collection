@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+set -eu
+
+readonly rootDir=$(realpath $(dirname $(realpath $0))/../..)
+
+readonly SYMFONY_VERSION="5.3.*"
+readonly SYMFONY_VERSION_SHORT="53"
+. ${rootDir}/bin/ci/phpunitBridgeSymfony.inc.sh
