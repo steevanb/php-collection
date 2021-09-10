@@ -166,6 +166,12 @@ class DateTimeArray extends ObjectArray
 }
 ```
 
+## Methods to modify data
+
+| Method | Description |
+| -- | -- |
+| `clear()` | Clear all data and reset next key to `0`. Next data added with `$array[]` will have key `0`. |
+
 ## Limitations
 
 PHP as some issues or limitations with their own implementation of `\ArrayAccess`, `iterable` etc.

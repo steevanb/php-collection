@@ -1,3 +1,7 @@
+### master
+
+- Add `AbstractTypedArray::reset()`
+
 ### [3.2.0](../../compare/3.1.1...3.2.0) - 2021-05-13
 
 - Add `ReadOnlyInterface`
