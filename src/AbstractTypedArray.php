@@ -218,6 +218,18 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
         return $this;
     }
 
+    public function changeKeyCase(int $case = CASE_LOWER): self
+    {
+        $this->assertIsNotReadOnly();
+        $newValues = array_change_key_case($this->toArray(), $case);
+        $this->clear();
+        foreach ($newValues as $key => $value) {
+            $this->offsetSet($key, $value);
+        }
+
+        return $this;
+    }
+
     protected function assertIsNotReadOnly(): self
     {
         if ($this->isReadOnly()) {

@@ -19,3 +19,6 @@ ${rootDir}/bin/ci/phpunitBridgeSymfony51
 
 title "Symfony 5.2"
 ${rootDir}/bin/ci/phpunitBridgeSymfony52
+
+title "Symfony 5.3"
+${rootDir}/bin/ci/phpunitBridgeSymfony53

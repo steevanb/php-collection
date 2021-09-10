@@ -166,11 +166,15 @@ class DateTimeArray extends ObjectArray
 }
 ```
 
-## Methods to modify data
+## Methods to modify keys and values
 
-| Method | Description |
-| -- | -- |
-| `clear()` | Clear all data and reset next key to `0`. Next data added with `$array[]` will have key `0`. |
+All methods below will directly apply modifications, 
+it will not return a new TypedArray with modifications applied like some PHP functions do.
+
+| Method | Version | PHP associated function | Description |
+| --- | --- | --- | --- |
+| `clear()` | ^3.3 | _none_ | Clear all data and reset next key to `0`. Next data added with `$array[]` will have key `0`. |
+| `changeKeyCase()` | ^3.3 | [array_change_key_case()](https://www.php.net/manual/fr/function.array-change-key-case.php) | Changes the case of all keys |
 
 ## Limitations
 
