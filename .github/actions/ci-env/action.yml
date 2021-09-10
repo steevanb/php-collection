@@ -1,0 +1,15 @@
+name: ci-env
+description: Load CI env
+runs:
+    using: composite
+    steps:
+        -
+            name: Composer cache
+            uses: actions/cache@v2
+            with:
+                path: vendor
+                key: composer-${{ hashFiles('composer.json') }}
+                restore-keys: composer-${{ hashFiles('composer.json') }}
+        -
+            shell: bash
+            run: bin/ci/env

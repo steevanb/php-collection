@@ -15,7 +15,7 @@ final class AbstractTypedArrayTest extends TestCase
         static::assertSame([0, 1, 2, 'foo'], array_keys($array->toArray()));
         static::assertSame(1, $array[0]);
         static::assertSame('2', $array[1]);
-        static::assertSame(null, $array[2]);
+        static::assertNull($array[2]);
         static::assertSame('foo', $array['foo']);
 
         $array->resetKeys();
@@ -23,7 +23,7 @@ final class AbstractTypedArrayTest extends TestCase
         static::assertSame([0, 1, 2, 3], array_keys($array->toArray()));
         static::assertSame(1, $array[0]);
         static::assertSame('2', $array[1]);
-        static::assertSame(null, $array[2]);
+        static::assertNull($array[2]);
         static::assertSame('foo', $array[3]);
     }
 

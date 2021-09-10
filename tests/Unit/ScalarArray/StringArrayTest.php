@@ -27,7 +27,7 @@ final class StringArrayTest extends TestCase
         static::assertSame('4', $array[3]);
         static::assertSame('1', $array[4]);
         static::assertSame('', $array[5]);
-        static::assertSame(null, $array[6]);
+        static::assertNull($array[6]);
     }
 
     public function testAllowString(): void
@@ -43,7 +43,7 @@ final class StringArrayTest extends TestCase
         $array = new StringArray([null]);
 
         static::assertCount(1, $array);
-        static::assertSame(null, $array[0]);
+        static::assertNull($array[0]);
     }
 
     public function testNullValueModeDoNotAdd(): void

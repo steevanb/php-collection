@@ -1,0 +1,11 @@
+parameters:
+    level: 8
+    tmpDir: ../../var/ci/phpstan
+    paths:
+        - ../../src
+        - ../../tests
+    checkGenericClassInNonGenericObjectType: false
+includes:
+    - /composer/common/vendor/phpstan/phpstan-deprecation-rules/rules.neon
+    - /composer/common/vendor/phpstan/phpstan-phpunit/rules.neon
+    - /composer/common/vendor/phpstan/phpstan-strict-rules/rules.neon

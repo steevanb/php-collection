@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+set -eu
+
+readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/../..")"
+. "${ROOT_DIR}"/bin/common.inc.sh
+. "${ROOT_DIR}"/bin/dockerise.inc.sh
+
+phpVersion=
+symfonyVersion=
+phpunitParameters=
+for arg in "${@}"; do
+    if [ "${arg:0:6}" == "--php=" ]; then
+        phpVersion="${arg:6}"
+    elif [ "${arg:0:10}" == "--symfony=" ]; then
+        symfonyVersion="${arg:10}"
+    else
+        phpunitParameters="${phpunitParameters} ${arg}"
+    fi
+done
+
+if [ "${phpVersion}" == "" ] || [ "${symfonyVersion}" == "" ]; then
+    php8.0 "${ROOT_DIR}"/bin/ci/phpunit.php "${@}"
+else
+    echo "PHP ${phpVersion} - Symfony ${symfonyVersion}"
+
+    readonly composerHomeVarName="COMPOSER_HOME_SYMFONY_${symfonyVersion/./_}"
+
+    "php${phpVersion}" \
+        vendor/bin/phpunit \
+            --configuration config/ci/phpunit.php-${phpVersion}.xml \
+            --bootstrap ${!composerHomeVarName}/vendor/autoload.php \
+            ${phpunitParameters}
+fi

@@ -68,8 +68,8 @@ final class ScalarArrayTest extends TestCase
         $array = (new ScalarArray([true, false]));
 
         static::assertCount(2, $array);
-        static::assertSame(true, $array[0]);
-        static::assertSame(false, $array[1]);
+        static::assertTrue($array[0]);
+        static::assertFalse($array[1]);
     }
 
     public function testDisallowBool(): void
@@ -85,7 +85,7 @@ final class ScalarArrayTest extends TestCase
         $array = new ScalarArray([null]);
 
         static::assertCount(1, $array);
-        static::assertSame(null, $array[0]);
+        static::assertNull($array[0]);
     }
 
     public function testNullValueModeDoNotAdd(): void
@@ -117,16 +117,16 @@ final class ScalarArrayTest extends TestCase
         static::assertSame(2.0, $array[1]);
         static::assertSame(3.1, $array[2]);
         static::assertSame('4', $array[3]);
-        static::assertSame(true, $array[4]);
-        static::assertSame(false, $array[5]);
-        static::assertSame(null, $array[6]);
+        static::assertTrue($array[4]);
+        static::assertFalse($array[5]);
+        static::assertNull($array[6]);
         static::assertSame(1, $array[7]);
         static::assertSame(2.0, $array[8]);
         static::assertSame(3.1, $array[9]);
         static::assertSame('4', $array[10]);
-        static::assertSame(true, $array[11]);
-        static::assertSame(false, $array[12]);
-        static::assertSame(null, $array[13]);
+        static::assertTrue($array[11]);
+        static::assertFalse($array[12]);
+        static::assertNull($array[13]);
     }
 
     public function testMergeValueAlreadyExistsDoNotAdd(): void

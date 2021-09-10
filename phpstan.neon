@@ -1,9 +1,0 @@
-parameters:
-    level: 8
-    paths:
-        - src
-        - tests
-    checkGenericClassInNonGenericObjectType: false
-includes:
-    - /root/.composer/vendor/phpstan/phpstan-deprecation-rules/rules.neon
-    - /root/.composer/vendor/phpstan/phpstan-strict-rules/rules.neon

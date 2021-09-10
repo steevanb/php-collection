@@ -2,23 +2,22 @@
 
 set -eu
 
-readonly rootDir=$(realpath $(dirname $(realpath $0))/../..)
-readonly dockerImageTag="steevanb/php-typed-array-ci:1.1.0"
+readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/../..")"
+. "${ROOT_DIR}"/bin/common.inc.sh
 
-cd "${rootDir}"
 docker \
     build \
-        -t ${dockerImageTag} \
-        -f docker/Dockerfile \
-        .
+        --tag "${CI_DOCKER_IMAGE_NAME}" \
+        --file "${ROOT_DIR}"/docker/Dockerfile \
+        "${ROOT_DIR}"
 
 push=false
-for param in "$@"; do
+for param in "${@}"; do
     if [ "${param}" == "--push" ]; then
         push=true
     fi
 done
 
-if [ ${push} == true ]; then
-    docker push ${dockerImageTag}
+if [ "${push}" == true ]; then
+    docker push "${CI_DOCKER_IMAGE_NAME}"
 fi

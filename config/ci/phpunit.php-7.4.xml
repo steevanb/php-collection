@@ -1,0 +1,15 @@
+<phpunit
+    cacheResultFile="../../var/ci/phpunit/.phpunit.result.cache"
+    colors="true"
+>
+    <testsuites>
+        <testsuite name="default">
+            <directory>../../tests</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory>../../src</directory>
+        </whitelist>
+    </filter>
+</phpunit>

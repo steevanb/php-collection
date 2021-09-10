@@ -2,18 +2,21 @@
 
 set -eu
 
-if [ $(which docker || false) ]; then
-    readonly rootDir=$(realpath $(dirname $(realpath $0))/../..)
-    docker \
-        run \
-            --rm \
-            -it \
-            -v ${rootDir}:/app:ro \
-            --entrypoint /app/bin/ci/phpcs \
-            steevanb/php-code-sniffs:4.2.0
-else
-    PHPCS_PARAMETERS="-p --warning-severity=0 --ignore=/vendor/"
-    PHPCS_BOOTSTRAP="/app/phpcs.bootstrap.php"
+readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/../..")"
+. "${ROOT_DIR}"/bin/common.inc.sh
+. "${ROOT_DIR}"/bin/dockerise.inc.sh
 
-    /var/php-code-sniffs/docker/entrypoint.sh
+if [ ! -d "${ROOT_DIR}"/var/ci/phpcs ]; then
+    mkdir -p "${ROOT_DIR}"/var/ci/phpcs
 fi
+
+phpcs \
+    -p \
+    --warning-severity=0 \
+    --ignore=/vendor/,/var/ \
+    --bootstrap=config/ci/phpcs.php \
+    --standard="${COMPOSER_HOME}"/vendor/steevanb/php-code-sniffs/src/Steevanb/ruleset.xml \
+    --report=steevanb\\PhpCodeSniffs\\Reports\\Steevanb \
+    --cache="${ROOT_DIR}"/var/ci/phpcs/cache \
+    . \
+    "${@}"

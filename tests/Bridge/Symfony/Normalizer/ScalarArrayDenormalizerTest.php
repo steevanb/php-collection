@@ -24,7 +24,7 @@ final class ScalarArrayDenormalizerTest extends TestCase
         static::assertSame(2.0, $array[1]);
         static::assertSame(3.1, $array[2]);
         static::assertSame('4', $array[3]);
-        static::assertSame(true, $array[4]);
-        static::assertSame(false, $array[5]);
+        static::assertTrue($array[4]);
+        static::assertFalse($array[5]);
     }
 }

@@ -11,7 +11,7 @@ final class ReadOnlyTest extends TestCase
 {
     public function testDefaultReadOnlyValue(): void
     {
-        static::assertSame(false, (new TypedArray())->isReadOnly());
+        static::assertFalse((new TypedArray())->isReadOnly());
     }
 
     public function testSetValues(): void
