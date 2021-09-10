@@ -27,7 +27,7 @@ final class FloatArrayTest extends TestCase
         static::assertSame(4.0, $array[3]);
         static::assertSame(1.0, $array[4]);
         static::assertSame(0.0, $array[5]);
-        static::assertSame(null, $array[6]);
+        static::assertNull($array[6]);
     }
 
     public function testAllowFloat(): void
@@ -43,7 +43,7 @@ final class FloatArrayTest extends TestCase
         $array = new FloatArray([null]);
 
         static::assertCount(1, $array);
-        static::assertSame(null, $array[0]);
+        static::assertNull($array[0]);
     }
 
     public function testNullValueModeDoNotAdd(): void

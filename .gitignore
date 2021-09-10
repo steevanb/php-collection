@@ -1,2 +1,4 @@
+/var/
+!/var/.gitkeep
 /vendor/
 /composer.lock

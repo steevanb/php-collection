@@ -16,7 +16,7 @@ final class NullValueTest extends TestCase
         static::assertCount(3, $array);
         static::assertSame(1, $array[0]);
         static::assertSame(2, $array[1]);
-        static::assertSame(null, $array[2]);
+        static::assertNull($array[2]);
     }
 
     public function testNullValueDoNotAdd(): void

@@ -13,10 +13,10 @@ final class ArrayAccessTest extends TestCase
     {
         $array = new TypedArray([1, '2', null]);
 
-        static::assertSame(true, $array->offsetExists(0));
-        static::assertSame(true, $array->offsetExists(1));
-        static::assertSame(true, $array->offsetExists(2));
-        static::assertSame(false, $array->offsetExists(3));
+        static::assertTrue($array->offsetExists(0));
+        static::assertTrue($array->offsetExists(1));
+        static::assertTrue($array->offsetExists(2));
+        static::assertFalse($array->offsetExists(3));
     }
 
     public function testOffsetGet(): void
@@ -25,10 +25,10 @@ final class ArrayAccessTest extends TestCase
 
         static::assertSame(1, $array->offsetGet(0));
         static::assertSame('2', $array->offsetGet(1));
-        static::assertSame(null, $array->offsetGet(2));
+        static::assertNull($array->offsetGet(2));
 
         static::expectException(KeyNotFoundException::class);
-        static::assertSame(false, $array->offsetGet(3));
+        static::assertFalse($array->offsetGet(3));
     }
 
     public function testOffsetSet(): void
@@ -40,7 +40,7 @@ final class ArrayAccessTest extends TestCase
 
         static::assertSame(1, $array[0]);
         static::assertSame('2', $array[1]);
-        static::assertSame(null, $array[2]);
+        static::assertNull($array[2]);
     }
 
     public function testOffsetUnset(): void
@@ -53,8 +53,8 @@ final class ArrayAccessTest extends TestCase
 
         static::assertCount(2, $array);
         static::assertSame(1, $array[0]);
-        static::assertSame(null, $array[2]);
+        static::assertNull($array[2]);
         static::expectException(KeyNotFoundException::class);
-        static::assertSame(false, $array[1]);
+        static::assertFalse($array[1]);
     }
 }

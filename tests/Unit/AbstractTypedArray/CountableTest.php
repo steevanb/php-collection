@@ -10,8 +10,6 @@ final class CountableTest extends TestCase
 {
     public function testCount(): void
     {
-        $array = new TypedArray([1, '2', null]);
-
-        static::assertSame(3, $array->count());
+        static::assertCount(3, new TypedArray([1, '2', null]));
     }
 }

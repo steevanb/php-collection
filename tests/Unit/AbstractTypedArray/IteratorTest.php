@@ -33,7 +33,7 @@ final class IteratorTest extends TestCase
             static::assertSame($i, $array->key());
             $array->next();
         }
-        static::assertSame(null, $array->key());
+        static::assertNull($array->key());
     }
 
     public function testValid(): void
@@ -42,10 +42,10 @@ final class IteratorTest extends TestCase
 
         $countValues = count($array);
         for ($i = 0; $i < $countValues; $i++) {
-            static::assertSame(true, $array->valid());
+            static::assertTrue($array->valid());
             $array->next();
         }
-        static::assertSame(false, $array->valid());
+        static::assertFalse($array->valid());
     }
 
     public function testRewind(): void

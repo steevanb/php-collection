@@ -6,7 +6,4 @@ readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/../..")"
 . "${ROOT_DIR}"/bin/common.inc.sh
 . "${ROOT_DIR}"/bin/dockerise.inc.sh
 
-phpstan \
-    analyse \
-        --ansi \
-        --configuration config/ci/phpstan.neon
+composer validate --ansi --strict
