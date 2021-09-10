@@ -16,7 +16,7 @@ jobs:
                     - ./vendor
     phpcs:
         docker:
-            - image: steevanb/php-code-sniffs:4.1.0
+            - image: steevanb/php-code-sniffs:4.2.0
         working_directory: /app
         steps:
             - checkout
@@ -25,7 +25,7 @@ jobs:
                 command: bin/ci/phpcs
     phpunitPhp71:
         docker:
-            - image: php:7.1.33-cli-buster
+            - image: php:7.1.33-cli-alpine3.10
         working_directory: /app
         steps:
             - checkout
@@ -37,7 +37,7 @@ jobs:
 
     phpunitPhp72:
         docker:
-            - image: php:7.2.34-cli-buster
+            - image: php:7.2.34-cli-alpine3.12
         working_directory: /app
         steps:
             - checkout
@@ -49,7 +49,7 @@ jobs:
 
     phpunitPhp73:
         docker:
-            - image: php:7.3.28-cli-buster
+            - image: php:7.3.30-cli-alpine3.14
         working_directory: /app
         steps:
             - checkout
@@ -61,7 +61,7 @@ jobs:
 
     phpunitPhp74:
         docker:
-            - image: php:7.4.19-cli-buster
+            - image: php:7.4.23-cli-alpine3.14
         working_directory: /app
         steps:
             - checkout
@@ -73,7 +73,7 @@ jobs:
 
     phpunitPhp80:
         docker:
-            - image: php:8.0.6-cli-buster
+            - image: php:8.0.10-cli-alpine3.14
         working_directory: /app
         steps:
             - checkout
@@ -169,7 +169,7 @@ jobs:
 
     composerRequireChecker:
         docker:
-            - image: steevanb/composer-require-checker:2.1.0
+            - image: steevanb/composer-require-checker:3.2.0
         working_directory: /app
         steps:
             - checkout

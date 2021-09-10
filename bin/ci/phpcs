@@ -10,7 +10,7 @@ if [ $(which docker || false) ]; then
             -it \
             -v ${rootDir}:/app:ro \
             --entrypoint /app/bin/ci/phpcs \
-            steevanb/php-code-sniffs:4.1.0
+            steevanb/php-code-sniffs:4.2.0
 else
     PHPCS_PARAMETERS="-p --warning-severity=0 --ignore=/vendor/"
     PHPCS_BOOTSTRAP="/app/phpcs.bootstrap.php"
