@@ -209,6 +209,15 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
         return $this->nullValueMode;
     }
 
+    public function clear(): self
+    {
+        $this->assertIsNotReadOnly();
+        $this->values = [];
+        $this->nextIntKey = 0;
+
+        return $this;
+    }
+
     protected function assertIsNotReadOnly(): self
     {
         if ($this->isReadOnly()) {

@@ -8,4 +8,8 @@ use steevanb\PhpTypedArray\AbstractTypedArray;
 
 final class TypedArray extends AbstractTypedArray
 {
+    public function getNextIntKey(): int
+    {
+        return $this->nextIntKey;
+    }
 }
