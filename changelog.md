@@ -1,6 +1,7 @@
 ### master
 
 - Add `AbstractTypedArray::reset()`
+- Add `AbstractTypedArray::changeKeyCase()`
 
 ### [3.2.0](../../compare/3.1.1...3.2.0) - 2021-05-13
 
