@@ -9,7 +9,7 @@ if [ $(which docker || false) ]; then
         --rm \
         -v ${rootDir}:/app:ro \
         --entrypoint=bin/ci/composerRequireChecker \
-        steevanb/composer-require-checker:2.1.0
+        steevanb/composer-require-checker:3.2.0
 else
     composer-require-checker --config-file=composerRequireChecker.json
 fi

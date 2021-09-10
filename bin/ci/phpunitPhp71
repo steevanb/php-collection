@@ -9,7 +9,7 @@ if [ $(which docker || false) ]; then
             --rm \
             -v ${rootDir}:/app:ro \
             -w /app \
-            php:7.1.33-cli-buster \
+            php:7.1.33-cli-alpine3.10 \
             bin/ci/phpunitPhp71 \
             "${@}"
 else

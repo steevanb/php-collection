@@ -1,10 +1,9 @@
-FROM php:7.4.20-cli-buster
+FROM php:7.4.23-cli-alpine3.14
 
-COPY --from=composer:1.10.22 /usr/bin/composer /usr/local/bin/composer
+COPY --from=composer:2.1.6 /usr/bin/composer /usr/local/bin/composer
 
 RUN \
-    apt-get update \
-    && apt-get install -y libzip-dev zip \
+    apk add libzip-dev zip \
     && docker-php-ext-install zip \
     # Install CI tools
     && composer global require \
