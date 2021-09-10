@@ -10,9 +10,12 @@ readonly binaries=(
     bin/ci/composer-require-checker
     bin/ci/composer-validate
     bin/ci/docker
+    bin/ci/env
     bin/ci/phpcs
     bin/ci/phpdd
     bin/ci/phpstan
+    bin/ci/phpunit
+    bin/ci/phpunit-coverage
     bin/ci/shellcheck
     bin/ci/unused-scanner
     bin/ci/validate
