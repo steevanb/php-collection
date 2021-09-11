@@ -27,13 +27,19 @@ function initLog() {
     fi
 }
 
-function editReadme() {
+function updateReleaseBadge() {
     trap onError ERR
 
-    echo "Edit README.md"
+    echo "Edit release badge in README.md"
 
     local releaseBadge="[![Version](https:\/\/img.shields.io\/badge\/version-${version}-blueviolet.svg)](https:\/\/github.com\/steevanb\/php-typed-array\/tree\/${version})"
     sed -i "1s/.*/${releaseBadge}/" "${rootDir}"/README.md
+}
+
+function updateCodeLinesBadge() {
+    trap onError ERR
+
+    echo "Edit code lines badge in README.md"
 
     local codeLines=
     codeLines=$("${rootDir}"/bin/release/code-lines)
@@ -41,23 +47,37 @@ function editReadme() {
     sed -i "3s/.*/${codeLinesBadge}/" "${rootDir}"/README.md
 }
 
-function editCoverage() {
-    echo "Calculate coverage"
+function updateCoverageBadge() {
+    trap onError ERR
 
+    echo "Calculate coverage"
     local coveragePercent=
     coveragePercent="$(${rootDir}/bin/release/phpunit-coverage)"
     echo "Coverage: ${coveragePercent}%"
 
+    echo "Edit coverage in README.md"
     local badge="![Coverage](https:\/\/img.shields.io\/badge\/coverage-${coveragePercent}%25-success.svg)"
     sed -i "6s/.*/${badge}/" "${rootDir}"/README.md
 }
 
-function editChangelog() {
+function updateComposerRequire() {
+    trap onError ERR
+
+    echo "Edit composer require in README.md"
+    local majorMinor=${version%.*}
+    sed -i "s/composer require steevanb\/php-typed-array ^[[:digit:]]\+.[[:digit:]]\+/composer require steevanb\/php-typed-array ^${majorMinor}/" README.md
+}
+
+function updateChangelog() {
+    trap onError ERR
+
     echo "Edit changelog"
     "${rootDir}"/bin/release/changelog "${version}"
 }
 
 initLog
-editReadme
-editCoverage
-editChangelog
+updateReleaseBadge
+updateCodeLinesBadge
+updateCoverageBadge
+updateComposerRequire
+updateChangelog
