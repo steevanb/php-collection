@@ -1,5 +1,7 @@
 ### master
 
+### [3.3.0](../../compare/3.2.0...3.3.0) - 2021-09-11
+
 - Add `AbstractTypedArray::reset()`
 - Add `AbstractTypedArray::changeKeyCase()`
 - CI moved from CircleCI to GitHub Actions
