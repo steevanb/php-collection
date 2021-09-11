@@ -52,6 +52,12 @@ function editCoverage() {
     sed -i "6s/.*/${badge}/" "${rootDir}"/README.md
 }
 
+function editChangelog() {
+    echo "Edit changelog"
+    "${rootDir}"/bin/release/changelog "${version}"
+}
+
 initLog
 editReadme
 editCoverage
+editChangelog
