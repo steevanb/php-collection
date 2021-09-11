@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+set -eu
+
+readonly rootDir="$(realpath "$(dirname "$(realpath "$0")")/../..")"
+readonly version="${1}"
+readonly logFilePath="${rootDir}/var/release"
+readonly logFilename="${logFilePath}/prepare.log"
+
+function onError() {
+    if [ -f "${logFilename}" ]; then
+        cat "${logFilename}"
+    fi
+
+    echo -e "\e[41m Error. \e[0m"
+}
+
+trap onError ERR
+
+function initLog() {
+    if [ ! -d "${logFilePath}" ]; then
+        mkdir -p "${logFilePath}"
+    fi
+
+    if [ -f "${logFilename}" ]; then
+        rm "${logFilename}"
+    fi
+}
+
+function editReadme() {
+    trap onError ERR
+
+    echo "Edit README.md"
+
+    local releaseBadge="[![Version](https:\/\/img.shields.io\/badge\/version-${version}-blueviolet.svg)](https:\/\/github.com\/steevanb\/php-typed-array\/tree\/${version})"
+    sed -i "1s/.*/${releaseBadge}/" "${rootDir}"/README.md
+
+    local codeLines=
+    codeLines=$("${rootDir}"/bin/release/code-lines)
+    local codeLinesBadge="![Lines](https:\/\/img.shields.io\/badge\/code%20lines-${codeLines}-blue.svg)"
+    sed -i "3s/.*/${codeLinesBadge}/" "${rootDir}"/README.md
+}
+
+function editCoverage() {
+    echo "Calculate coverage"
+
+    local coveragePercent=
+    coveragePercent="$(${rootDir}/bin/release/phpunit-coverage)"
+    echo "Coverage: ${coveragePercent}%"
+
+    local badge="![Coverage](https:\/\/img.shields.io\/badge\/coverage-${coveragePercent}%25-success.svg)"
+    sed -i "6s/.*/${badge}/" "${rootDir}"/README.md
+}
+
+initLog
+editReadme
+editCoverage

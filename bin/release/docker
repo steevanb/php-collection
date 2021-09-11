@@ -5,6 +5,6 @@ set -eu
 readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/../..")"
 source "${ROOT_DIR}"/bin/common.inc.sh
 
-DOCKER_IMAGE_NAME="${CI_DOCKER_IMAGE_NAME}" \
-    DOCKER_FILE_PATH="${ROOT_DIR}"/docker/ci/Dockerfile \
+DOCKER_IMAGE_NAME="${RELEASE_DOCKER_IMAGE_NAME}" \
+    DOCKER_FILE_PATH="${ROOT_DIR}"/docker/release/Dockerfile \
     source "${ROOT_DIR}"/bin/docker-build.inc.bash
