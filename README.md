@@ -1,6 +1,6 @@
 [![Version](https://img.shields.io/badge/version-3.2.0-blueviolet.svg)](https://github.com/steevanb/php-typed-array/tree/3.2.0)
 [![PHP](https://img.shields.io/badge/php-^7.1||^8.0-blue.svg)](https://php.net)
-![Lines](https://img.shields.io/badge/code%20lines-4,583-blue.svg)
+![Lines](https://img.shields.io/badge/code%20lines-4,630-blue.svg)
 ![Downloads](https://poser.pugx.org/steevanb/php-typed-array/downloads)
 ![GitHub workflow status](https://img.shields.io/github/workflow/status/steevanb/php-typed-array/CI)
 ![Coverage](https://img.shields.io/badge/coverage-96%25-success.svg)

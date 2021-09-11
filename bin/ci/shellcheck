@@ -19,6 +19,12 @@ readonly binaries=(
     bin/ci/shellcheck
     bin/ci/unused-scanner
     bin/ci/validate
+    bin/release/changelog
+    bin/release/code-lines
+    bin/release/docker
+    bin/release/env
+    bin/release/phpunit-coverage
+    bin/release/prepare
     bin/common.inc.sh
     bin/composer
     bin/dockerise.inc.sh
