@@ -1,5 +1,7 @@
 ### master
 
+### [3.3.1](../../compare/3.3.0...3.3.1) - 2021-09-11
+
 - Fix `composer require` version in `README.md` in GitHub Actions workflow `Release`
 
 ### [3.3.0](../../compare/3.2.0...3.3.0) - 2021-09-11
