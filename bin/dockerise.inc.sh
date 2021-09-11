@@ -9,7 +9,11 @@ else
 fi
 
 if [ -z "${BIN_DIR-}" ]; then
-    BIN_DIR="bin/ci/"
+    BIN_DIR="bin/ci"
+fi
+
+if [ -z "${DOCKER_IMAGE_NAME-}" ]; then
+    DOCKER_IMAGE_NAME="${CI_DOCKER_IMAGE_NAME}"
 fi
 
 if ! ${isInDocker}; then
@@ -32,7 +36,7 @@ if ! ${isInDocker}; then
             --user "$(id -u)":"$(id -g)" \
             --entrypoint "${BIN_DIR}"/"$(basename "${0}")" \
             --workdir /app \
-            "${CI_DOCKER_IMAGE_NAME}" \
+            "${DOCKER_IMAGE_NAME}" \
             "${@}"
     exit 0
 fi
