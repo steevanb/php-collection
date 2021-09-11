@@ -2,6 +2,11 @@
 
 - Add `AbstractTypedArray::reset()`
 - Add `AbstractTypedArray::changeKeyCase()`
+- CI moved from CircleCI to GitHub Actions
+- Add tools in `bin/ci`: `composer-validate`, `phpunit-coverage`, `shellcheck` and `unused-scanner`
+- Rework `bin/ci` binaries
+- Add `bin/release` binaries
+- Add GitHub Actions workflow `Release`
 
 ### [3.2.0](../../compare/3.1.1...3.2.0) - 2021-05-13
 
