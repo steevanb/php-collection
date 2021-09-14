@@ -11,8 +11,6 @@ jobs:
     build:
         name: Release
         runs-on: ubuntu-latest
-        container:
-            image: steevanb/php-typed-array:release
         steps:
             - uses: actions/checkout@v2
             -

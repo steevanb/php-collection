@@ -18,6 +18,8 @@ function onError() {
 trap onError ERR
 
 function initLog() {
+    trap onError ERR
+
     if [ ! -d "${logFilePath}" ]; then
         mkdir -p "${logFilePath}"
     fi
