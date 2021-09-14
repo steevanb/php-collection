@@ -4,7 +4,7 @@ set -eu
 
 readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/../..")"
 . "${ROOT_DIR}"/bin/common.inc.sh
-. "${ROOT_DIR}"/bin/dockerise.inc.sh
+. "${ROOT_DIR}"/bin/dockerise.inc.bash
 
 readonly binaries=(
     bin/ci/composer-require-checker
@@ -27,7 +27,7 @@ readonly binaries=(
     bin/release/prepare
     bin/common.inc.sh
     bin/composer
-    bin/dockerise.inc.sh
+    bin/dockerise.inc.bash
 )
 
 exitCode=0
