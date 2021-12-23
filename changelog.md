@@ -1,5 +1,7 @@
 ### master
 
+### [3.3.2](../../compare/3.3.1...3.3.2) - 2021-12-23
+
 - Add #[\ReturnTypeWillChange] when needed to remove a new deprecated with PHP 8.1
 
 ### [3.3.1](../../compare/3.3.0...3.3.1) - 2021-09-11
