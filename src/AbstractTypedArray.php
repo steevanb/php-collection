@@ -64,6 +64,7 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
     }
 
     /** @return string|int|null */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->valid() ? key($this->values) : null;
@@ -80,6 +81,7 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
     }
 
     /** @return mixed */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         $return = current($this->values);
@@ -129,6 +131,7 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
      * @param mixed $offset
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         if ($this->offsetExists($offset) === false) {
