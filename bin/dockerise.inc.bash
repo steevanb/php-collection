@@ -34,9 +34,8 @@ if ! ${isInDocker}; then
             ${interactiveParameter} \
             --volume "${ROOT_DIR}":/app \
             --user "$(id -u)":"$(id -g)" \
-            --entrypoint "${BIN_DIR}"/"$(basename "${0}")" \
+            --entrypoint /bin/bash \
             --workdir /app \
-            "${DOCKER_IMAGE_NAME}" \
-            "${@}"
+            "${DOCKER_IMAGE_NAME}"
     exit 0
 fi

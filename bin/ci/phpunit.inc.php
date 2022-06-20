@@ -12,17 +12,15 @@ function createPhpunitProcesses(string $phpVersion = null, string $symfonyVersio
 {
     $phpVersions = new StringArray(is_string($phpVersion) ? [$phpVersion] : ['7.1', '7.2', '7.3', '7.4', '8.0']);
     $symfonyVersions = new StringArray(
-        is_string($symfonyVersion) ? [$symfonyVersion] : ['4.4', '5.0', '5.1', '5.2', '5.3']
+        is_string($symfonyVersion) ? [$symfonyVersion] : ['4.4', '5.0', '5.1', '5.2', '5.3', '5.4']
     );
 
     $return = new ProcessArray();
     foreach ($phpVersions as $loopPhpVersion) {
         foreach ($symfonyVersions as $loopSymfonyVersion) {
             if (
-                (
-                    in_array($loopPhpVersion, ['7.2', '7.3', '7.4', '8.0'])
-                    && in_array($loopSymfonyVersion, ['4.4', '5.0', '5.1', '5.2', '5.3'])
-                ) || (
+                in_array($loopPhpVersion, ['7.2', '7.3', '7.4', '8.0'])
+                || (
                     $loopPhpVersion === '7.1'
                     && $loopSymfonyVersion === '4.4'
                 )
