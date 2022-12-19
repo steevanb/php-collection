@@ -6,6 +6,7 @@ namespace Steevanb\PhpTypedArray\ObjectArray;
 
 use Steevanb\PhpTypedArray\{
     AbstractTypedArray,
+    EnumArray\AbstractEnumArray,
     Exception\InvalidTypeException,
     Exception\PhpTypedArrayException,
     ObjectComparisonModeEnum
@@ -13,11 +14,9 @@ use Steevanb\PhpTypedArray\{
 
 class ObjectArray extends AbstractTypedArray
 {
-    protected ?string $className;
-
     protected ObjectComparisonModeEnum $comparisonMode = ObjectComparisonModeEnum::STRING;
 
-    protected ?string $instanceOf;
+    protected ?string $className;
 
     /** @param iterable<object> $values */
     public function __construct(iterable $values = [], string $className = null)
@@ -29,14 +28,32 @@ class ObjectArray extends AbstractTypedArray
 
     public function setClassName(?string $className): static
     {
-        $this->instanceOf = $className;
+        if (is_string($className)) {
+            $implements = class_implements($className);
+            if ($implements === false) {
+                $implements = [];
+            }
+
+            if (
+                $className === \UnitEnum::class
+                || $className === \BackedEnum::class
+                || in_array(\UnitEnum::class, $implements, true)
+            ) {
+                throw new InvalidTypeException(
+                    __CLASS__ . ' can not store ' . \UnitEnum::class . ' or ' . \BackedEnum::class
+                        . '. Use ' . AbstractEnumArray::class . ' instead.'
+                );
+            }
+        }
+
+        $this->className = $className;
 
         return $this;
     }
 
     public function getClassName(): ?string
     {
-        return $this->instanceOf;
+        return $this->className;
     }
 
     public function setComparisonMode(ObjectComparisonModeEnum $mode): static
@@ -57,13 +74,13 @@ class ObjectArray extends AbstractTypedArray
             if (
                 is_object($value) === false
                 || (
-                    is_string($this->instanceOf)
-                    && $value instanceof $this->instanceOf === false
+                    is_string($this->className)
+                    && $value instanceof $this->className === false
                 )
             ) {
                 throw new InvalidTypeException(
                     '$value should be '
-                    . (is_string($this->instanceOf) ? 'instance of "' . $this->instanceOf . '"' : 'an object')
+                    . (is_string($this->className) ? 'instance of "' . $this->className . '"' : 'an object')
                     . '.'
                 );
             }
