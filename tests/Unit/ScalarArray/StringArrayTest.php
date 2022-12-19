@@ -9,7 +9,9 @@ use Steevanb\PhpTypedArray\{
     Exception\InvalidTypeException,
     Exception\NullValueException,
     Exception\ValueAlreadyExistException,
-    ScalarArray\StringArray
+    NullValueModeEnum,
+    ScalarArray\StringArray,
+    ValueAlreadyExistsModeEnum
 };
 
 final class StringArrayTest extends TestCase
@@ -49,7 +51,7 @@ final class StringArrayTest extends TestCase
     public function testNullValueModeDoNotAdd(): void
     {
         $array = (new StringArray())
-            ->setNullValueMode(StringArray::NULL_VALUE_DO_NOT_ADD)
+            ->setNullValueMode(NullValueModeEnum::DO_NOT_ADD)
             ->setValues(['4', null]);
 
         static::assertCount(1, $array);
@@ -60,7 +62,7 @@ final class StringArrayTest extends TestCase
     {
         static::expectException(NullValueException::class);
         (new StringArray())
-            ->setNullValueMode(StringArray::NULL_VALUE_EXCEPTION)
+            ->setNullValueMode(NullValueModeEnum::EXCEPTION)
             ->setValues([null]);
     }
 
@@ -85,7 +87,7 @@ final class StringArrayTest extends TestCase
     public function testMergeValueAlreadyExistsAdd(): void
     {
         $array = (new StringArray(['foo', 'bar']))
-            ->setValueAlreadyExistMode(StringArray::VALUE_ALREADY_EXIST_ADD)
+            ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::ADD)
             ->merge(new StringArray(['bar', 'baz']));
 
         static::assertCount(4, $array);
@@ -98,7 +100,7 @@ final class StringArrayTest extends TestCase
     public function testMergeValueAlreadyExistsDoNotAdd(): void
     {
         $array = (new StringArray(['foo', 'bar']))
-            ->setValueAlreadyExistMode(StringArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
+            ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::DO_NOT_ADD)
             ->merge(new StringArray(['bar', 'baz']));
 
         static::assertCount(3, $array);
@@ -112,7 +114,7 @@ final class StringArrayTest extends TestCase
     {
         static::expectException(ValueAlreadyExistException::class);
         (new StringArray(['foo', 'bar']))
-            ->setValueAlreadyExistMode(StringArray::VALUE_ALREADY_EXIST_EXCEPTION)
+            ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::EXCEPTION)
             ->merge(new StringArray(['bar', 'baz']));
     }
 }

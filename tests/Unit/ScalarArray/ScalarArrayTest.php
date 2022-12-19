@@ -9,7 +9,9 @@ use Steevanb\PhpTypedArray\{
     Exception\InvalidTypeException,
     Exception\NullValueException,
     Exception\ValueAlreadyExistException,
-    ScalarArray\ScalarArray
+    NullValueModeEnum,
+    ScalarArray\ScalarArray,
+    ValueAlreadyExistsModeEnum
 };
 
 final class ScalarArrayTest extends TestCase
@@ -91,7 +93,7 @@ final class ScalarArrayTest extends TestCase
     public function testNullValueModeDoNotAdd(): void
     {
         $array = (new ScalarArray())
-            ->setNullValueMode(ScalarArray::NULL_VALUE_DO_NOT_ADD)
+            ->setNullValueMode(NullValueModeEnum::DO_NOT_ADD)
             ->setValues([1, null]);
 
         static::assertCount(1, $array);
@@ -102,14 +104,14 @@ final class ScalarArrayTest extends TestCase
     {
         static::expectException(NullValueException::class);
         (new ScalarArray())
-            ->setNullValueMode(ScalarArray::NULL_VALUE_EXCEPTION)
+            ->setNullValueMode(NullValueModeEnum::EXCEPTION)
             ->setValues([null]);
     }
 
     public function testMergeValueAlreadyExistsAdd(): void
     {
         $array = (new ScalarArray([1, 2.0, 3.1, '4', true, false, null]))
-            ->setValueAlreadyExistMode(ScalarArray::VALUE_ALREADY_EXIST_ADD)
+            ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::ADD)
             ->merge(new ScalarArray([1, 2.0, 3.1, '4', true, false, null]));
 
         static::assertCount(14, $array);
@@ -132,7 +134,7 @@ final class ScalarArrayTest extends TestCase
     public function testMergeValueAlreadyExistsDoNotAdd(): void
     {
         $array = (new ScalarArray([1]))
-            ->setValueAlreadyExistMode(ScalarArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
+            ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::DO_NOT_ADD)
             ->merge(new ScalarArray([1, '4']));
 
         static::assertCount(2, $array);
@@ -145,7 +147,7 @@ final class ScalarArrayTest extends TestCase
     {
         static::expectException(ValueAlreadyExistException::class);
         (new ScalarArray([1]))
-            ->setValueAlreadyExistMode(ScalarArray::VALUE_ALREADY_EXIST_EXCEPTION)
+            ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::EXCEPTION)
             ->merge(new ScalarArray([1, '4']));
     }
 }

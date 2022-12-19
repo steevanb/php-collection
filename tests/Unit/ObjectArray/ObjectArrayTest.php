@@ -7,7 +7,9 @@ namespace Steevanb\PhpTypedArray\Tests\Unit\ObjectArray;
 use PHPUnit\Framework\TestCase;
 use Steevanb\PhpTypedArray\{
     Exception\InvalidTypeException,
-    ObjectArray\ObjectArray
+    ObjectArray\ObjectArray,
+    ObjectComparisonModeEnum,
+    ValueAlreadyExistsModeEnum
 };
 
 final class ObjectArrayTest extends TestCase
@@ -72,7 +74,7 @@ final class ObjectArrayTest extends TestCase
     public function testComparisonModeString(): void
     {
         $array = (new ObjectArray())
-            ->setValueAlreadyExistMode(ObjectArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
+            ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::DO_NOT_ADD)
             ->setValues(
                 [
                     new TestObject('foo'),
@@ -90,8 +92,8 @@ final class ObjectArrayTest extends TestCase
     public function testComparisonModeObjectHas(): void
     {
         $array = (new ObjectArray())
-            ->setComparisonMode(ObjectArray::COMPARISON_OBJECT_HASH)
-            ->setValueAlreadyExistMode(ObjectArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
+            ->setComparisonMode(ObjectComparisonModeEnum::HASH)
+            ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::DO_NOT_ADD)
             ->setValues(
                 [
                     new TestObject('foo'),

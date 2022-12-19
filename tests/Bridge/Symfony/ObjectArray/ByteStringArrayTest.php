@@ -9,7 +9,8 @@ use Steevanb\PhpTypedArray\{
     Exception\InvalidTypeException,
     Exception\ValueAlreadyExistException,
     ObjectArray\ByteStringArray,
-    ObjectArray\UnicodeStringArray
+    ObjectComparisonModeEnum,
+    ValueAlreadyExistsModeEnum
 };
 use Symfony\Component\String\ByteString;
 
@@ -63,7 +64,7 @@ final class ByteStringArrayTest extends TestCase
     public function testComparisonModeString(): void
     {
         $array = (new ByteStringArray())
-            ->setValueAlreadyExistMode(ByteStringArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
+            ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::DO_NOT_ADD)
             ->setValues(
                 [
                     new ByteString('foo'),
@@ -81,8 +82,8 @@ final class ByteStringArrayTest extends TestCase
     public function testComparisonModeObjectHas(): void
     {
         $array = (new ByteStringArray())
-            ->setComparisonMode(ByteStringArray::COMPARISON_OBJECT_HASH)
-            ->setValueAlreadyExistMode(ByteStringArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
+            ->setComparisonMode(ObjectComparisonModeEnum::HASH)
+            ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::DO_NOT_ADD)
             ->setValues(
                 [
                     new ByteString('foo'),
@@ -100,7 +101,7 @@ final class ByteStringArrayTest extends TestCase
     public function testMergeValueAlreadyExistsAdd(): void
     {
         $array = (new ByteStringArray([new ByteString('foo'), new ByteString('bar')]))
-            ->setValueAlreadyExistMode(UnicodeStringArray::VALUE_ALREADY_EXIST_ADD)
+            ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::ADD)
             ->merge(new ByteStringArray([new ByteString('bar'), new ByteString('baz')]));
 
         static::assertCount(4, $array);
@@ -113,7 +114,7 @@ final class ByteStringArrayTest extends TestCase
     public function testMergeValueAlreadyExistsDoNotAdd(): void
     {
         $array = (new ByteStringArray([new ByteString('foo'), new ByteString('bar')]))
-            ->setValueAlreadyExistMode(UnicodeStringArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
+            ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::DO_NOT_ADD)
             ->merge(new ByteStringArray([new ByteString('bar'), new ByteString('baz')]));
 
         static::assertCount(3, $array);
@@ -127,7 +128,7 @@ final class ByteStringArrayTest extends TestCase
     {
         static::expectException(ValueAlreadyExistException::class);
         (new ByteStringArray([new ByteString('foo'), new ByteString('bar')]))
-            ->setValueAlreadyExistMode(UnicodeStringArray::VALUE_ALREADY_EXIST_EXCEPTION)
+            ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::EXCEPTION)
             ->merge(new ByteStringArray([new ByteString('bar'), new ByteString('baz')]));
     }
 }

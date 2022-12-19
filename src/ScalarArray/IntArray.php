@@ -13,8 +13,7 @@ class IntArray extends AbstractScalarArray
         return parent::current();
     }
 
-    /** @param mixed $offset */
-    public function offsetGet($offset): ?int
+    public function offsetGet(mixed $offset): ?int
     {
         return parent::offsetGet($offset);
     }
@@ -26,11 +25,7 @@ class IntArray extends AbstractScalarArray
         return $this;
     }
 
-    /**
-     * @param mixed $offset
-     * @param mixed $value
-     */
-    protected function canAddValue($offset, $value): bool
+    protected function canAddValue(mixed $offset, mixed $value): bool
     {
         if (is_null($value) === false && is_int($value) === false) {
             throw new InvalidTypeException('$value should be of type int or null.');
@@ -39,8 +34,7 @@ class IntArray extends AbstractScalarArray
         return parent::canAddValue($offset, $value);
     }
 
-    /** @param mixed $value */
-    protected function cast($value): ?int
+    protected function cast(mixed $value): ?int
     {
         if (
             is_numeric($value) === false

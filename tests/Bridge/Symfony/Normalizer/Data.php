@@ -6,9 +6,7 @@ namespace Steevanb\PhpTypedArray\Tests\Bridge\Symfony\Normalizer;
 
 class Data
 {
-    /** @var string */
-    public $foo;
+    public string $foo;
 
-    /** @var int */
-    public $bar;
+    public int $bar;
 }

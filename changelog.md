@@ -5,6 +5,10 @@
 - [BC Break] Remove support for Symfony < 6.1
 - Add support for Symfony 6.1 and 6.2
 - [BC Break] Rename namespace first part from `steevanb` to `Steevanb`
+- [BC Break] `AbstractTypedArray::NULL_VALUE_ALLOW`, `NULL_VALUE_DO_NOT_ADD` and `NULL_VALUE_EXCEPTION` are replaced by `NullValueModeEnum`
+- [BC Break] `AbstractTypedArray::VALUE_ALREADY_EXIST_ADD`, `VALUE_ALREADY_EXIST_DO_NOT_ADD` and `VALUE_ALREADY_EXIST_EXCEPTION` are replaced by `ValueAlreadyExistsModeEnum`
+- [BC Break] `ObjectArray::COMPARISON_STRING` and `COMPARISON_OBJECT_HASH` are replaced by `ObjectComparisonModeEnum`
+- [BC Break] Add types everywhere we can
 
 ### [3.3.2](../../compare/3.3.1...3.3.2) - 2021-12-23
 

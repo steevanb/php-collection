@@ -13,31 +13,18 @@ use Steevanb\PhpTypedArray\{
 
 abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterface
 {
-    public const NULL_VALUE_ALLOW = 1;
-    public const NULL_VALUE_DO_NOT_ADD = 2;
-    public const NULL_VALUE_EXCEPTION = 3;
-
-    public const VALUE_ALREADY_EXIST_ADD = 1;
-    public const VALUE_ALREADY_EXIST_DO_NOT_ADD = 2;
-    public const VALUE_ALREADY_EXIST_EXCEPTION = 3;
-
-    /** @var int */
-    protected $nextIntKey = 0;
+    protected int $nextIntKey = 0;
 
     /** @var array<mixed> */
-    protected $values = [];
+    protected array $values = [];
 
-    /** @var bool */
-    protected $valid = true;
+    protected bool $valid = true;
 
-    /** @var int */
-    protected $valueAlreadyExistMode = self::VALUE_ALREADY_EXIST_ADD;
+    protected ValueAlreadyExistsModeEnum $valueAlreadyExistMode = ValueAlreadyExistsModeEnum::ADD;
 
-    /** @var int */
-    protected $nullValueMode = self::NULL_VALUE_ALLOW;
+    protected NullValueModeEnum $nullValueMode = NullValueModeEnum::ALLOW;
 
-    /** @var bool */
-    protected $readOnly = false;
+    protected bool $readOnly = false;
 
     /** @param iterable<mixed> $values */
     public function __construct(iterable $values = [])
@@ -60,9 +47,7 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
         return $this;
     }
 
-    /** @return string|int|null */
-    #[\ReturnTypeWillChange]
-    public function key()
+    public function key(): string|int|null
     {
         return $this->valid() ? key($this->values) : null;
     }
@@ -77,9 +62,7 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
         $this->valid = next($this->values) !== false;
     }
 
-    /** @return mixed */
-    #[\ReturnTypeWillChange]
-    public function current()
+    public function current(): mixed
     {
         $return = current($this->values);
 
@@ -92,17 +75,12 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
         $this->valid = count($this->values) > 0;
     }
 
-    /** @param mixed $offset */
-    public function offsetExists($offset): bool
+    public function offsetExists(mixed $offset): bool
     {
         return array_key_exists($offset, $this->values);
     }
 
-    /**
-     * @param mixed $offset
-     * @param mixed $value
-     */
-    public function offsetSet($offset, $value): void
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         $this->assertIsNotReadOnly();
 
@@ -124,12 +102,7 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
         }
     }
 
-    /**
-     * @param mixed $offset
-     * @return mixed
-     */
-    #[\ReturnTypeWillChange]
-    public function offsetGet($offset)
+    public function offsetGet(mixed $offset): mixed
     {
         if ($this->offsetExists($offset) === false) {
             throw new KeyNotFoundException('Key "' . $offset . '" not found.');
@@ -138,8 +111,7 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
         return $this->values[$offset];
     }
 
-    /** @param mixed $offset */
-    public function offsetUnset($offset): void
+    public function offsetUnset(mixed $offset): void
     {
         $this->assertIsNotReadOnly();
 
@@ -181,26 +153,26 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
         return $this->values;
     }
 
-    public function setValueAlreadyExistMode(int $valueAlreadyExistMode): static
+    public function setValueAlreadyExistMode(ValueAlreadyExistsModeEnum $valueAlreadyExistMode): static
     {
         $this->valueAlreadyExistMode = $valueAlreadyExistMode;
 
         return $this;
     }
 
-    public function getValueAlreadyExistMode(): int
+    public function getValueAlreadyExistMode(): ValueAlreadyExistsModeEnum
     {
         return $this->valueAlreadyExistMode;
     }
 
-    public function setNullValueMode(int $mode): static
+    public function setNullValueMode(NullValueModeEnum $mode): static
     {
         $this->nullValueMode = $mode;
 
         return $this;
     }
 
-    public function getNullValueMode(): int
+    public function getNullValueMode(): NullValueModeEnum
     {
         return $this->nullValueMode;
     }
@@ -240,33 +212,24 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
         return $this->setValues(array_merge($this->values, $typedArray->toArray()));
     }
 
-    /**
-     * @param mixed $firstValue
-     * @param mixed $secondValue
-     */
-    protected function isSameValues($firstValue, $secondValue): bool
+    protected function isSameValues(mixed $firstValue, mixed $secondValue): bool
     {
         return $firstValue === $secondValue;
     }
 
-    /** @param mixed $value */
-    protected function castValueToString($value): string
+    protected function castValueToString(mixed $value): string
     {
         return is_null($value) ? 'NULL' : (string) $value;
     }
 
-    /**
-     * @param mixed $offset
-     * @param mixed $value
-     */
-    protected function canAddValue($offset, $value): bool
+    protected function canAddValue(mixed $offset, mixed $value): bool
     {
         $return = true;
 
         if (is_null($value)) {
-            if ($this->getNullValueMode() === static::NULL_VALUE_DO_NOT_ADD) {
+            if ($this->getNullValueMode() === NullValueModeEnum::DO_NOT_ADD) {
                 $return = false;
-            } elseif ($this->getNullValueMode() === static::NULL_VALUE_EXCEPTION) {
+            } elseif ($this->getNullValueMode() === NullValueModeEnum::EXCEPTION) {
                 throw new NullValueException('NULL value is not allowed for offset ' . $offset . '.');
             }
         }
@@ -275,13 +238,13 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
             $return === true
             && in_array(
                 $this->getValueAlreadyExistMode(),
-                [static::VALUE_ALREADY_EXIST_DO_NOT_ADD, static::VALUE_ALREADY_EXIST_EXCEPTION],
+                [ValueAlreadyExistsModeEnum::DO_NOT_ADD, ValueAlreadyExistsModeEnum::EXCEPTION],
                 true
             )
         ) {
             foreach ($this->values as $internalValue) {
                 if ($this->isSameValues($value, $internalValue)) {
-                    if ($this->getValueAlreadyExistMode() === static::VALUE_ALREADY_EXIST_EXCEPTION) {
+                    if ($this->getValueAlreadyExistMode() === ValueAlreadyExistsModeEnum::EXCEPTION) {
                         throw new ValueAlreadyExistException(
                             'Value "' . $this->castValueToString($value) . '" already exist.'
                         );

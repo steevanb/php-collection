@@ -17,9 +17,9 @@ $phpVersion = null;
 $symfonyVersion = null;
 $applicationArgv = new StringArray();
 foreach ($argv as $arg) {
-    if (substr($arg, 0, 6) === '--php=') {
+    if (str_starts_with($arg, '--php=')) {
         $phpVersion = substr($arg, 6);
-    } elseif (substr($arg, 0, 10) === '--symfony=') {
+    } elseif (str_starts_with($arg, '--symfony=')) {
         $symfonyVersion = substr($arg, 10);
     } else {
         $applicationArgv[] = $arg;
