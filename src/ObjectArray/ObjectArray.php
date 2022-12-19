@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray\ObjectArray;
+namespace Steevanb\PhpTypedArray\ObjectArray;
 
-use steevanb\PhpTypedArray\{
+use Steevanb\PhpTypedArray\{
     AbstractTypedArray,
     Exception\InvalidTypeException,
     Exception\PhpTypedArrayException
@@ -32,8 +32,7 @@ class ObjectArray extends AbstractTypedArray
         parent::__construct($values);
     }
 
-    /** @return $this */
-    public function setClassName(?string $className): self
+    public function setClassName(?string $className): static
     {
         $this->instanceOf = $className;
 
@@ -45,8 +44,7 @@ class ObjectArray extends AbstractTypedArray
         return $this->instanceOf;
     }
 
-    /** @return $this */
-    public function setComparisonMode(int $mode): self
+    public function setComparisonMode(int $mode): static
     {
         $this->comparisonMode = $mode;
 

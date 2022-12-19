@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray\ObjectArray;
+namespace Steevanb\PhpTypedArray\ObjectArray;
 
 use Symfony\Component\String\ByteString;
 
@@ -13,7 +13,7 @@ class ByteStringArray extends ObjectArray
         parent::__construct($values, ByteString::class);
     }
 
-    public function merge(ByteStringArray $typedArray): self
+    public function merge(ByteStringArray $typedArray): static
     {
         parent::doMerge($typedArray);
 

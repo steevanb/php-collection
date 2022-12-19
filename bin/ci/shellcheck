@@ -34,10 +34,12 @@ exitCode=0
 for binary in "${binaries[@]}"; do
     set +e
     # SC1090: Can't follow non-constant source. Use a directive to specify location.
+    # SC1091: Not following: was not specified as input
     # SC2034: CI_DOCKER_IMAGE_NAME appears unused. Verify use (or export if used externally).
     # SC2086: Double quote to prevent globbing and word splitting. (needed for ${DOCKER_INTERACTIVE_PARAMETER})
+    # SC2155: Declare and assign separately to avoid masking return values.
     # SC2181: Check exit code directly with e.g. 'if mycmd;', not indirectly with $?.
-    shellcheck --color=always --exclude SC1090,SC2034,SC2086,SC2181 "${binary}"
+    shellcheck --color=always --exclude SC1090,SC1091,SC2034,SC2086,SC2155,SC2181 "${binary}"
     if [ ${?} != 0 ]; then
         exitCode=1
     fi

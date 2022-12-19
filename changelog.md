@@ -1,5 +1,11 @@
 ### master
 
+- [BC Break] Remove support for PHP 7.1, 7.2, 7.3, 7.4 and 8.0
+- Add support for PHP 8.2
+- [BC Break] Remove support for Symfony < 6.1
+- Add support for Symfony 6.1 and 6.2
+- [BC Break] Rename namespace first part from `steevanb` to `Steevanb`
+
 ### [3.3.2](../../compare/3.3.1...3.3.2) - 2021-12-23
 
 - Add #[\ReturnTypeWillChange] when needed to remove a new deprecated with PHP 8.1

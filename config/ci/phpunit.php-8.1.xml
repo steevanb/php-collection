@@ -1,5 +1,5 @@
 <phpunit
-    cacheResultFile="../../var/ci/phpunit/.phpunit.result.cache"
+    cacheResultFile="../../var/ci/phpunit/php-8.1/.phpunit.result.cache"
     colors="true"
 >
     <testsuites>

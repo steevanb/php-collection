@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray\ScalarArray;
+namespace Steevanb\PhpTypedArray\ScalarArray;
 
-use steevanb\PhpTypedArray\{
+use Steevanb\PhpTypedArray\{
     AbstractTypedArray,
     Exception\InvalidTypeException
 };
@@ -24,6 +24,7 @@ class ScalarArray extends AbstractTypedArray
     protected $allowBool = true;
 
     /** @return string|int|float|bool|null */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return parent::current();
@@ -33,19 +34,20 @@ class ScalarArray extends AbstractTypedArray
      * @param mixed $offset
      * @return string|int|float|bool|null
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return parent::offsetGet($offset);
     }
 
-    public function merge(ScalarArray $typedArray): self
+    public function merge(ScalarArray $typedArray): static
     {
         parent::doMerge($typedArray);
 
         return $this;
     }
 
-    public function setAllowString(bool $allowString): self
+    public function setAllowString(bool $allowString): static
     {
         $this->allowString = $allowString;
 
@@ -57,7 +59,7 @@ class ScalarArray extends AbstractTypedArray
         return $this->allowString;
     }
 
-    public function setAllowInt(bool $allowInt): self
+    public function setAllowInt(bool $allowInt): static
     {
         $this->allowInt = $allowInt;
 
@@ -69,7 +71,7 @@ class ScalarArray extends AbstractTypedArray
         return $this->allowInt;
     }
 
-    public function setAllowFloat(bool $allowFloat): self
+    public function setAllowFloat(bool $allowFloat): static
     {
         $this->allowFloat = $allowFloat;
 
@@ -81,7 +83,7 @@ class ScalarArray extends AbstractTypedArray
         return $this->allowFloat;
     }
 
-    public function setAllowBool(bool $allowBool): self
+    public function setAllowBool(bool $allowBool): static
     {
         $this->allowBool = $allowBool;
 

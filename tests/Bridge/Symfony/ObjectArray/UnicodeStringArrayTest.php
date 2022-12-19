@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray\Tests\Bridge\Symfony\ObjectArray;
+namespace Steevanb\PhpTypedArray\Tests\Bridge\Symfony\ObjectArray;
 
 use PHPUnit\Framework\TestCase;
-use steevanb\PhpTypedArray\{
+use Steevanb\PhpTypedArray\{
     Exception\InvalidTypeException,
     Exception\ValueAlreadyExistException,
     ObjectArray\UnicodeStringArray

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray\Tests\Bridge\Symfony\Normalizer;
+namespace Steevanb\PhpTypedArray\Tests\Bridge\Symfony\Normalizer;
 
-use steevanb\PhpTypedArray\ObjectArray\ObjectArray;
+use Steevanb\PhpTypedArray\ObjectArray\ObjectArray;
 
 class DataArray extends ObjectArray
 {

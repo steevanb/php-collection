@@ -20,7 +20,7 @@ for arg in "${@}"; do
 done
 
 if [ "${phpVersion}" == "" ] || [ "${symfonyVersion}" == "" ]; then
-    php8.0 "${ROOT_DIR}"/bin/ci/phpunit.php "${@}"
+    php8.1 "${ROOT_DIR}"/bin/ci/phpunit.php "${@}"
 else
     echo "PHP ${phpVersion} - Symfony ${symfonyVersion}"
 

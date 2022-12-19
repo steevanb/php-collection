@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray\Bridge\Symfony\Normalizer;
+namespace Steevanb\PhpTypedArray\Bridge\Symfony\Normalizer;
 
-use steevanb\PhpTypedArray\{
+use Steevanb\PhpTypedArray\{
     AbstractTypedArray,
     ScalarArray\AbstractScalarArray,
     ScalarArray\ScalarArray

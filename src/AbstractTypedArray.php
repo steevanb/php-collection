@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray;
+namespace Steevanb\PhpTypedArray;
 
-use steevanb\PhpTypedArray\{
+use Steevanb\PhpTypedArray\{
     Exception\KeyNotFoundException,
     Exception\ReadOnlyException,
     Exception\ValueAlreadyExistException,
@@ -45,11 +45,8 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
         $this->setValues($values);
     }
 
-    /**
-     * @param iterable<mixed> $values
-     * @return $this
-     */
-    public function setValues(iterable $values): TypedArrayInterface
+    /** @param iterable<mixed> $values */
+    public function setValues(iterable $values): static
     {
         $this->assertIsNotReadOnly();
 
@@ -151,8 +148,7 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
         }
     }
 
-    /** @return $this */
-    public function resetKeys(): TypedArrayInterface
+    public function resetKeys(): static
     {
         $this->assertIsNotReadOnly();
 
@@ -167,8 +163,7 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
         return count($this->values);
     }
 
-    /** @return $this */
-    public function setReadOnly(bool $readOnly = true): ReadOnlyInterface
+    public function setReadOnly(bool $readOnly = true): static
     {
         $this->readOnly = $readOnly;
 
@@ -186,8 +181,7 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
         return $this->values;
     }
 
-    /** @return $this */
-    public function setValueAlreadyExistMode(int $valueAlreadyExistMode): TypedArrayInterface
+    public function setValueAlreadyExistMode(int $valueAlreadyExistMode): static
     {
         $this->valueAlreadyExistMode = $valueAlreadyExistMode;
 
@@ -199,8 +193,7 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
         return $this->valueAlreadyExistMode;
     }
 
-    /** @return $this */
-    public function setNullValueMode(int $mode): TypedArrayInterface
+    public function setNullValueMode(int $mode): static
     {
         $this->nullValueMode = $mode;
 
@@ -212,7 +205,7 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
         return $this->nullValueMode;
     }
 
-    public function clear(): self
+    public function clear(): static
     {
         $this->assertIsNotReadOnly();
         $this->values = [];
@@ -221,7 +214,7 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
         return $this;
     }
 
-    public function changeKeyCase(int $case = CASE_LOWER): self
+    public function changeKeyCase(int $case = CASE_LOWER): static
     {
         $this->assertIsNotReadOnly();
         $newValues = array_change_key_case($this->toArray(), $case);
@@ -233,7 +226,7 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
         return $this;
     }
 
-    protected function assertIsNotReadOnly(): self
+    protected function assertIsNotReadOnly(): static
     {
         if ($this->isReadOnly()) {
             throw new ReadOnlyException();
@@ -242,7 +235,7 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
         return $this;
     }
 
-    protected function doMerge(AbstractTypedArray $typedArray): self
+    protected function doMerge(AbstractTypedArray $typedArray): static
     {
         return $this->setValues(array_merge($this->values, $typedArray->toArray()));
     }

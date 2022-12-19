@@ -2,29 +2,23 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray;
+namespace Steevanb\PhpTypedArray;
 
 interface TypedArrayInterface extends \ArrayAccess, \Iterator, \Countable
 {
-    /**
-     * @param iterable<mixed> $values
-     * @return TypedArrayInterface<mixed>
-     */
-    public function setValues(iterable $values): self;
+    /** @param iterable<mixed> $values */
+    public function setValues(iterable $values): static;
 
-    /** @return TypedArrayInterface<mixed> */
-    public function resetKeys(): self;
+    public function resetKeys(): static;
 
     /** @return array<mixed> */
     public function toArray(): array;
 
-    /** @return TypedArrayInterface<mixed> */
-    public function setValueAlreadyExistMode(int $valueAlreadyExistMode): self;
+    public function setValueAlreadyExistMode(int $valueAlreadyExistMode): static;
 
     public function getValueAlreadyExistMode(): int;
 
-    /** @return TypedArrayInterface<mixed> */
-    public function setNullValueMode(int $mode): self;
+    public function setNullValueMode(int $mode): static;
 
     public function getNullValueMode(): int;
 }
