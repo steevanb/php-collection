@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray\Tests\Bridge\Symfony\Normalizer;
+namespace Steevanb\PhpTypedArray\Tests\Bridge\Symfony\Normalizer;
 
 class Data
 {

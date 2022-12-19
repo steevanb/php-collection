@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray\ObjectArray;
+namespace Steevanb\PhpTypedArray\ObjectArray;
 
 use Symfony\Component\String\CodePointString;
 
@@ -13,7 +13,7 @@ class CodePointStringArray extends ObjectArray
         parent::__construct($values, CodePointString::class);
     }
 
-    public function merge(CodePointStringArray $typedArray): self
+    public function merge(CodePointStringArray $typedArray): static
     {
         parent::doMerge($typedArray);
 

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray\Bridge\Symfony\Normalizer;
+namespace Steevanb\PhpTypedArray\Bridge\Symfony\Normalizer;
 
-use steevanb\PhpTypedArray\ObjectArray\ObjectArray;
+use Steevanb\PhpTypedArray\ObjectArray\ObjectArray;
 use Symfony\Component\Serializer\{
     Normalizer\DenormalizerAwareInterface,
     Normalizer\DenormalizerAwareTrait,

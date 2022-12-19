@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray\Tests\Unit\ScalarArray;
+namespace Steevanb\PhpTypedArray\Tests\Unit\ScalarArray;
 
 use PHPUnit\Framework\TestCase;
-use steevanb\PhpTypedArray\{
+use Steevanb\PhpTypedArray\{
     Exception\InvalidTypeException,
     Exception\NullValueException,
     Exception\ValueAlreadyExistException,

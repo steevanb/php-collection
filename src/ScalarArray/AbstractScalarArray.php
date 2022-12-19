@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray\ScalarArray;
+namespace Steevanb\PhpTypedArray\ScalarArray;
 
-use steevanb\PhpTypedArray\AbstractTypedArray;
+use Steevanb\PhpTypedArray\AbstractTypedArray;
 
 abstract class AbstractScalarArray extends AbstractTypedArray
 {
@@ -29,8 +29,7 @@ abstract class AbstractScalarArray extends AbstractTypedArray
         );
     }
 
-    /** @return $this */
-    public function setCastValues(bool $castValues): self
+    public function setCastValues(bool $castValues): static
     {
         $this->castValues = $castValues;
 

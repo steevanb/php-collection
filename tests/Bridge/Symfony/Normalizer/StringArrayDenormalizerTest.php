@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray\Tests\Bridge\Symfony\Normalizer;
+namespace Steevanb\PhpTypedArray\Tests\Bridge\Symfony\Normalizer;
 
 use PHPUnit\Framework\TestCase;
-use steevanb\PhpTypedArray\{
+use Steevanb\PhpTypedArray\{
     Bridge\Symfony\Normalizer\ScalarArrayDenormalizer,
     ScalarArray\StringArray
 };

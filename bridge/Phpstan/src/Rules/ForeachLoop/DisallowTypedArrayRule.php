@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray\Bridge\Phpstan\Rules\ForeachLoop;
+namespace Steevanb\PhpTypedArray\Bridge\Phpstan\Rules\ForeachLoop;
 
 use PhpParser\Node;
 use PHPStan\{
@@ -14,7 +14,7 @@ use PHPStan\{
     Type\ObjectType,
     Rules\FoundTypeResult
 };
-use steevanb\PhpTypedArray\TypedArrayInterface;
+use Steevanb\PhpTypedArray\TypedArrayInterface;
 
 class DisallowTypedArrayRule implements Rule
 {

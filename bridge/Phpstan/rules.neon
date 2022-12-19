@@ -1,5 +1,5 @@
 services:
     -
-        class: steevanb\PhpTypedArray\Bridge\Phpstan\Rules\ForeachLoop\DisallowTypedArrayRule
+        class: Steevanb\PhpTypedArray\Bridge\Phpstan\Rules\ForeachLoop\DisallowTypedArrayRule
         tags:
             - phpstan.rules.rule

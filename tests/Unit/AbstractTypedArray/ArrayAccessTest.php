@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray\Tests\Unit\AbstractTypedArray;
+namespace Steevanb\PhpTypedArray\Tests\Unit\AbstractTypedArray;
 
 use PHPUnit\Framework\TestCase;
-use steevanb\PhpTypedArray\Exception\KeyNotFoundException;
+use Steevanb\PhpTypedArray\Exception\KeyNotFoundException;
 
 final class ArrayAccessTest extends TestCase
 {

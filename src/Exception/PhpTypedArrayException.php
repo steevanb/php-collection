@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray\Exception;
+namespace Steevanb\PhpTypedArray\Exception;
 
 class PhpTypedArrayException extends \Exception
 {

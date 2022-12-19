@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpTypedArray\ScalarArray;
+namespace Steevanb\PhpTypedArray\ScalarArray;
 
-use steevanb\PhpTypedArray\Exception\InvalidTypeException;
+use Steevanb\PhpTypedArray\Exception\InvalidTypeException;
 
 class StringArray extends AbstractScalarArray
 {
@@ -19,7 +19,7 @@ class StringArray extends AbstractScalarArray
         return parent::offsetGet($offset);
     }
 
-    public function merge(StringArray $typedArray): self
+    public function merge(StringArray $typedArray): static
     {
         parent::doMerge($typedArray);
 

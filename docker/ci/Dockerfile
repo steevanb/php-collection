@@ -1,13 +1,12 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
-COPY --from=composer:2.1.6 /usr/bin/composer /usr/local/bin/composer
+COPY --from=composer:2.4.4 /usr/bin/composer /usr/local/bin/composer
 
 ENV COMPOSER_HOME=/composer/common
-ENV COMPOSER_HOME_SYMFONY_4_4=/composer/symfony-4-4
-ENV COMPOSER_HOME_SYMFONY_5_0=/composer/symfony-5-0
-ENV COMPOSER_HOME_SYMFONY_5_1=/composer/symfony-5-1
-ENV COMPOSER_HOME_SYMFONY_5_2=/composer/symfony-5-2
-ENV COMPOSER_HOME_SYMFONY_5_3=/composer/symfony-5-3
+ENV COMPOSER_HOME_SYMFONY_6_1=/composer/symfony-6-1
+ENV COMPOSER_HOME_SYMFONY_6_2=/composer/symfony-6-2
+
+COPY docker/ci/composer.json ${COMPOSER_HOME}/composer.json
 
 RUN \
     apt-get update \
@@ -17,34 +16,22 @@ RUN \
     && apt-get install -y \
         bash \
         shellcheck \
-        php7.1-cli \
-        php7.1-simplexml \
-        php7.2-cli \
-        php7.2-simplexml \
-        php7.3-cli \
-        php7.3-simplexml \
-        php7.4-cli \
-        php7.4-simplexml \
-        php8.0-cli \
-        php8.0-simplexml \
+        php8.1-cli \
+        php8.1-simplexml \
+        php8.2-cli \
+        php8.2-simplexml \
         # For Composer
-        curl zip php8.0-curl php8.0-zip \
-        # For unused-scanner \
-        php8.0-mbstring \
-        # For coverage \
-        php7.4-xdebug \
+        curl zip php8.1-curl php8.1-zip \
+        # For unused-scanner and phpunit
+        php8.1-mbstring php8.2-mbstring \
+        # For coverage
+        php8.1-xdebug
 
+# TODO : un seul layer
+RUN \
     # Install CI tools
-    && composer global require \
-        steevanb/php-parallel-processes:0.1.0 \
-        phpstan/phpstan:0.12.* \
-        phpstan/phpstan-deprecation-rules:0.12.* \
-        phpstan/phpstan-strict-rules:0.12.* \
-        phpstan/phpstan-phpunit:0.12.* \
-        maglnet/composer-require-checker:3.3.* \
-        wapmorgan/php-deprecation-detector:2.0.* \
-        steevanb/php-code-sniffs:4.2.* \
-        insolita/unused-scanner:2.3.* \
+    cd ${COMPOSER_HOME} \
+    && composer up \
     && ln -s ${COMPOSER_HOME}/vendor/bin/composer-require-checker /usr/local/bin/composer-require-checker \
     && ln -s ${COMPOSER_HOME}/vendor/bin/phpdd /usr/local/bin/phpdd \
     && ln -s ${COMPOSER_HOME}/vendor/bin/phpcs /usr/local/bin/phpcs \
@@ -52,11 +39,8 @@ RUN \
     && ln -s ${COMPOSER_HOME}/vendor/bin/unused_scanner /usr/local/bin/unused-scanner \
 
     # Install Symfony components
-    && COMPOSER_HOME=${COMPOSER_HOME_SYMFONY_4_4} composer global require symfony/serializer:4.4.* \
-    && COMPOSER_HOME=${COMPOSER_HOME_SYMFONY_5_0} composer global require symfony/serializer:5.0.* \
-    && COMPOSER_HOME=${COMPOSER_HOME_SYMFONY_5_1} composer global require symfony/serializer:5.1.* \
-    && COMPOSER_HOME=${COMPOSER_HOME_SYMFONY_5_2} composer global require symfony/serializer:5.2.* \
-    && COMPOSER_HOME=${COMPOSER_HOME_SYMFONY_5_3} composer global require symfony/serializer:5.3.* \
+    && COMPOSER_HOME=${COMPOSER_HOME_SYMFONY_6_1} composer global require symfony/serializer:6.1.* \
+    && COMPOSER_HOME=${COMPOSER_HOME_SYMFONY_6_2} composer global require symfony/serializer:6.2.* \
 
     # Purge
     && apt-get purge -y software-properties-common \
