@@ -9,6 +9,8 @@
 - [BC Break] `AbstractTypedArray::VALUE_ALREADY_EXIST_ADD`, `VALUE_ALREADY_EXIST_DO_NOT_ADD` and `VALUE_ALREADY_EXIST_EXCEPTION` are replaced by `ValueAlreadyExistsModeEnum`
 - [BC Break] `ObjectArray::COMPARISON_STRING` and `COMPARISON_OBJECT_HASH` are replaced by `ObjectComparisonModeEnum`
 - [BC Break] Add types everywhere we can
+- Add `AbstractEnumArray` to store PHP 8.1 `\UnitEnum`.
+- [BC Break] `ObjectArray` could not store instances of `\UnitEnum` anymore.
 
 ### [3.3.2](../../compare/3.3.1...3.3.2) - 2021-12-23
 
