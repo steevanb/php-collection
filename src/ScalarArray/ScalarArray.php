@@ -11,31 +11,20 @@ use Steevanb\PhpTypedArray\{
 
 class ScalarArray extends AbstractTypedArray
 {
-    /** @var bool */
-    protected $allowString = true;
+    protected bool $allowString = true;
 
-    /** @var bool */
-    protected $allowInt = true;
+    protected bool $allowInt = true;
 
-    /** @var bool */
-    protected $allowFloat = true;
+    protected bool $allowFloat = true;
 
-    /** @var bool */
-    protected $allowBool = true;
+    protected bool $allowBool = true;
 
-    /** @return string|int|float|bool|null */
-    #[\ReturnTypeWillChange]
-    public function current()
+    public function current(): string|int|float|bool|null
     {
         return parent::current();
     }
 
-    /**
-     * @param mixed $offset
-     * @return string|int|float|bool|null
-     */
-    #[\ReturnTypeWillChange]
-    public function offsetGet($offset)
+    public function offsetGet(mixed $offset): string|int|float|bool|null
     {
         return parent::offsetGet($offset);
     }
@@ -95,11 +84,7 @@ class ScalarArray extends AbstractTypedArray
         return $this->allowBool;
     }
 
-    /**
-     * @param mixed $offset
-     * @param mixed $value
-     */
-    protected function canAddValue($offset, $value): bool
+    protected function canAddValue(mixed $offset, mixed $value): bool
     {
         if (is_null($value) === false) {
             if (is_scalar($value) === false) {

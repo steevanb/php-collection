@@ -8,20 +8,11 @@ use Steevanb\PhpTypedArray\AbstractTypedArray;
 
 abstract class AbstractScalarArray extends AbstractTypedArray
 {
-    /**
-     * @param mixed $value
-     * @return mixed
-     */
-    abstract protected function cast($value);
+    abstract protected function cast(mixed $value): mixed;
 
-    /** @var bool */
-    protected $castValues = false;
+    protected bool $castValues = false;
 
-    /**
-     * @param mixed $offset
-     * @param mixed $value
-     */
-    public function offsetSet($offset, $value): void
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         parent::offsetSet(
             $offset,

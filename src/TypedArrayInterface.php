@@ -14,11 +14,11 @@ interface TypedArrayInterface extends \ArrayAccess, \Iterator, \Countable
     /** @return array<mixed> */
     public function toArray(): array;
 
-    public function setValueAlreadyExistMode(int $valueAlreadyExistMode): static;
+    public function setValueAlreadyExistMode(ValueAlreadyExistsModeEnum $valueAlreadyExistMode): static;
 
-    public function getValueAlreadyExistMode(): int;
+    public function getValueAlreadyExistMode(): ValueAlreadyExistsModeEnum;
 
-    public function setNullValueMode(int $mode): static;
+    public function setNullValueMode(NullValueModeEnum $mode): static;
 
-    public function getNullValueMode(): int;
+    public function getNullValueMode(): NullValueModeEnum;
 }

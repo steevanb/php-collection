@@ -6,8 +6,7 @@ namespace Steevanb\PhpTypedArray\Tests\Unit\ObjectArray;
 
 final class TestObject
 {
-    /** @var string */
-    private $toString;
+    private string $toString;
 
     public function __construct(string $toString)
     {

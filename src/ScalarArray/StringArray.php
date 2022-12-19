@@ -13,8 +13,7 @@ class StringArray extends AbstractScalarArray
         return parent::current();
     }
 
-    /** @param mixed $offset */
-    public function offsetGet($offset): ?string
+    public function offsetGet(mixed $offset): ?string
     {
         return parent::offsetGet($offset);
     }
@@ -26,11 +25,7 @@ class StringArray extends AbstractScalarArray
         return $this;
     }
 
-    /**
-     * @param mixed $offset
-     * @param mixed $value
-     */
-    protected function canAddValue($offset, $value): bool
+    protected function canAddValue(mixed $offset, mixed $value): bool
     {
         if (is_null($value) === false && is_string($value) === false) {
             throw new InvalidTypeException('$value should be of type string or null.');
@@ -39,8 +34,7 @@ class StringArray extends AbstractScalarArray
         return parent::canAddValue($offset, $value);
     }
 
-    /** @param mixed $value */
-    protected function cast($value): ?string
+    protected function cast(mixed $value): ?string
     {
         return is_null($value) ? null : (string) $value;
     }

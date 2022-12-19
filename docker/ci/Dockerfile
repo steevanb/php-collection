@@ -25,12 +25,10 @@ RUN \
         # For unused-scanner and phpunit
         php8.1-mbstring php8.2-mbstring \
         # For coverage
-        php8.1-xdebug
+        php8.1-xdebug \
 
-# TODO : un seul layer
-RUN \
     # Install CI tools
-    cd ${COMPOSER_HOME} \
+    && cd ${COMPOSER_HOME} \
     && composer up \
     && ln -s ${COMPOSER_HOME}/vendor/bin/composer-require-checker /usr/local/bin/composer-require-checker \
     && ln -s ${COMPOSER_HOME}/vendor/bin/phpdd /usr/local/bin/phpdd \

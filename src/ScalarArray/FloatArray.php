@@ -13,8 +13,7 @@ class FloatArray extends AbstractScalarArray
         return parent::current();
     }
 
-    /** @param mixed $offset */
-    public function offsetGet($offset): ?float
+    public function offsetGet(mixed $offset): ?float
     {
         return parent::offsetGet($offset);
     }
@@ -26,11 +25,7 @@ class FloatArray extends AbstractScalarArray
         return $this;
     }
 
-    /**
-     * @param mixed $offset
-     * @param mixed $value
-     */
-    protected function canAddValue($offset, $value): bool
+    protected function canAddValue(mixed $offset, mixed $value): bool
     {
         if (is_null($value) === false && is_float($value) === false) {
             throw new InvalidTypeException('$value should be of type float or null.');
@@ -39,8 +34,7 @@ class FloatArray extends AbstractScalarArray
         return parent::canAddValue($offset, $value);
     }
 
-    /** @param mixed $value */
-    protected function cast($value): ?float
+    protected function cast(mixed $value): ?float
     {
         return is_null($value) ? null : (float) $value;
     }

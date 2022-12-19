@@ -8,7 +8,9 @@ use PHPUnit\Framework\TestCase;
 use Steevanb\PhpTypedArray\{
     Exception\InvalidTypeException,
     Exception\ValueAlreadyExistException,
-    ObjectArray\UnicodeStringArray
+    ObjectArray\UnicodeStringArray,
+    ObjectComparisonModeEnum,
+    ValueAlreadyExistsModeEnum
 };
 use Symfony\Component\String\UnicodeString;
 
@@ -63,7 +65,7 @@ final class UnicodeStringArrayTest extends TestCase
     public function testComparisonModeString(): void
     {
         $array = (new UnicodeStringArray())
-            ->setValueAlreadyExistMode(UnicodeStringArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
+            ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::DO_NOT_ADD)
             ->setValues(
                 [
                     new UnicodeString('foo'),
@@ -81,8 +83,8 @@ final class UnicodeStringArrayTest extends TestCase
     public function testComparisonModeObjectHas(): void
     {
         $array = (new UnicodeStringArray())
-            ->setComparisonMode(UnicodeStringArray::COMPARISON_OBJECT_HASH)
-            ->setValueAlreadyExistMode(UnicodeStringArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
+            ->setComparisonMode(ObjectComparisonModeEnum::HASH)
+            ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::DO_NOT_ADD)
             ->setValues(
                 [
                     new UnicodeString('foo'),
@@ -100,7 +102,7 @@ final class UnicodeStringArrayTest extends TestCase
     public function testMergeValueAlreadyExistsAdd(): void
     {
         $array = (new UnicodeStringArray([new UnicodeString('foo'), new UnicodeString('bar')]))
-            ->setValueAlreadyExistMode(UnicodeStringArray::VALUE_ALREADY_EXIST_ADD)
+            ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::ADD)
             ->merge(new UnicodeStringArray([new UnicodeString('bar'), new UnicodeString('baz')]));
 
         static::assertCount(4, $array);
@@ -113,7 +115,7 @@ final class UnicodeStringArrayTest extends TestCase
     public function testMergeValueAlreadyExistsDoNotAdd(): void
     {
         $array = (new UnicodeStringArray([new UnicodeString('foo'), new UnicodeString('bar')]))
-            ->setValueAlreadyExistMode(UnicodeStringArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
+            ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::DO_NOT_ADD)
             ->merge(new UnicodeStringArray([new UnicodeString('bar'), new UnicodeString('baz')]));
 
         static::assertCount(3, $array);
@@ -127,7 +129,7 @@ final class UnicodeStringArrayTest extends TestCase
     {
         static::expectException(ValueAlreadyExistException::class);
         (new UnicodeStringArray([new UnicodeString('foo'), new UnicodeString('bar')]))
-            ->setValueAlreadyExistMode(UnicodeStringArray::VALUE_ALREADY_EXIST_EXCEPTION)
+            ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::EXCEPTION)
             ->merge(new UnicodeStringArray([new UnicodeString('bar'), new UnicodeString('baz')]));
     }
 }

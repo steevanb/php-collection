@@ -13,7 +13,7 @@ fi
 phpcs \
     -p \
     --warning-severity=0 \
-    --ignore=/vendor/,/var/ \
+    --ignore=/vendor/,/var/,*Enum.php \
     --bootstrap=config/ci/phpcs.php \
     --standard="${COMPOSER_HOME}"/vendor/steevanb/php-code-sniffs/src/Steevanb/ruleset.xml \
     --report=steevanb\\PhpCodeSniffs\\Reports\\Steevanb \

@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Steevanb\PhpTypedArray\Tests\Unit\AbstractTypedArray;
 
 use PHPUnit\Framework\TestCase;
-use Steevanb\PhpTypedArray\Exception\NullValueException;
+use Steevanb\PhpTypedArray\{
+    Exception\NullValueException,
+    NullValueModeEnum
+};
 
 final class NullValueTest extends TestCase
 {
@@ -22,7 +25,7 @@ final class NullValueTest extends TestCase
     public function testNullValueDoNotAdd(): void
     {
         $array = (new TypedArray())
-            ->setNullValueMode(TypedArray::NULL_VALUE_DO_NOT_ADD)
+            ->setNullValueMode(NullValueModeEnum::DO_NOT_ADD)
             ->setValues([1, 2, null]);
 
         static::assertCount(2, $array);
@@ -35,7 +38,7 @@ final class NullValueTest extends TestCase
         static::expectException(NullValueException::class);
 
         (new TypedArray())
-            ->setNullValueMode(TypedArray::NULL_VALUE_EXCEPTION)
+            ->setNullValueMode(NullValueModeEnum::EXCEPTION)
             ->setValues([1, 2, null]);
     }
 }

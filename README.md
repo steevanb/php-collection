@@ -68,17 +68,17 @@ If you want to be sure a value is unique inside your TypedArray, you have to con
 // IntArray will contain [1, 2, 2]
 (new IntArray())
     // Default behavior, code here is just for the example
-    ->setValueAlreadyExistMode(IntArray::VALUE_ALREADY_EXIST_ADD)
+    ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::ADD)
     ->setValues([1, 2, 2]);
 
 // IntArray will contain [1, 2]
 (new IntArray())
-    ->setValueAlreadyExistMode(IntArray::VALUE_ALREADY_EXIST_DO_NOT_ADD)
+    ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::DO_NOT_ADD)
     ->setValues([1, 2, 2]);
 
 // ValueAlreadyExistException will be throwned
 (new IntArray())
-    ->setValueAlreadyExistMode(IntArray::VALUE_ALREADY_EXIST_EXCEPTION)
+    ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::EXCEPTION)
     ->setValues([1, 2, 2]);
 ```
 
@@ -92,17 +92,17 @@ You can configure the behavior when `null` value is added:
 // IntArray will contain [1, 2, null]
 (new IntArray())
     // default behavior, code here is just for the example
-    ->setValueAlreadyExistMode(IntArray::NULL_VALUE_ALLOW)
+    ->setValueAlreadyExistMode(NullValueModeEnum::ALLOW)
     ->setValues([1, 2, null]);
 
 // IntArray will contain [1, 2]
 (new IntArray())
-    ->setValueAlreadyExistMode(IntArray::NULL_VALUE_DO_NOT_ADD)
+    ->setValueAlreadyExistMode(NullValueModeEnum::DO_NOT_ADD)
     ->setValues([1, 2, null]);
 
 // NullValueException will be throwned
 (new IntArray())
-    ->setValueAlreadyExistMode(IntArray::NULL_VALUE_EXCEPTION)
+    ->setValueAlreadyExistMode(NullValueModeEnum::EXCEPTION)
     ->setValues([1, 2, null]);
 ```
 

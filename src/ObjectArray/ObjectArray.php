@@ -7,22 +7,17 @@ namespace Steevanb\PhpTypedArray\ObjectArray;
 use Steevanb\PhpTypedArray\{
     AbstractTypedArray,
     Exception\InvalidTypeException,
-    Exception\PhpTypedArrayException
+    Exception\PhpTypedArrayException,
+    ObjectComparisonModeEnum
 };
 
 class ObjectArray extends AbstractTypedArray
 {
-    public const COMPARISON_STRING = 1;
-    public const COMPARISON_OBJECT_HASH = 2;
+    protected ?string $className;
 
-    /** @var ?string */
-    protected $className;
+    protected ObjectComparisonModeEnum $comparisonMode = ObjectComparisonModeEnum::STRING;
 
-    /** @var int */
-    protected $comparisonMode = self::COMPARISON_STRING;
-
-    /** @var ?string */
-    protected $instanceOf;
+    protected ?string $instanceOf;
 
     /** @param iterable<object> $values */
     public function __construct(iterable $values = [], string $className = null)
@@ -44,23 +39,19 @@ class ObjectArray extends AbstractTypedArray
         return $this->instanceOf;
     }
 
-    public function setComparisonMode(int $mode): static
+    public function setComparisonMode(ObjectComparisonModeEnum $mode): static
     {
         $this->comparisonMode = $mode;
 
         return $this;
     }
 
-    public function getComparisonMode(): int
+    public function getComparisonMode(): ObjectComparisonModeEnum
     {
         return $this->comparisonMode;
     }
 
-    /**
-     * @param mixed $offset
-     * @param mixed $value
-     */
-    protected function canAddValue($offset, $value): bool
+    protected function canAddValue(mixed $offset, mixed $value): bool
     {
         if (is_null($value) === false) {
             if (
@@ -81,35 +72,30 @@ class ObjectArray extends AbstractTypedArray
         return parent::canAddValue($offset, $value);
     }
 
-    /**
-     * @param mixed $firstValue
-     * @param mixed $secondValue
-     */
-    protected function isSameValues($firstValue, $secondValue): bool
+    protected function isSameValues(mixed $firstValue, mixed $secondValue): bool
     {
-        if ($this->getComparisonMode() === static::COMPARISON_STRING) {
+        if ($this->getComparisonMode() === ObjectComparisonModeEnum::STRING) {
             $return = parent::isSameValues(
                 $this->castValueToString($firstValue),
                 $this->castValueToString($secondValue)
             );
-        } elseif ($this->getComparisonMode() === static::COMPARISON_OBJECT_HASH) {
+        } elseif ($this->getComparisonMode() === ObjectComparisonModeEnum::HASH) {
             $return = parent::isSameValues(
                 is_object($firstValue) ? spl_object_hash($firstValue) : null,
                 is_object($secondValue) ? spl_object_hash($secondValue) : null
             );
         } else {
-            throw new PhpTypedArrayException('Unknown comparison mode "' . $this->getComparisonMode() . '".');
+            throw new PhpTypedArrayException('Unknown comparison mode "' . $this->getComparisonMode()->value . '".');
         }
 
         return $return;
     }
 
-    /** @param mixed $value */
-    protected function castValueToString($value): string
+    protected function castValueToString(mixed $value): string
     {
         try {
             $return = parent::castValueToString($value);
-        } catch (\ErrorException $exception) {
+        } catch (\Throwable) {
             throw new PhpTypedArrayException('Error while converting object to string. Add __toString() to do it.');
         }
 
