@@ -36,5 +36,14 @@
     },
     "config": {
         "sort-packages": true
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@rm-composer-lock"
+        ],
+        "post-update-cmd": [
+            "@rm-composer-lock"
+        ],
+        "rm-composer-lock": "rm composer.lock"
     }
 }
