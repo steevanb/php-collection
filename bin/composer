@@ -6,4 +6,4 @@ readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/..")"
 . "${ROOT_DIR}"/bin/common.inc.sh
 BIN_DIR=bin COMPOSER_HOME=/app/var/composer . "${ROOT_DIR}"/bin/dockerise.inc.bash
 
-php8.1 /usr/local/bin/composer "${@}"
+php /usr/local/bin/composer "${@}"
