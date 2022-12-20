@@ -12,9 +12,9 @@ set +e
 XDEBUG_MODE=coverage \
     php \
         vendor/bin/phpunit \
-            --bootstrap "${COMPOSER_HOME_SYMFONY_5_3}"/vendor/autoload.php \
+            --bootstrap "${COMPOSER_HOME_SYMFONY_6_1}"/vendor/autoload.php \
             --coverage-xml "${ROOT_DIR}"/var/release/phpunit/coverage/xml \
-            --configuration "${ROOT_DIR}"/config/ci/phpunit.php-7.4.xml \
+            --configuration "${ROOT_DIR}"/config/ci/phpunit.php-8.1.xml \
             1>/dev/null \
             2>&1
 set -e
