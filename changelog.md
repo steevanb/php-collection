@@ -1,5 +1,7 @@
 ### master
 
+### [4.0.0](../../compare/3.3.2...4.0.0) - 2022-12-20
+
 - [BC Break] Remove support for PHP 7.1, 7.2, 7.3, 7.4 and 8.0
 - Add support for PHP 8.2
 - [BC Break] Remove support for Symfony < 6.1

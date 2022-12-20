@@ -1,6 +1,6 @@
-[![Version](https://img.shields.io/badge/version-3.3.2-blueviolet.svg)](https://github.com/steevanb/php-typed-array/tree/3.3.2)
+[![Version](https://img.shields.io/badge/version-4.0.0-blueviolet.svg)](https://github.com/steevanb/php-typed-array/tree/4.0.0)
 [![PHP](https://img.shields.io/badge/php-^7.1||^8.0-blue.svg)](https://php.net)
-![Lines](https://img.shields.io/badge/code%20lines-4,369-blue.svg)
+![Lines](https://img.shields.io/badge/code%20lines-4,637-blue.svg)
 ![Downloads](https://poser.pugx.org/steevanb/php-typed-array/downloads)
 ![GitHub workflow status](https://img.shields.io/github/actions/workflow/status/steevanb/php-typed-array/ci.yml?branch=master)
 ![Coverage](https://img.shields.io/badge/coverage-96%25-success.svg)
@@ -16,7 +16,7 @@ With `php-typed-array`, you can type your array values. How? Cause now you will 
 ## Installation
 
 ```
-composer require steevanb/php-typed-array ^3.3
+composer require steevanb/php-typed-array ^4.0
 ```
 
 ## Typed array available
