@@ -20,7 +20,7 @@ RUN \
     && apk del .build-deps \
 
     # Install symfony component for coverage
-    && COMPOSER_HOME=${COMPOSER_HOME_SYMFONY_5_3} composer global require symfony/serializer:6.1.* \
+    && COMPOSER_HOME=${COMPOSER_HOME_SYMFONY_6_1} composer global require symfony/serializer:6.1.* \
 
     # Purge
     && rm -rf /tmp/*
