@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 
-COPY --from=composer:2.4.4 /usr/bin/composer /usr/local/bin/composer
+COPY --from=composer:2.5.4 /usr/bin/composer /usr/local/bin/composer
 
 ENV COMPOSER_HOME=/composer/common
 ENV COMPOSER_HOME_SYMFONY_6_1=/composer/symfony-6-1
@@ -26,6 +26,7 @@ RUN \
         php8.1-mbstring php8.2-mbstring \
         # For coverage
         php8.1-xdebug \
+    && update-alternatives --set php /usr/bin/php8.1 \
 
     # Install CI tools
     && cd ${COMPOSER_HOME} \

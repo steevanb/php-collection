@@ -1,5 +1,8 @@
 ### master
 
+- Define PHP `8.1` as default PHP version in Docker image `steevanb/php-typed-array:ci`
+- Update Composer to `2.5.4`
+
 ### [4.0.0](../../compare/3.3.2...4.0.0) - 2022-12-20
 
 - [BC Break] Remove support for PHP 7.1, 7.2, 7.3, 7.4 and 8.0
