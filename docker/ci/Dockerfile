@@ -5,6 +5,7 @@ COPY --from=composer:2.5.4 /usr/bin/composer /usr/local/bin/composer
 ENV COMPOSER_HOME=/composer/common
 ENV COMPOSER_HOME_SYMFONY_6_1=/composer/symfony-6-1
 ENV COMPOSER_HOME_SYMFONY_6_2=/composer/symfony-6-2
+ENV PHPSTAN_BIN_PATH=/usr/local/bin/phpstan
 
 COPY docker/ci/composer.json ${COMPOSER_HOME}/composer.json
 
