@@ -20,6 +20,7 @@
 - [BC Break] Rename `Steevanb\PhpTypedArray\ObjectComparisonModeEnum` to `Steevanb\PhpTypedArray\ObjectArray\ComparisonModeEnum`
 - [BC Break] Remove `ObjectArray` to force an `ObjectArray` to have instance of only one class/interface.
 - [BC Break] Default comparison mode for `ObjectArray` is `HASH` (it was `STRING`)
+- [BC Break] Remove parameter `$offset` of `AbstractTypedArray::canAddValue()`
 
 ### [4.0.0](../../compare/3.3.2...4.0.0) - 2022-12-20
 

@@ -30,12 +30,12 @@ abstract class AbstractObjectNullableArray extends AbstractTypedArray
         return '$value should be an instance of ' . $this->getClassName() . ' or null.';
     }
 
-    protected function canAddValue(mixed $offset, mixed $value): bool
+    protected function canAddValue(mixed $value): bool
     {
         if (is_null($value) === false) {
             $this->assertInstanceOf($value);
         }
 
-        return parent::canAddValue($offset, $value);
+        return parent::canAddValue($value);
     }
 }
