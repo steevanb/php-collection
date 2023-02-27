@@ -185,7 +185,7 @@ All methods below will directly apply modifications,
 it will not return a new TypedArray with modifications applied like some PHP functions do.
 
 | Method | PHP associated function | Description |
-| --- |---------------| --- | --- |
+| --- | --- | --- |
 | `clear()` | _none_ | Clear all data and reset next key to `0`. Next data added with `$array[]` will have key `0`. |
 | `changeKeyCase()` | [array_change_key_case()](https://www.php.net/manual/fr/function.array-change-key-case.php) | Changes the case of all keys |
 
