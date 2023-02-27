@@ -9,10 +9,13 @@ jobs:
 
     phpstan:
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                php: [--php=8.1, --php=8.2]
         steps:
             - uses: actions/checkout@v2
             - uses: ./.github/actions/ci-env
-            - run: bin/ci/phpstan
+            - run: bin/ci/phpstan ${{ matrix.php }}
 
     phpdd:
         runs-on: ubuntu-latest
