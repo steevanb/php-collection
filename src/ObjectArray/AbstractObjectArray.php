@@ -18,11 +18,11 @@ abstract class AbstractObjectArray extends AbstractTypedArray
         private readonly string $className,
         iterable $values = [],
         private readonly ComparisonModeEnum $comparisonMode = ComparisonModeEnum::HASH,
-        ValueAlreadyExistsModeEnum $valueAlreadyExistMode = ValueAlreadyExistsModeEnum::ADD
+        ValueAlreadyExistsModeEnum $valueAlreadyExistsMode = ValueAlreadyExistsModeEnum::ADD
     ) {
         $this->assertClassName($this->className);
 
-        parent::__construct($values, $valueAlreadyExistMode);
+        parent::__construct($values, $valueAlreadyExistsMode);
     }
 
     protected function getAssertInstanceOfError(): string

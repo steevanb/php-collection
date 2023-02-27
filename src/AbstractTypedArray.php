@@ -7,7 +7,7 @@ namespace Steevanb\PhpTypedArray;
 use Steevanb\PhpTypedArray\{
     Exception\KeyNotFoundException,
     Exception\ReadOnlyException,
-    Exception\ValueAlreadyExistException
+    Exception\ValueAlreadyExistsException
 };
 
 abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterface
@@ -24,7 +24,7 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
     /** @param iterable<mixed> $values */
     public function __construct(
         iterable $values = [],
-        private readonly ValueAlreadyExistsModeEnum $valueAlreadyExistMode = ValueAlreadyExistsModeEnum::ADD
+        private readonly ValueAlreadyExistsModeEnum $valueAlreadyExistsMode = ValueAlreadyExistsModeEnum::ADD
     ) {
         $this->setValues($values);
     }
@@ -149,9 +149,9 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
         return $this->values;
     }
 
-    public function getValueAlreadyExistMode(): ValueAlreadyExistsModeEnum
+    public function getValueAlreadyExistsMode(): ValueAlreadyExistsModeEnum
     {
-        return $this->valueAlreadyExistMode;
+        return $this->valueAlreadyExistsMode;
     }
 
     public function clear(): static
@@ -200,15 +200,15 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
 
         if (
             in_array(
-                $this->getValueAlreadyExistMode(),
+                $this->getValueAlreadyExistsMode(),
                 [ValueAlreadyExistsModeEnum::DO_NOT_ADD, ValueAlreadyExistsModeEnum::EXCEPTION],
                 true
             )
         ) {
             foreach ($this->values as $internalValue) {
                 if ($this->isSameValues($value, $internalValue)) {
-                    if ($this->getValueAlreadyExistMode() === ValueAlreadyExistsModeEnum::EXCEPTION) {
-                        throw new ValueAlreadyExistException(
+                    if ($this->getValueAlreadyExistsMode() === ValueAlreadyExistsModeEnum::EXCEPTION) {
+                        throw new ValueAlreadyExistsException(
                             'Value "' . $this->castValueToString($value) . '" already exist.'
                         );
                     }

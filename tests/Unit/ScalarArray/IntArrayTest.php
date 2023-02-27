@@ -7,7 +7,7 @@ namespace Steevanb\PhpTypedArray\Tests\Unit\ScalarArray;
 use PHPUnit\Framework\TestCase;
 use Steevanb\PhpTypedArray\{
     Exception\InvalidTypeException,
-    Exception\ValueAlreadyExistException,
+    Exception\ValueAlreadyExistsException,
     ScalarArray\IntArray,
     ValueAlreadyExistsModeEnum
 };
@@ -76,7 +76,7 @@ final class IntArrayTest extends TestCase
 
     public function testMergeValueAlreadyExistsException(): void
     {
-        static::expectException(ValueAlreadyExistException::class);
+        static::expectException(ValueAlreadyExistsException::class);
         (new IntArray([1, 2], ValueAlreadyExistsModeEnum::EXCEPTION))
             ->merge(new IntArray([2, 3]));
     }

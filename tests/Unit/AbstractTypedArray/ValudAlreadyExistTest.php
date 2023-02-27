@@ -6,13 +6,13 @@ namespace Steevanb\PhpTypedArray\Tests\Unit\AbstractTypedArray;
 
 use PHPUnit\Framework\TestCase;
 use Steevanb\PhpTypedArray\{
-    Exception\ValueAlreadyExistException,
+    Exception\ValueAlreadyExistsException,
     ValueAlreadyExistsModeEnum
 };
 
 final class ValudAlreadyExistTest extends TestCase
 {
-    public function testValueAlreadyExistModeAdd(): void
+    public function testValueAlreadyExistsModeAdd(): void
     {
         $array = new TypedArray([10, 11, 11, 13]);
 
@@ -23,7 +23,7 @@ final class ValudAlreadyExistTest extends TestCase
         static::assertSame(13, $array[3]);
     }
 
-    public function testValueAlreadyExistModeDoNotAdd(): void
+    public function testValueAlreadyExistsModeDoNotAdd(): void
     {
         $array = new TypedArray([10, 11, 11, 13], ValueAlreadyExistsModeEnum::DO_NOT_ADD);
 
@@ -33,9 +33,9 @@ final class ValudAlreadyExistTest extends TestCase
         static::assertSame(13, $array[3]);
     }
 
-    public function testValueAlreadyExistModeException(): void
+    public function testValueAlreadyExistsModeException(): void
     {
-        static::expectException(ValueAlreadyExistException::class);
+        static::expectException(ValueAlreadyExistsException::class);
         new TypedArray([10, 11, 11, 13], ValueAlreadyExistsModeEnum::EXCEPTION);
     }
 }

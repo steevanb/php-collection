@@ -7,7 +7,7 @@ namespace Steevanb\PhpTypedArray\Tests\Unit\ScalarArray;
 use PHPUnit\Framework\TestCase;
 use Steevanb\PhpTypedArray\{
     Exception\InvalidTypeException,
-    Exception\ValueAlreadyExistException,
+    Exception\ValueAlreadyExistsException,
     ScalarArray\StringNullableArray,
     ValueAlreadyExistsModeEnum
 };
@@ -77,7 +77,7 @@ final class StringNullableArrayTest extends TestCase
 
     public function testMergeValueAlreadyExistsException(): void
     {
-        static::expectException(ValueAlreadyExistException::class);
+        static::expectException(ValueAlreadyExistsException::class);
         (new StringNullableArray(['foo', 'bar'], ValueAlreadyExistsModeEnum::EXCEPTION))
             ->merge(new StringNullableArray(['bar', 'baz']));
     }

@@ -14,5 +14,5 @@ interface TypedArrayInterface extends \ArrayAccess, \Iterator, \Countable
     /** @return array<mixed> */
     public function toArray(): array;
 
-    public function getValueAlreadyExistMode(): ValueAlreadyExistsModeEnum;
+    public function getValueAlreadyExistsMode(): ValueAlreadyExistsModeEnum;
 }
