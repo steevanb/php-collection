@@ -12,16 +12,19 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class ScalarArrayDenormalizer implements DenormalizerInterface
 {
-    public function supportsDenormalization($data, $type, $format = null): bool
+    public function supportsDenormalization(mixed $data, string $type, string $format = null): bool
     {
         $interfaces = class_implements($type);
 
         return is_array($interfaces) && array_key_exists(ScalarArrayInterface::class, $interfaces);
     }
 
-    /** @var array<mixed> $context */
-    public function denormalize(mixed $data, string $type, $format = null, array $context = []): AbstractTypedArray
-    {
+    public function denormalize(
+        mixed $data,
+        string $type,
+        string $format = null,
+        array $context = []
+    ): AbstractTypedArray {
         return $this
             ->createScalarArray($type)
             ->setValues($data);

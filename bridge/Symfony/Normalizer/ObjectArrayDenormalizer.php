@@ -18,7 +18,7 @@ class ObjectArrayDenormalizer implements DenormalizerInterface, DenormalizerAwar
 {
     use DenormalizerAwareTrait;
 
-    public function supportsDenormalization($data, $type, $format = null): bool
+    public function supportsDenormalization(mixed $data, string $type, string $format = null): bool
     {
         return
             $type === AbstractObjectArray::class
