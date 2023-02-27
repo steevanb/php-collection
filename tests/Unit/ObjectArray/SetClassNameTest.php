@@ -7,15 +7,15 @@ namespace Steevanb\PhpTypedArray\Tests\Unit\ObjectArray;
 use PHPUnit\Framework\TestCase;
 use Steevanb\PhpTypedArray\{
     Exception\InvalidTypeException,
-    ObjectArray\ObjectArray
+    ObjectArray\ComparisonModeEnum,
+    ValueAlreadyExistsModeEnum
 };
 
 final class SetClassNameTest extends TestCase
 {
     public function testSetObject(): void
     {
-        $objectArray = (new ObjectArray())
-            ->setClassName(TestObject::class);
+        $objectArray = new ObjectArray();
 
         static::assertSame(TestObject::class, $objectArray->getClassName());
     }
@@ -25,11 +25,10 @@ final class SetClassNameTest extends TestCase
         $this->expectException(InvalidTypeException::class);
         $this->expectExceptionCode(0);
         $this->expectDeprecationMessage(
-            'Steevanb\PhpTypedArray\ObjectArray\ObjectArray can not store UnitEnum or BackedEnum.'
+            'Steevanb\PhpTypedArray\ObjectArray\AbstractObjectArray can not store UnitEnum or BackedEnum.'
                 . ' Use Steevanb\PhpTypedArray\EnumArray\AbstractEnumArray instead.'
         );
-        (new ObjectArray())
-            ->setClassName(\UnitEnum::class);
+        new ObjectArray([], ComparisonModeEnum::HASH, ValueAlreadyExistsModeEnum::ADD, \UnitEnum::class);
     }
 
     public function testSetBackedEnum(): void
@@ -37,10 +36,9 @@ final class SetClassNameTest extends TestCase
         $this->expectException(InvalidTypeException::class);
         $this->expectExceptionCode(0);
         $this->expectDeprecationMessage(
-            'Steevanb\PhpTypedArray\ObjectArray\ObjectArray can not store UnitEnum or BackedEnum.'
+            'Steevanb\PhpTypedArray\ObjectArray\AbstractObjectArray can not store UnitEnum or BackedEnum.'
                 . ' Use Steevanb\PhpTypedArray\EnumArray\AbstractEnumArray instead.'
         );
-        (new ObjectArray())
-            ->setClassName(\BackedEnum::class);
+        new ObjectArray([], ComparisonModeEnum::HASH, ValueAlreadyExistsModeEnum::ADD, \BackedEnum::class);
     }
 }

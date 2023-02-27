@@ -8,15 +8,15 @@ use PHPUnit\Framework\TestCase;
 use Steevanb\PhpTypedArray\{
     Exception\InvalidTypeException,
     Exception\ValueAlreadyExistException,
-    ScalarArray\IntArray,
+    ScalarArray\IntNullableArray,
     ValueAlreadyExistsModeEnum
 };
 
-final class IntArrayTest extends TestCase
+final class IntNullableArrayTest extends TestCase
 {
     public function testAllowInt(): void
     {
-        $array = new IntArray([1]);
+        $array = new IntNullableArray([1]);
 
         static::assertCount(1, $array);
         static::assertSame(1, $array[0]);
@@ -26,34 +26,35 @@ final class IntArrayTest extends TestCase
     {
         static::expectException(InvalidTypeException::class);
         /** @phpstan-ignore-next-line */
-        new IntArray(['4']);
+        new IntNullableArray(['4']);
     }
 
     public function testInvalidTypeFloat(): void
     {
         static::expectException(InvalidTypeException::class);
         /** @phpstan-ignore-next-line */
-        new IntArray([3.1]);
+        new IntNullableArray([3.1]);
     }
 
     public function testInvalidTypeBool(): void
     {
         static::expectException(InvalidTypeException::class);
         /** @phpstan-ignore-next-line */
-        new IntArray([true]);
+        new IntNullableArray([true]);
     }
 
-    public function testInvalidTypeNull(): void
+    public function testAllowNull(): void
     {
-        static::expectException(InvalidTypeException::class);
-        /** @phpstan-ignore-next-line */
-        new IntArray([null]);
+        $array = new IntNullableArray([null]);
+
+        static::assertCount(1, $array);
+        static::assertNull($array[0]);
     }
 
     public function testMergeValueAlreadyExistsAdd(): void
     {
-        $array = (new IntArray([1, 2], ValueAlreadyExistsModeEnum::ADD))
-            ->merge(new IntArray([1, 2]));
+        $array = (new IntNullableArray([1, 2], ValueAlreadyExistsModeEnum::ADD))
+            ->merge(new IntNullableArray([1, 2]));
 
         static::assertCount(4, $array);
         static::assertSame(1, $array[0]);
@@ -64,8 +65,8 @@ final class IntArrayTest extends TestCase
 
     public function testMergeValueAlreadyExistsDoNotAdd(): void
     {
-        $array = (new IntArray([1, 2], ValueAlreadyExistsModeEnum::DO_NOT_ADD))
-            ->merge(new IntArray([2, 3]));
+        $array = (new IntNullableArray([1, 2], ValueAlreadyExistsModeEnum::DO_NOT_ADD))
+            ->merge(new IntNullableArray([2, 3]));
 
         static::assertCount(3, $array);
         static::assertSame(1, $array[0]);
@@ -77,7 +78,7 @@ final class IntArrayTest extends TestCase
     public function testMergeValueAlreadyExistsException(): void
     {
         static::expectException(ValueAlreadyExistException::class);
-        (new IntArray([1, 2], ValueAlreadyExistsModeEnum::EXCEPTION))
-            ->merge(new IntArray([2, 3]));
+        (new IntNullableArray([1, 2], ValueAlreadyExistsModeEnum::EXCEPTION))
+            ->merge(new IntNullableArray([2, 3]));
     }
 }

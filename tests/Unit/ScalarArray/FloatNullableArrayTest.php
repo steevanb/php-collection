@@ -8,15 +8,15 @@ use PHPUnit\Framework\TestCase;
 use Steevanb\PhpTypedArray\{
     Exception\InvalidTypeException,
     Exception\ValueAlreadyExistException,
-    ScalarArray\FloatArray,
+    ScalarArray\FloatNullableArray,
     ValueAlreadyExistsModeEnum
 };
 
-final class FloatArrayTest extends TestCase
+final class FloatNullableArrayTest extends TestCase
 {
     public function testAllowFloat(): void
     {
-        $array = new FloatArray([1.0]);
+        $array = new FloatNullableArray([1.0]);
 
         static::assertCount(1, $array);
         static::assertSame(1.0, $array[0]);
@@ -26,33 +26,34 @@ final class FloatArrayTest extends TestCase
     {
         static::expectException(InvalidTypeException::class);
         /** @phpstan-ignore-next-line */
-        new FloatArray(['4']);
+        new FloatNullableArray(['4']);
     }
 
     public function testInvalidTypeInt(): void
     {
         static::expectException(InvalidTypeException::class);
-        new FloatArray([1]);
+        new FloatNullableArray([1]);
     }
 
     public function testInvalidTypeBool(): void
     {
         static::expectException(InvalidTypeException::class);
         /** @phpstan-ignore-next-line */
-        new FloatArray([true]);
+        new FloatNullableArray([true]);
     }
 
-    public function testInvalidTypeNull(): void
+    public function testAllowNull(): void
     {
-        static::expectException(InvalidTypeException::class);
-        /** @phpstan-ignore-next-line */
-        new FloatArray([null]);
+        $array = new FloatNullableArray([null]);
+
+        static::assertCount(1, $array);
+        static::assertNull($array[0]);
     }
 
     public function testMergeValueAlreadyExistsAdd(): void
     {
-        $array = (new FloatArray([1.0, 2.0], ValueAlreadyExistsModeEnum::ADD))
-            ->merge(new FloatArray([1.0, 2.0]));
+        $array = (new FloatNullableArray([1.0, 2.0], ValueAlreadyExistsModeEnum::ADD))
+            ->merge(new FloatNullableArray([1.0, 2.0]));
 
         static::assertCount(4, $array);
         static::assertSame(1.0, $array[0]);
@@ -63,8 +64,8 @@ final class FloatArrayTest extends TestCase
 
     public function testMergeValueAlreadyExistsDoNotAdd(): void
     {
-        $array = (new FloatArray([1.0, 2.0], ValueAlreadyExistsModeEnum::DO_NOT_ADD))
-            ->merge(new FloatArray([2.0, 3.0]));
+        $array = (new FloatNullableArray([1.0, 2.0], ValueAlreadyExistsModeEnum::DO_NOT_ADD))
+            ->merge(new FloatNullableArray([2.0, 3.0]));
 
         static::assertCount(3, $array);
         static::assertSame(1.0, $array[0]);
@@ -76,7 +77,7 @@ final class FloatArrayTest extends TestCase
     public function testMergeValueAlreadyExistsException(): void
     {
         static::expectException(ValueAlreadyExistException::class);
-        (new FloatArray([1.0, 2.0], ValueAlreadyExistsModeEnum::EXCEPTION))
-            ->merge(new FloatArray([2.0, 3.0]));
+        (new FloatNullableArray([1.0, 2.0], ValueAlreadyExistsModeEnum::EXCEPTION))
+            ->merge(new FloatNullableArray([2.0, 3.0]));
     }
 }

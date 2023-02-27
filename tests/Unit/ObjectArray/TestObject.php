@@ -6,15 +6,17 @@ namespace Steevanb\PhpTypedArray\Tests\Unit\ObjectArray;
 
 final class TestObject
 {
-    private string $toString;
-
-    public function __construct(string $toString)
+    public function __construct(private readonly string $value)
     {
-        $this->toString = $toString;
+    }
+
+    public function getValue(): string
+    {
+        return $this->value;
     }
 
     public function __toString(): string
     {
-        return $this->toString;
+        return $this->value;
     }
 }

@@ -10,9 +10,9 @@ use Steevanb\PhpTypedArray\{
     ValueAlreadyExistsModeEnum
 };
 
-class FloatArray extends AbstractTypedArray implements ScalarArrayInterface
+class StringNullableArray extends AbstractTypedArray implements ScalarArrayInterface
 {
-    /** @param iterable<float> $values */
+    /** @param iterable<string|null> $values */
     public function __construct(
         iterable $values = [],
         ValueAlreadyExistsModeEnum $valueAlreadyExistsMode = ValueAlreadyExistsModeEnum::ADD
@@ -20,24 +20,24 @@ class FloatArray extends AbstractTypedArray implements ScalarArrayInterface
         parent::__construct($values, $valueAlreadyExistsMode);
     }
 
-    public function current(): ?float
+    public function current(): ?string
     {
         return parent::current();
     }
 
-    public function offsetGet(mixed $offset): float
+    public function offsetGet(mixed $offset): ?string
     {
         return parent::offsetGet($offset);
     }
 
-    public function merge(FloatArray $typedArray): static
+    public function merge(StringNullableArray|StringArray $typedArray): static
     {
         parent::doMerge($typedArray);
 
         return $this;
     }
 
-    /** @return array<float> */
+    /** @return array<string|null> */
     public function toArray(): array
     {
         return parent::toArray();
@@ -45,8 +45,8 @@ class FloatArray extends AbstractTypedArray implements ScalarArrayInterface
 
     protected function canAddValue(mixed $offset, mixed $value): bool
     {
-        if (is_float($value) === false) {
-            throw new InvalidTypeException('$value should be of type float.');
+        if (is_null($value) === false && is_string($value) === false) {
+            throw new InvalidTypeException('$value should be of type string or null.');
         }
 
         return parent::canAddValue($offset, $value);

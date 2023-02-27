@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Steevanb\PhpTypedArray\Bridge\Symfony\Normalizer;
 
-use Steevanb\PhpTypedArray\ObjectArray\ObjectArray;
+use Steevanb\PhpTypedArray\{
+    ObjectArray\AbstractObjectArray,
+    ObjectArray\AbstractObjectNullableArray
+};
 use Symfony\Component\Serializer\{
     Normalizer\DenormalizerAwareInterface,
     Normalizer\DenormalizerAwareTrait,
@@ -17,15 +20,23 @@ class ObjectArrayDenormalizer implements DenormalizerInterface, DenormalizerAwar
 
     public function supportsDenormalization($data, $type, $format = null): bool
     {
-        return $type === ObjectArray::class || is_subclass_of($type, ObjectArray::class);
+        return
+            $type === AbstractObjectArray::class
+            || is_subclass_of($type, AbstractObjectArray::class)
+            || $type === AbstractObjectNullableArray::class
+            || is_subclass_of($type, AbstractObjectNullableArray::class);
     }
 
     /**
      * @var array<mixed> $data
      * @var array<mixed> $context
      */
-    public function denormalize($data, $type, $format = null, array $context = []): ObjectArray
-    {
+    public function denormalize(
+        mixed $data,
+        string $type,
+        string $format = null,
+        array $context = []
+    ): AbstractObjectArray|AbstractObjectNullableArray {
         $return = $this->createObjectArray($type);
         foreach ($data as $item) {
             $return[] = $this->denormalizeObject($item, $return, $format, $context);
@@ -34,14 +45,19 @@ class ObjectArrayDenormalizer implements DenormalizerInterface, DenormalizerAwar
         return $return;
     }
 
-    protected function createObjectArray(string $type): ObjectArray
+    protected function createObjectArray(string $type): AbstractObjectArray|AbstractObjectNullableArray
     {
-        return new $type([]);
+        return new $type();
     }
 
-    /** @return object */
-    protected function denormalizeObject($item, ObjectArray $objectArray, ?string $format, array $context)
-    {
-        return $this->denormalizer->denormalize($item, $objectArray->getClassName(), $format, $context);
+    protected function denormalizeObject(
+        mixed $item,
+        AbstractObjectArray|AbstractObjectNullableArray $objectArray,
+        ?string $format,
+        array $context
+    ): object|null {
+        return $item === null
+            ? null
+            : $this->denormalizer->denormalize($item, $objectArray->getClassName(), $format, $context);
     }
 }
