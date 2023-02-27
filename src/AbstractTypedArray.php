@@ -7,8 +7,7 @@ namespace Steevanb\PhpTypedArray;
 use Steevanb\PhpTypedArray\{
     Exception\KeyNotFoundException,
     Exception\ReadOnlyException,
-    Exception\ValueAlreadyExistException,
-    Exception\NullValueException
+    Exception\ValueAlreadyExistException
 };
 
 abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterface
@@ -20,15 +19,13 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
 
     protected bool $valid = true;
 
-    protected ValueAlreadyExistsModeEnum $valueAlreadyExistMode = ValueAlreadyExistsModeEnum::ADD;
-
-    protected NullValueModeEnum $nullValueMode = NullValueModeEnum::ALLOW;
-
     protected bool $readOnly = false;
 
     /** @param iterable<mixed> $values */
-    public function __construct(iterable $values = [])
-    {
+    public function __construct(
+        iterable $values = [],
+        private readonly ValueAlreadyExistsModeEnum $valueAlreadyExistMode = ValueAlreadyExistsModeEnum::ADD
+    ) {
         $this->setValues($values);
     }
 
@@ -37,8 +34,7 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
     {
         $this->assertIsNotReadOnly();
 
-        $this->values = [];
-        $this->nextIntKey = 0;
+        $this->clear();
         foreach ($values as $key => $value) {
             $this->offsetSet($key, $value);
         }
@@ -153,28 +149,9 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
         return $this->values;
     }
 
-    public function setValueAlreadyExistMode(ValueAlreadyExistsModeEnum $valueAlreadyExistMode): static
-    {
-        $this->valueAlreadyExistMode = $valueAlreadyExistMode;
-
-        return $this;
-    }
-
     public function getValueAlreadyExistMode(): ValueAlreadyExistsModeEnum
     {
         return $this->valueAlreadyExistMode;
-    }
-
-    public function setNullValueMode(NullValueModeEnum $mode): static
-    {
-        $this->nullValueMode = $mode;
-
-        return $this;
-    }
-
-    public function getNullValueMode(): NullValueModeEnum
-    {
-        return $this->nullValueMode;
     }
 
     public function clear(): static
@@ -188,14 +165,9 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
 
     public function changeKeyCase(int $case = CASE_LOWER): static
     {
-        $this->assertIsNotReadOnly();
-        $newValues = array_change_key_case($this->toArray(), $case);
-        $this->clear();
-        foreach ($newValues as $key => $value) {
-            $this->offsetSet($key, $value);
-        }
-
-        return $this;
+        return $this
+            ->assertIsNotReadOnly()
+            ->setValues(array_change_key_case($this->toArray(), $case));
     }
 
     protected function assertIsNotReadOnly(): static
@@ -226,17 +198,8 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
     {
         $return = true;
 
-        if (is_null($value)) {
-            if ($this->getNullValueMode() === NullValueModeEnum::DO_NOT_ADD) {
-                $return = false;
-            } elseif ($this->getNullValueMode() === NullValueModeEnum::EXCEPTION) {
-                throw new NullValueException('NULL value is not allowed for offset ' . $offset . '.');
-            }
-        }
-
         if (
-            $return === true
-            && in_array(
+            in_array(
                 $this->getValueAlreadyExistMode(),
                 [ValueAlreadyExistsModeEnum::DO_NOT_ADD, ValueAlreadyExistsModeEnum::EXCEPTION],
                 true
@@ -251,6 +214,7 @@ abstract class AbstractTypedArray implements TypedArrayInterface, ReadOnlyInterf
                     }
 
                     $return = false;
+                    break;
                 }
             }
         }

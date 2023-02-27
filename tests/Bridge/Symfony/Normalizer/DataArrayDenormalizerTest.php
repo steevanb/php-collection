@@ -37,4 +37,32 @@ final class DataArrayDenormalizerTest extends TestCase
         static::assertSame('foo2', $data2->foo);
         static::assertSame(43, $data2->bar);
     }
+
+    public function testDenormalizeNullable(): void
+    {
+        $serializer = new Serializer([new ObjectArrayDenormalizer(), new ObjectNormalizer()]);
+        /** @var DataNullableArray $array */
+        $array = $serializer->denormalize(
+            [
+                ['foo' => 'foo1', 'bar' => 42],
+                ['foo' => 'foo2', 'bar' => 43],
+                null
+            ],
+            DataNullableArray::class
+        );
+
+        static::assertCount(3, $array);
+
+        $data1 = $array[0];
+        static::assertInstanceOf(Data::class, $data1);
+        static::assertSame('foo1', $data1->foo);
+        static::assertSame(42, $data1->bar);
+
+        $data2 = $array[1];
+        static::assertInstanceOf(Data::class, $data2);
+        static::assertSame('foo2', $data2->foo);
+        static::assertSame(43, $data2->bar);
+
+        static::assertNull($array[2]);
+    }
 }

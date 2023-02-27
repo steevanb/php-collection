@@ -25,9 +25,7 @@ final class ValudAlreadyExistTest extends TestCase
 
     public function testValueAlreadyExistModeDoNotAdd(): void
     {
-        $array = (new TypedArray())
-            ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::DO_NOT_ADD)
-            ->setValues([10, 11, 11, 13]);
+        $array = new TypedArray([10, 11, 11, 13], ValueAlreadyExistsModeEnum::DO_NOT_ADD);
 
         static::assertCount(3, $array);
         static::assertSame(10, $array[0]);
@@ -38,9 +36,6 @@ final class ValudAlreadyExistTest extends TestCase
     public function testValueAlreadyExistModeException(): void
     {
         static::expectException(ValueAlreadyExistException::class);
-
-        (new TypedArray())
-            ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::EXCEPTION)
-            ->setValues([10, 11, 11, 13]);
+        new TypedArray([10, 11, 11, 13], ValueAlreadyExistsModeEnum::EXCEPTION);
     }
 }

@@ -17,7 +17,7 @@ final class ToArrayTest extends TestCase
 
     public function testOneValue(): void
     {
-        $array = (new TestAbstractEnumArray([TestEnum::VALUE1]))->toArray();
+        $array = (new TestAbstractEnumArray(TestEnum::class, [TestEnum::VALUE1]))->toArray();
 
         static::assertCount(1, $array);
         static::assertArrayHasKey(0, $array);
@@ -28,6 +28,7 @@ final class ToArrayTest extends TestCase
     {
         $array = (
             new TestAbstractEnumArray(
+                TestEnum::class,
                 [TestEnum::VALUE1, TestEnum::VALUE2, TestEnum::VALUE3]
             )
         )->toArray();

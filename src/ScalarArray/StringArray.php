@@ -4,16 +4,28 @@ declare(strict_types=1);
 
 namespace Steevanb\PhpTypedArray\ScalarArray;
 
-use Steevanb\PhpTypedArray\Exception\InvalidTypeException;
+use Steevanb\PhpTypedArray\{
+    AbstractTypedArray,
+    Exception\InvalidTypeException,
+    ValueAlreadyExistsModeEnum
+};
 
-class StringArray extends AbstractScalarArray
+class StringArray extends AbstractTypedArray implements ScalarArrayInterface
 {
+    /** @param iterable<string> $values */
+    public function __construct(
+        iterable $values = [],
+        ValueAlreadyExistsModeEnum $valueAlreadyExistsMode = ValueAlreadyExistsModeEnum::ADD
+    ) {
+        parent::__construct($values, $valueAlreadyExistsMode);
+    }
+
     public function current(): ?string
     {
         return parent::current();
     }
 
-    public function offsetGet(mixed $offset): ?string
+    public function offsetGet(mixed $offset): string
     {
         return parent::offsetGet($offset);
     }
@@ -25,17 +37,18 @@ class StringArray extends AbstractScalarArray
         return $this;
     }
 
+    /** @return array<string> */
+    public function toArray(): array
+    {
+        return parent::toArray();
+    }
+
     protected function canAddValue(mixed $offset, mixed $value): bool
     {
-        if (is_null($value) === false && is_string($value) === false) {
-            throw new InvalidTypeException('$value should be of type string or null.');
+        if (is_string($value) === false) {
+            throw new InvalidTypeException('$value should be of type string.');
         }
 
         return parent::canAddValue($offset, $value);
-    }
-
-    protected function cast(mixed $value): ?string
-    {
-        return is_null($value) ? null : (string) $value;
     }
 }

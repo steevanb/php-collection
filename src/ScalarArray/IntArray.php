@@ -4,16 +4,28 @@ declare(strict_types=1);
 
 namespace Steevanb\PhpTypedArray\ScalarArray;
 
-use Steevanb\PhpTypedArray\Exception\InvalidTypeException;
+use Steevanb\PhpTypedArray\{
+    AbstractTypedArray,
+    Exception\InvalidTypeException,
+    ValueAlreadyExistsModeEnum
+};
 
-class IntArray extends AbstractScalarArray
+class IntArray extends AbstractTypedArray implements ScalarArrayInterface
 {
+    /** @param iterable<int> $values */
+    public function __construct(
+        iterable $values = [],
+        ValueAlreadyExistsModeEnum $valueAlreadyExistsMode = ValueAlreadyExistsModeEnum::ADD
+    ) {
+        parent::__construct($values, $valueAlreadyExistsMode);
+    }
+
     public function current(): ?int
     {
         return parent::current();
     }
 
-    public function offsetGet(mixed $offset): ?int
+    public function offsetGet(mixed $offset): int
     {
         return parent::offsetGet($offset);
     }
@@ -25,25 +37,18 @@ class IntArray extends AbstractScalarArray
         return $this;
     }
 
+    /** @return array<int> */
+    public function toArray(): array
+    {
+        return parent::toArray();
+    }
+
     protected function canAddValue(mixed $offset, mixed $value): bool
     {
-        if (is_null($value) === false && is_int($value) === false) {
-            throw new InvalidTypeException('$value should be of type int or null.');
+        if (is_int($value) === false) {
+            throw new InvalidTypeException('$value should be of type int.');
         }
 
         return parent::canAddValue($offset, $value);
-    }
-
-    protected function cast(mixed $value): ?int
-    {
-        if (
-            is_numeric($value) === false
-            && is_bool($value) === false
-            && is_null($value) === false
-        ) {
-            throw new InvalidTypeException('"' . $value . '" is not numeric.');
-        }
-
-        return is_null($value) ? null : (int) $value;
     }
 }

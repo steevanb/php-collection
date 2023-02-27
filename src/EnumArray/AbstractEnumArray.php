@@ -5,41 +5,66 @@ declare(strict_types=1);
 namespace Steevanb\PhpTypedArray\EnumArray;
 
 use Steevanb\PhpTypedArray\{
+    AbstractTypedArray,
     Exception\InvalidTypeException,
-    ObjectArray\ObjectArray
+    ObjectArray\AbstractObjectArray,
+    ObjectArray\AbstractObjectNullableArray,
+    ValueAlreadyExistsModeEnum
 };
 
-abstract class AbstractEnumArray extends ObjectArray
+abstract class AbstractEnumArray extends AbstractTypedArray
 {
     /** @param iterable<\UnitEnum> $values */
-    public function __construct(iterable $values = [], string $className = null)
-    {
-        parent::__construct($values, $className);
+    public function __construct(
+        private readonly string $className,
+        iterable $values = [],
+        ValueAlreadyExistsModeEnum $valueAlreadyExistMode = ValueAlreadyExistsModeEnum::ADD
+    ) {
+        $this->assertClassName($this->className);
+
+        parent::__construct($values, $valueAlreadyExistMode);
     }
 
-    public function setClassName(?string $className): static
+    public function getClassName(): string
     {
-        if (is_string($className)) {
-            $implements = class_implements($className);
-            if ($implements === false) {
-                $implements = [];
-            }
+        return $this->className;
+    }
 
-            if (in_array(\UnitEnum::class, $implements, true) === false) {
-                throw new InvalidTypeException(
-                    __CLASS__
-                        . ' can store only '
-                        . \UnitEnum::class
-                        . '. Use '
-                        . ObjectArray::class
-                        . ' if you want to store objects.'
-                );
-            }
+    protected function assertClassName(string $className): static
+    {
+        $implements = class_implements($className);
+        if ($implements === false) {
+            $implements = [];
         }
 
-        $this->className = $className;
+        if (in_array(\UnitEnum::class, $implements, true) === false) {
+            throw new InvalidTypeException(
+                __CLASS__
+                    . ' can store only ' . \UnitEnum::class
+                    . ' or ' . \BackedEnum::class . '. Use '
+                    . AbstractObjectArray::class . ' or ' . AbstractObjectNullableArray::class
+                    . ' if you want to store objects.'
+            );
+        }
 
         return $this;
+    }
+
+    protected function isSameValues(mixed $firstValue, mixed $secondValue): bool
+    {
+        return $firstValue === $secondValue;
+    }
+
+    protected function canAddValue(mixed $offset, mixed $value): bool
+    {
+        if (
+            is_object($value) === false
+            || $value instanceof ($this->getClassName()) === false
+        ) {
+            throw new InvalidTypeException('$value should be an instance of ' . $this->getClassName() . '.');
+        }
+
+        return parent::canAddValue($offset, $value);
     }
 
     protected function castValueToString(mixed $value): string
@@ -49,7 +74,9 @@ abstract class AbstractEnumArray extends ObjectArray
         } elseif ($value instanceof \UnitEnum) {
             $return = $value->name;
         } else {
-            throw new InvalidTypeException('$value should be an instance of ' . \UnitEnum::class . '.');
+            throw new InvalidTypeException(
+                '$value should be an instance of ' . \UnitEnum::class . ' or ' . \BackedEnum::class . '.'
+            );
         }
 
         return $return;

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Steevanb\PhpTypedArray\Tests\Bridge\Symfony\Normalizer;
 
-use Steevanb\PhpTypedArray\ObjectArray\AbstractObjectArray;
+use Steevanb\PhpTypedArray\ObjectArray\AbstractObjectNullableArray;
 
-class DataArray extends AbstractObjectArray
+class DataNullableArray extends AbstractObjectNullableArray
 {
     public function __construct()
     {

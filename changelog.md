@@ -2,6 +2,24 @@
 
 - Define PHP `8.1` as default PHP version in Docker image `steevanb/php-typed-array:ci`
 - Update Composer to `2.5.4`
+- [BC Break] Remove `AbstractTypedArray::$nullValueMode`
+- Call `$this->clear()` in `AbstractTypedArray::setValues()`
+- Rework `AbstractTypedArray::changeKeyCase()`
+- [BC Break] Remove `NullValueException`
+- [BC Break] Remove `NullValueModeEnum`
+- Add PHPDoc everywhere to force return types in `toArray()`
+- [BC Break] Remove `AbstractScalarArray`
+- Add `ScalarArrayInterface` for `ScalarArrayDenormalizer`
+- [BC Break] Remove `ScalarArray`: it was not enough typed, too much types can be added
+- [BC Break] `FloatArray`, `IntArray` and `StringArray` now accepts only the right type (null is not allowed too), values will not be casted by the TypedArray
+- [BC Break] Remove `ByteStringArray`, `CodePointStringArray` and `UnicodeStringArray`: they are specific to another library
+- Add `FloatNullableArray`, `IntNullableArray`, `StringNullableArray` and `ObjectNullableArray` who allow `null` and the right type
+- [BC Break] Remove `setValueAlreadyExistMode()`, now it's a parameter in `__construct()`
+- [BC Break] Change `__construct()` parameters for all TypedArray classes
+- [BC Break] AbstractEnumArray new extends `AbstractTypedArray` and not `ObjectArray`
+- [BC Break] Rename `Steevanb\PhpTypedArray\ObjectComparisonModeEnum` to `Steevanb\PhpTypedArray\ObjectArray\ComparisonModeEnum`
+- [BC Break] Remove `ObjectArray` to force an `ObjectArray` to have instance of only one class/interface.
+- [BC Break] Default comparison mode for `ObjectArray` is `HASH` (it was `STRING`)
 
 ### [4.0.0](../../compare/3.3.2...4.0.0) - 2022-12-20
 

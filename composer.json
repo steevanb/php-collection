@@ -31,8 +31,7 @@
         "symfony/config": "Needed to use Symfony bridge PhpTypedArrayBundle",
         "symfony/dependency-injection": "Needed to use Symfony bridge PhpTypedArrayBundle",
         "symfony/http-kernel": "Needed to use Symfony bridge PhpTypedArrayBundle",
-        "symfony/serializer": "Needede to denormalize TypedArray with PhpTypedArrayBundle",
-        "symfony/string": "Needed to use UnicodeStringArray, ByteStringArray or CodePointStringArray."
+        "symfony/serializer": "Needed to denormalize TypedArray with PhpTypedArrayBundle"
     },
     "config": {
         "sort-packages": true

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Steevanb\PhpTypedArray;
+namespace Steevanb\PhpTypedArray\ObjectArray;
 
-enum ObjectComparisonModeEnum: int
+enum ComparisonModeEnum: int
 {
     case STRING = 1;
     case HASH = 2;
