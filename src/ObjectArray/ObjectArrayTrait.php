@@ -64,6 +64,10 @@ trait ObjectArrayTrait
                 $this->castValueToString($firstValue),
                 $this->castValueToString($secondValue)
             );
+        /**
+         * He is right, this is if useless for now, but if one day we add a value I prefer throw the exception
+         * @phpstan-ignore-next-line
+         */
         } elseif ($this->getComparisonMode() === ComparisonModeEnum::HASH) {
             $return = parent::isSameValues(
                 is_object($firstValue) ? spl_object_hash($firstValue) : null,
