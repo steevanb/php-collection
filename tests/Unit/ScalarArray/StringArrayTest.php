@@ -7,7 +7,7 @@ namespace Steevanb\PhpTypedArray\Tests\Unit\ScalarArray;
 use PHPUnit\Framework\TestCase;
 use Steevanb\PhpTypedArray\{
     Exception\InvalidTypeException,
-    Exception\ValueAlreadyExistException,
+    Exception\ValueAlreadyExistsException,
     ScalarArray\StringArray,
     ValueAlreadyExistsModeEnum
 };
@@ -76,7 +76,7 @@ final class StringArrayTest extends TestCase
 
     public function testMergeValueAlreadyExistsException(): void
     {
-        static::expectException(ValueAlreadyExistException::class);
+        static::expectException(ValueAlreadyExistsException::class);
         (new StringArray(['foo', 'bar'], ValueAlreadyExistsModeEnum::EXCEPTION))
             ->merge(new StringArray(['bar', 'baz']));
     }

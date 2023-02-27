@@ -18,11 +18,11 @@ abstract class AbstractEnumArray extends AbstractTypedArray
     public function __construct(
         private readonly string $className,
         iterable $values = [],
-        ValueAlreadyExistsModeEnum $valueAlreadyExistMode = ValueAlreadyExistsModeEnum::ADD
+        ValueAlreadyExistsModeEnum $valueAlreadyExistsMode = ValueAlreadyExistsModeEnum::ADD
     ) {
         $this->assertClassName($this->className);
 
-        parent::__construct($values, $valueAlreadyExistMode);
+        parent::__construct($values, $valueAlreadyExistsMode);
     }
 
     public function getClassName(): string

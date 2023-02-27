@@ -1,5 +1,5 @@
 [![Version](https://img.shields.io/badge/version-4.0.0-blueviolet.svg)](https://github.com/steevanb/php-typed-array/tree/4.0.0)
-[![PHP](https://img.shields.io/badge/php-^7.1||^8.0-blue.svg)](https://php.net)
+[![PHP](https://img.shields.io/badge/php-^8.1-blue.svg)](https://php.net)
 ![Lines](https://img.shields.io/badge/code%20lines-4,637-blue.svg)
 ![Downloads](https://poser.pugx.org/steevanb/php-typed-array/downloads)
 ![GitHub workflow status](https://img.shields.io/github/actions/workflow/status/steevanb/php-typed-array/ci.yml?branch=master)
@@ -22,13 +22,13 @@ composer require steevanb/php-typed-array ^4.0
 ## Typed array available
 
  * `FloatArray`: can store `float`
+ * `FloatNullableArray`: can store `float` or `null`
  * `IntArray`: can store `int`
- * `ScalarArray`: can store `string|int|float|bool`
+ * `IntNullableArray`: can store `int` or `null`
  * `StringArray`: can store `string`
- * `ObjectArray`: can store `object`
- * `ByteStringArray`: can store `Symfony\Component\String\ByteString` (need `symfony/string` to work)
- * `CodePointStringArray`: can store `Symfony\Component\String\CodePointStringArray` (need `symfony/string` to work)
- * `UnicodeStringArray`: can store `Symfony\Component\String\UnicodeStringArray` (need `symfony/string` to work)
+ * `StringNullableArray`: can store `string` or `null`
+ * `AbstractObjectArray`: can store `object`
+ * `AbstractObjectNullableArray`: can store `object` or `null`
  * `AbstractEnumArray`: can store instances of `\UnitEnum` (PHP 8.1 enums)
 
 ## Usage
@@ -46,9 +46,9 @@ foreach ($intArray as $key => $int) {
 
 Usefull usage:
 ```php
-function returnInts(): \IntArray
+function returnInts(): IntArray
 {
-    return new \IntArray([1, 2, 3]); 
+    return new IntArray([1, 2, 3]); 
 }
 
 foreach (returnInts() as $key => $int) {
@@ -66,45 +66,15 @@ $intArray = new IntArray([1, 2, 'foo']);
 If you want to be sure a value is unique inside your TypedArray, you have to configure `valueAlreadyExistMode`:
 
 ```php
+// Default behavior, code here is just for the example
 // IntArray will contain [1, 2, 2]
-(new IntArray())
-    // Default behavior, code here is just for the example
-    ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::ADD)
-    ->setValues([1, 2, 2]);
+new IntArray([1, 2, 2], ValueAlreadyExistsModeEnum::ADD);
 
 // IntArray will contain [1, 2]
-(new IntArray())
-    ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::DO_NOT_ADD)
-    ->setValues([1, 2, 2]);
+new IntArray([1, 2, 2], ValueAlreadyExistsModeEnum::DO_NOT_ADD);
 
-// ValueAlreadyExistException will be throwned
-(new IntArray())
-    ->setValueAlreadyExistMode(ValueAlreadyExistsModeEnum::EXCEPTION)
-    ->setValues([1, 2, 2]);
-```
-
-/!\ Calling `setValueAlreadyExistMode()` will NOT apply new mode to data already defined. It will only be applied on new values. 
-
-### Behavior when adding null
-
-You can configure the behavior when `null` value is added:
-
-```php
-// IntArray will contain [1, 2, null]
-(new IntArray())
-    // default behavior, code here is just for the example
-    ->setValueAlreadyExistMode(NullValueModeEnum::ALLOW)
-    ->setValues([1, 2, null]);
-
-// IntArray will contain [1, 2]
-(new IntArray())
-    ->setValueAlreadyExistMode(NullValueModeEnum::DO_NOT_ADD)
-    ->setValues([1, 2, null]);
-
-// NullValueException will be throwned
-(new IntArray())
-    ->setValueAlreadyExistMode(NullValueModeEnum::EXCEPTION)
-    ->setValues([1, 2, null]);
+// ValueAlreadyExistSException will be throwned
+(new IntArray([1, 2, 2], ValueAlreadyExistsModeEnum::EXCEPTION));
 ```
 
 ### Read only
@@ -115,7 +85,7 @@ You can have this behavior with read only:
 
 ```php
 $foo = new IntArray([1, 2]);
-// By default you can add values after object creation
+// By default, you can add values after object creation
 $foo[] = 3;
 // Now set read only
 $foo->setReadOnly(); // you don't need to define first parameter to true: it's default value
@@ -129,25 +99,18 @@ $foo[] = 3;
 
 ### ObjectArray
 
-If you need to store objects in array, you can use `steevanb\PhpTypedArray\ObjectArray\ObjectArray`.
-
-To be sure each objects are an instance of something, you can configure it in `__construct()`:
-
-```php
-$dateTimeArray = new ObjectArray([new \DateTime()], \DateTime::class);
-```
-
-Or you can extends `ObjectArray` and configure it internally:
+If you need to store objects in array, you have to create a classe who extends
+`Steevanb\PhpTypedArray\ObjectArray\AbstractObjectArray` or `AbstractObjectNullableArray`.
 
 ```php
-class DateTimeArray extends ObjectArray
+class DateTimeArray extends AbstractObjectArray
 {
     public function __construct(iterable $values = [])
     {
-        parent::__construct($values, \DateTime::class);
+        parent::__construct(\DateTime::class, $values);
     }
     
-    /** This method is not mandatory, but you can create it to typehint $typedArray and the return */
+    /** This method is not mandatory, but you can create it to type $values */
     public function merge(self $values): static
     {
         parent::doMerge($values);
@@ -156,7 +119,7 @@ class DateTimeArray extends ObjectArray
     }
     
     /**
-     * This method is not mandatory, but you can create it to typehint return when you access an item
+     * This method is not mandatory, but you can create it to type return when you access an item
      * $data = new DateTimeArray([new \DateTime(), new \DateTime()]);
      * // Autocompletion should work with the override of current()
      * $first = $data[0];
@@ -165,23 +128,30 @@ class DateTimeArray extends ObjectArray
     {
         return parent::current();
     }
+    
+    /** This method is not mandatory, but you can create it to type the return */
+    /** @return array<\DateTime> */
+    public function toArray(): array
+    {
+        return parent::toArray();
+    }
 }
 ```
 
 ### EnumArray
 
 If you need to store enums in array, 
-you can create a class who extends `steevanb\PhpTypedArray\EnumArray\AbstractEnumArray`.
+you can create a class who extends `Steevanb\PhpTypedArray\EnumArray\AbstractEnumArray`.
 
 ```php
 class FooEnumArray extends AbstractEnumArray
 {
     public function __construct(iterable $values = [])
     {
-        parent::__construct($values, FooEnum::class);
+        parent::__construct(FooEnum::clas, $values);
     }
     
-    /** This method is not mandatory, but you can create it to typehint $typedArray and the return */
+    /** This method is not mandatory, but you can create it to type $values */
     public function merge(self $values): static
     {
         parent::doMerge($values);
@@ -190,7 +160,7 @@ class FooEnumArray extends AbstractEnumArray
     }
     
     /**
-     * This method is not mandatory, but you can create it to typehint return when you access an item
+     * This method is not mandatory, but you can create it to type return when you access an item
      * $data = new FooEnumArray([FooEnum::VALUE1, FooEnum::VALUE2]);
      * // Autocompletion should work with the override of current()
      * $first = $data[0];
@@ -198,6 +168,13 @@ class FooEnumArray extends AbstractEnumArray
     public function current(): ?FooEnum
     {
         return parent::current();
+    }
+    
+    /** This method is not mandatory, but you can create it to type the return */
+    /** @return array<FooEnum> */
+    public function toArray(): array
+    {
+        return parent::toArray();
     }
 }
 ```
@@ -207,10 +184,10 @@ class FooEnumArray extends AbstractEnumArray
 All methods below will directly apply modifications, 
 it will not return a new TypedArray with modifications applied like some PHP functions do.
 
-| Method | Version | PHP associated function | Description |
-| --- | --- | --- | --- |
-| `clear()` | ^3.3 | _none_ | Clear all data and reset next key to `0`. Next data added with `$array[]` will have key `0`. |
-| `changeKeyCase()` | ^3.3 | [array_change_key_case()](https://www.php.net/manual/fr/function.array-change-key-case.php) | Changes the case of all keys |
+| Method | PHP associated function | Description |
+| --- |---------------| --- | --- |
+| `clear()` | _none_ | Clear all data and reset next key to `0`. Next data added with `$array[]` will have key `0`. |
+| `changeKeyCase()` | [array_change_key_case()](https://www.php.net/manual/fr/function.array-change-key-case.php) | Changes the case of all keys |
 
 ## Limitations
 

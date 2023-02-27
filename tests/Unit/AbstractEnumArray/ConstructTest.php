@@ -20,7 +20,7 @@ final class ConstructTest extends TestCase
             'Steevanb\PhpTypedArray\Tests\Unit\AbstractEnumArray\TestEnum',
             $array->getClassName()
         );
-        static::assertSame(ValueAlreadyExistsModeEnum::ADD, $array->getValueAlreadyExistMode());
+        static::assertSame(ValueAlreadyExistsModeEnum::ADD, $array->getValueAlreadyExistsMode());
     }
 
     public function testEnum(): void
