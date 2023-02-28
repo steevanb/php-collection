@@ -2,5 +2,5 @@
 
 set -eu
 
-readonly CI_DOCKER_IMAGE_NAME="steevanb/php-typed-array:ci"
-readonly RELEASE_DOCKER_IMAGE_NAME="steevanb/php-typed-array:release"
+readonly CI_DOCKER_IMAGE_NAME="steevanb/php-collection:ci"
+readonly RELEASE_DOCKER_IMAGE_NAME="steevanb/php-collection:release"

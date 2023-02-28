@@ -3,5 +3,5 @@ services:
         autowire: true
         autoconfigure: true
 
-    Steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\:
+    Steevanb\PhpCollection\Bridge\Symfony\Normalizer\:
         resource: ../../Normalizer/*Denormalizer.php

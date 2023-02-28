@@ -1,16 +1,16 @@
 {
-    "name": "steevanb/php-typed-array",
+    "name": "steevanb/php-collection",
     "license": "MIT",
-    "description": "Add IntArray, StringArray, ObjectArray etc.",
+    "description": "Add IntCollection, StringCollection, ObjectCollection etc.",
     "autoload": {
         "psr-4": {
-            "Steevanb\\PhpTypedArray\\": "src"
+            "Steevanb\\PhpCollection\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Steevanb\\PhpTypedArray\\Tests\\": "tests",
-            "Steevanb\\PhpTypedArray\\Bridge\\": "bridge"
+            "Steevanb\\PhpCollection\\Tests\\": "tests",
+            "Steevanb\\PhpCollection\\Bridge\\": "bridge"
         }
     },
     "require": {
@@ -28,10 +28,10 @@
         "symfony/var-dumper": "6.1.*"
     },
     "suggest": {
-        "symfony/config": "Needed to use Symfony bridge PhpTypedArrayBundle",
-        "symfony/dependency-injection": "Needed to use Symfony bridge PhpTypedArrayBundle",
-        "symfony/http-kernel": "Needed to use Symfony bridge PhpTypedArrayBundle",
-        "symfony/serializer": "Needed to denormalize TypedArray with PhpTypedArrayBundle"
+        "symfony/config": "Needed to use Symfony bridge PhpCollectionBundle",
+        "symfony/dependency-injection": "Needed to use Symfony bridge PhpCollectionBundle",
+        "symfony/http-kernel": "Needed to use Symfony bridge PhpCollectionBundle",
+        "symfony/serializer": "Needed to denormalize Collection with PhpCollectionBundle"
     },
     "config": {
         "sort-packages": true

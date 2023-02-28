@@ -5,7 +5,7 @@ Add bridge to your autoload into `composer.json`:
 {
     "autoload": {
         "psr-4": {
-            "steevanb\\PhpTypedArray\\Bridge\\Phpstan\\": "vendor/steevanb/php-typed-array/bridge/Phpstan/src"
+            "steevanb\\PhpCollection\\Bridge\\Phpstan\\": "vendor/steevanb/php-collection/bridge/Phpstan/src"
         }
     }
 }
@@ -14,7 +14,7 @@ Add bridge to your autoload into `composer.json`:
 Add rules to your `phpstan.neon`:
 ```yaml
 includes:
-    - vendor/steevanb/php-typed-array/bridge/Phpstan/rules.neon
+    - vendor/steevanb/php-collection/bridge/Phpstan/rules.neon
 ```
 
 ## Rules

@@ -6,7 +6,7 @@ use Steevanb\ParallelProcess\{
     Console\Application\ParallelProcessesApplication,
     Process\Process
 };
-use Steevanb\PhpTypedArray\ScalarArray\StringArray;
+use Steevanb\PhpCollection\ScalarCollection\StringCollection;
 use Symfony\Component\Console\Input\ArgvInput;
 
 require $_SERVER['COMPOSER_HOME'] . '/vendor/autoload.php';
@@ -15,7 +15,7 @@ require __DIR__ . '/phpunit.inc.php';
 
 $phpVersion = null;
 $symfonyVersion = null;
-$applicationArgv = new StringArray();
+$applicationArgv = new StringCollection();
 foreach ($argv as $arg) {
     if (str_starts_with($arg, '--php=')) {
         $phpVersion = substr($arg, 6);
