@@ -16,7 +16,7 @@ final class ChangeKeyCaseTest extends TestCase
 
         static::assertCount(1, $collection);
         static::assertArrayHasKey('foo', $collection->toArray());
-        static::assertSame(1, $collection['foo']);
+        static::assertSame(1, $collection->callDoGet('foo'));
     }
 
     public function testLowerCaseAssociativesKeys(): void
@@ -27,26 +27,26 @@ final class ChangeKeyCaseTest extends TestCase
 
         static::assertCount(3, $collection);
         static::assertArrayHasKey('foo', $collection->toArray());
-        static::assertSame(1, $collection['foo']);
+        static::assertSame(1, $collection->callDoGet('foo'));
         static::assertArrayHasKey('bar', $collection->toArray());
-        static::assertSame(2, $collection['bar']);
+        static::assertSame(2, $collection->callDoGet('bar'));
         static::assertArrayHasKey('baz', $collection->toArray());
-        static::assertSame(3, $collection['baz']);
+        static::assertSame(3, $collection->callDoGet('baz'));
     }
 
     public function testUpperCaseAssociativesKeys(): void
     {
-        $acollectionray = new Collection(['foo' => 1, 'BaR' => 2, 'BAZ' => 3]);
+        $collection = new Collection(['foo' => 1, 'BaR' => 2, 'BAZ' => 3]);
 
-        $acollectionray->changeKeyCase(CASE_UPPER);
+        $collection->changeKeyCase(CASE_UPPER);
 
-        static::assertCount(3, $acollectionray);
-        static::assertArrayHasKey('FOO', $acollectionray->toArray());
-        static::assertSame(1, $acollectionray['FOO']);
-        static::assertArrayHasKey('BAR', $acollectionray->toArray());
-        static::assertSame(2, $acollectionray['BAR']);
-        static::assertArrayHasKey('BAZ', $acollectionray->toArray());
-        static::assertSame(3, $acollectionray['BAZ']);
+        static::assertCount(3, $collection);
+        static::assertArrayHasKey('FOO', $collection->toArray());
+        static::assertSame(1, $collection->callDoGet('FOO'));
+        static::assertArrayHasKey('BAR', $collection->toArray());
+        static::assertSame(2, $collection->callDoGet('BAR'));
+        static::assertArrayHasKey('BAZ', $collection->toArray());
+        static::assertSame(3, $collection->callDoGet('BAZ'));
     }
 
     public function testLowerCaseIndexedKeys(): void
@@ -57,11 +57,11 @@ final class ChangeKeyCaseTest extends TestCase
 
         static::assertCount(3, $collection);
         static::assertArrayHasKey(0, $collection->toArray());
-        static::assertSame(1, $collection[0]);
+        static::assertSame(1, $collection->callDoGet(0));
         static::assertArrayHasKey(10, $collection->toArray());
-        static::assertSame(2, $collection[10]);
+        static::assertSame(2, $collection->callDoGet(10));
         static::assertArrayHasKey(20, $collection->toArray());
-        static::assertSame(3, $collection[20]);
+        static::assertSame(3, $collection->callDoGet(20));
     }
 
     public function testUpperCaseIndexedKeys(): void
@@ -72,11 +72,11 @@ final class ChangeKeyCaseTest extends TestCase
 
         static::assertCount(3, $collection);
         static::assertArrayHasKey(0, $collection->toArray());
-        static::assertSame(1, $collection[0]);
+        static::assertSame(1, $collection->callDoGet(0));
         static::assertArrayHasKey(10, $collection->toArray());
-        static::assertSame(2, $collection[10]);
+        static::assertSame(2, $collection->callDoGet(10));
         static::assertArrayHasKey(20, $collection->toArray());
-        static::assertSame(3, $collection[20]);
+        static::assertSame(3, $collection->callDoGet(20));
     }
 
     public function testEmpty(): void

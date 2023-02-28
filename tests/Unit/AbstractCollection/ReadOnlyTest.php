@@ -14,10 +14,10 @@ final class ReadOnlyTest extends TestCase
         static::assertFalse((new Collection())->isReadOnly());
     }
 
-    public function testSetValues(): void
+    public function testReplace(): void
     {
         $collection = new Collection([1, 2]);
-        $collection->setValues([3, 4]);
+        $collection->callDoReplace([3, 4]);
 
         static::addToAssertionCount(1);
     }
@@ -25,25 +25,25 @@ final class ReadOnlyTest extends TestCase
     public function testAddValue(): void
     {
         $collection = new Collection([1, 2]);
-        $collection[] = 3;
+        $collection->callDoAdd(3);
 
         static::addToAssertionCount(1);
     }
 
-    public function testOffsetSet(): void
+    public function testSet(): void
     {
         $collection = new Collection([1, 2]);
-        $collection->offsetSet(0, 4);
+        $collection->callDoSet(0, 4);
 
-        static::addToAssertionCount(1);
+        static::assertSame(4, $collection->callDoGet(0));
     }
 
-    public function testOffsetUnset(): void
+    public function testRemove(): void
     {
         $collection = new Collection([1, 2]);
-        $collection->offsetUnset(0);
+        $collection->remove(0);
 
-        static::addToAssertionCount(1);
+        static::assertFalse($collection->hasKey(0));
     }
 
     public function testResetKeys(): void
@@ -54,12 +54,12 @@ final class ReadOnlyTest extends TestCase
         static::addToAssertionCount(1);
     }
 
-    public function testReadOnlySetValues(): void
+    public function testReadOnlyReplace(): void
     {
         $collection = (new Collection([1, 2]))->setReadOnly();
 
         $this->expectException(ReadOnlyException::class);
-        $collection->setValues([3, 4]);
+        $collection->callDoReplace([3, 4]);
     }
 
     public function testReadOnlyAddValue(): void
@@ -67,23 +67,23 @@ final class ReadOnlyTest extends TestCase
         $collection = (new Collection([1, 2]))->setReadOnly();
 
         $this->expectException(ReadOnlyException::class);
-        $collection[] = 3;
+        $collection->callDoAdd(3);
     }
 
-    public function testReadOnlyOffsetSet(): void
+    public function testReadOnlySet(): void
     {
         $collection = (new Collection([1, 2]))->setReadOnly();
 
         $this->expectException(ReadOnlyException::class);
-        $collection->offsetSet(0, 4);
+        $collection->callDoSet(0, 4);
     }
 
-    public function testReadOnlyOffsetUnset(): void
+    public function testReadOnlyRemove(): void
     {
         $collection = (new Collection([1, 2]))->setReadOnly();
 
         $this->expectException(ReadOnlyException::class);
-        $collection->offsetUnset(0);
+        $collection->remove(0);
     }
 
     public function testReadOnlyResetKeys(): void

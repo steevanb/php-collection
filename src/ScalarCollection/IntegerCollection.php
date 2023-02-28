@@ -10,9 +10,9 @@ use Steevanb\PhpCollection\{
     ValueAlreadyExistsModeEnum
 };
 
-class FloatCollection extends AbstractCollection implements FloatCollectionInterface
+class IntegerCollection extends AbstractCollection implements IntegerCollectionInterface
 {
-    /** @param iterable<string|int, float> $values */
+    /** @param iterable<string|int, int> $values */
     public function __construct(
         iterable $values = [],
         ValueAlreadyExistsModeEnum $valueAlreadyExistsMode = ValueAlreadyExistsModeEnum::ADD
@@ -20,38 +20,38 @@ class FloatCollection extends AbstractCollection implements FloatCollectionInter
         parent::__construct($values, $valueAlreadyExistsMode);
     }
 
-    public function set(int|string $key, float $value): static
+    public function set(int|string $key, int $value): static
     {
         return $this->doSet($key, $value);
     }
 
-    /** @param iterable<string|int, float> $values */
+    /** @param iterable<string|int, int> $values */
     public function replace(iterable $values): static
     {
         return $this->doReplace($values);
     }
 
-    public function add(float $value): static
+    public function add(int $value): static
     {
         return $this->doAdd($value);
     }
 
-    public function has(float $value): bool
+    public function has(int $value): bool
     {
         return $this->doHas($value);
     }
 
-    public function get(string|int $key): float
+    public function get(string|int $key): int
     {
         return $this->doGet($key);
     }
 
-    public function merge(FloatCollectionInterface $collection): static
+    public function merge(IntegerCollectionInterface $collection): static
     {
         return $this->doMerge($collection);
     }
 
-    /** @return array<string|int, float> */
+    /** @return array<string|int, int> */
     public function toArray(): array
     {
         return parent::toArray();
@@ -59,8 +59,8 @@ class FloatCollection extends AbstractCollection implements FloatCollectionInter
 
     protected function canAddValue(mixed $value): bool
     {
-        if (is_float($value) === false) {
-            throw new InvalidTypeException('$value should be of type float.');
+        if (is_int($value) === false) {
+            throw new InvalidTypeException('$value should be of type int.');
         }
 
         return parent::canAddValue($value);

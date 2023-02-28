@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Steevanb\PhpCollection\Bridge\Symfony\Normalizer;
 
-use Steevanb\PhpCollection\{
-    AbstractCollection,
-    ScalarCollection\ScalarCollectionInterface
-};
+use Steevanb\PhpCollection\ScalarCollection\ScalarCollectionInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class ScalarCollectionDenormalizer implements DenormalizerInterface
@@ -24,13 +21,13 @@ class ScalarCollectionDenormalizer implements DenormalizerInterface
         string $type,
         string $format = null,
         array $context = []
-    ): AbstractCollection {
+    ): ScalarCollectionInterface {
         return $this
             ->createScalarCollection($type)
-            ->setValues($data);
+            ->replace($data);
     }
 
-    protected function createScalarCollection(string $type): AbstractCollection
+    protected function createScalarCollection(string $type): ScalarCollectionInterface
     {
         return new $type();
     }

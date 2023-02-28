@@ -10,9 +10,9 @@ use Steevanb\PhpCollection\{
     ValueAlreadyExistsModeEnum
 };
 
-class StringCollection extends AbstractCollection implements ScalarCollectionInterface
+class StringCollection extends AbstractCollection implements StringCollectionInterface
 {
-    /** @param iterable<string> $values */
+    /** @param iterable<string|int, string> $values */
     public function __construct(
         iterable $values = [],
         ValueAlreadyExistsModeEnum $valueAlreadyExistsMode = ValueAlreadyExistsModeEnum::ADD
@@ -20,24 +20,38 @@ class StringCollection extends AbstractCollection implements ScalarCollectionInt
         parent::__construct($values, $valueAlreadyExistsMode);
     }
 
-    public function current(): ?string
+    public function set(int|string $key, string $value): static
     {
-        return parent::current();
+        return $this->doSet($key, $value);
     }
 
-    public function offsetGet(mixed $offset): string
+    /** @param iterable<string|int, string> $values */
+    public function replace(iterable $values): static
     {
-        return parent::offsetGet($offset);
+        return $this->doReplace($values);
     }
 
-    public function merge(StringCollection $collection): static
+    public function add(string $value): static
     {
-        parent::doMerge($collection);
-
-        return $this;
+        return $this->doAdd($value);
     }
 
-    /** @return array<string> */
+    public function has(string $value): bool
+    {
+        return $this->doHas($value);
+    }
+
+    public function get(string|int $key): string
+    {
+        return $this->doGet($key);
+    }
+
+    public function merge(StringCollectionInterface $collection): static
+    {
+        return $this->doMerge($collection);
+    }
+
+    /** @return array<string|int, string> */
     public function toArray(): array
     {
         return parent::toArray();

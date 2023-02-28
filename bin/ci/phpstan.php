@@ -18,7 +18,7 @@ function createPhpstanProcesses(): ProcessArray
     $phpVersions = new StringCollection(['8.1', '8.2']);
 
     $return = new ProcessArray();
-    foreach ($phpVersions as $loopPhpVersion) {
+    foreach ($phpVersions->toArray() as $loopPhpVersion) {
         $return[] = createPhpstanProcess($loopPhpVersion);
     }
 

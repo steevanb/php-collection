@@ -4,6 +4,8 @@ parameters:
     paths:
         - ../../src
         - ../../tests
+    excludePaths:
+        - ../../tests/Unit/ArrayTest.php
     checkGenericClassInNonGenericObjectType: false
 includes:
     - /composer/common/vendor/phpstan/phpstan-deprecation-rules/rules.neon

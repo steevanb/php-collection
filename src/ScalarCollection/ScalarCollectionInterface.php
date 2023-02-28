@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Steevanb\PhpCollection\ScalarCollection;
 
-interface ScalarCollectionInterface
+use Steevanb\PhpCollection\CollectionInterface;
+
+interface ScalarCollectionInterface extends CollectionInterface
 {
 }

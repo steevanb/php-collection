@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Steevanb\PhpCollection\Bridge\Symfony\Normalizer;
 
 use Steevanb\PhpCollection\{
+    Exception\PhpCollectionException,
     ObjectCollection\AbstractObjectCollection,
     ObjectCollection\AbstractObjectNullableCollection
 };
@@ -38,8 +39,11 @@ class ObjectCollectionDenormalizer implements DenormalizerInterface, Denormalize
         array $context = []
     ): AbstractObjectCollection|AbstractObjectNullableCollection {
         $return = $this->createObjectCollection($type);
-        foreach ($data as $item) {
-            $return[] = $this->denormalizeObject($item, $return, $format, $context);
+        foreach ($data as $value) {
+            $this->add(
+                $return,
+                $this->denormalizeObject($value, $return, $format, $context)
+            );
         }
 
         return $return;
@@ -50,14 +54,27 @@ class ObjectCollectionDenormalizer implements DenormalizerInterface, Denormalize
         return new $type();
     }
 
+    protected function add(
+        AbstractObjectCollection|AbstractObjectNullableCollection $collection,
+        object|null $value
+    ): static {
+        if (method_exists($collection, 'add') === false) {
+            throw new PhpCollectionException('Unable to find how to add a value in ' . $collection::class . '.');
+        }
+
+        $collection->add($value);
+
+        return $this;
+    }
+
     protected function denormalizeObject(
-        mixed $item,
+        mixed $value,
         AbstractObjectCollection|AbstractObjectNullableCollection $objectCollection,
         ?string $format,
         array $context
     ): object|null {
-        return $item === null
+        return $value === null
             ? null
-            : $this->denormalizer->denormalize($item, $objectCollection->getClassName(), $format, $context);
+            : $this->denormalizer->denormalize($value, $objectCollection->getClassName(), $format, $context);
     }
 }

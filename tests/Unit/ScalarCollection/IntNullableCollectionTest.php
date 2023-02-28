@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Steevanb\PhpCollection\{
     Exception\InvalidTypeException,
     Exception\ValueAlreadyExistsException,
-    ScalarCollection\IntNullableCollection,
+    ScalarCollection\IntegerNullableCollection,
     ValueAlreadyExistsModeEnum
 };
 
@@ -16,69 +16,69 @@ final class IntNullableCollectionTest extends TestCase
 {
     public function testAllowInt(): void
     {
-        $collection = new IntNullableCollection([1]);
+        $collection = new IntegerNullableCollection([1]);
 
         static::assertCount(1, $collection);
-        static::assertSame(1, $collection[0]);
+        static::assertSame(1, $collection->get(0));
     }
 
     public function testInvalidTypeString(): void
     {
         static::expectException(InvalidTypeException::class);
         /** @phpstan-ignore-next-line */
-        new IntNullableCollection(['4']);
+        new IntegerNullableCollection(['4']);
     }
 
     public function testInvalidTypeFloat(): void
     {
         static::expectException(InvalidTypeException::class);
         /** @phpstan-ignore-next-line */
-        new IntNullableCollection([3.1]);
+        new IntegerNullableCollection([3.1]);
     }
 
     public function testInvalidTypeBool(): void
     {
         static::expectException(InvalidTypeException::class);
         /** @phpstan-ignore-next-line */
-        new IntNullableCollection([true]);
+        new IntegerNullableCollection([true]);
     }
 
     public function testAllowNull(): void
     {
-        $collection = new IntNullableCollection([null]);
+        $collection = new IntegerNullableCollection([null]);
 
         static::assertCount(1, $collection);
-        static::assertNull($collection[0]);
+        static::assertNull($collection->get(0));
     }
 
     public function testMergeValueAlreadyExistsAdd(): void
     {
-        $collection = (new IntNullableCollection([1, 2], ValueAlreadyExistsModeEnum::ADD))
-            ->merge(new IntNullableCollection([1, 2]));
+        $collection = (new IntegerNullableCollection([1, 2], ValueAlreadyExistsModeEnum::ADD))
+            ->merge(new IntegerNullableCollection([1, 2]));
 
         static::assertCount(4, $collection);
-        static::assertSame(1, $collection[0]);
-        static::assertSame(2, $collection[1]);
-        static::assertSame(1, $collection[2]);
-        static::assertSame(2, $collection[3]);
+        static::assertSame(1, $collection->get(0));
+        static::assertSame(2, $collection->get(1));
+        static::assertSame(1, $collection->get(2));
+        static::assertSame(2, $collection->get(3));
     }
 
     public function testMergeValueAlreadyExistsDoNotAdd(): void
     {
-        $collection = (new IntNullableCollection([1, 2], ValueAlreadyExistsModeEnum::DO_NOT_ADD))
-            ->merge(new IntNullableCollection([2, 3]));
+        $collection = (new IntegerNullableCollection([1, 2], ValueAlreadyExistsModeEnum::DO_NOT_ADD))
+            ->merge(new IntegerNullableCollection([2, 3]));
 
         static::assertCount(3, $collection);
-        static::assertSame(1, $collection[0]);
-        static::assertSame(2, $collection[1]);
+        static::assertSame(1, $collection->get(0));
+        static::assertSame(2, $collection->get(1));
         // @see https://github.com/steevanb/php-collection/issues/15
-        static::assertSame(3, $collection[3]);
+        static::assertSame(3, $collection->get(3));
     }
 
     public function testMergeValueAlreadyExistsException(): void
     {
         static::expectException(ValueAlreadyExistsException::class);
-        (new IntNullableCollection([1, 2], ValueAlreadyExistsModeEnum::EXCEPTION))
-            ->merge(new IntNullableCollection([2, 3]));
+        (new IntegerNullableCollection([1, 2], ValueAlreadyExistsModeEnum::EXCEPTION))
+            ->merge(new IntegerNullableCollection([2, 3]));
     }
 }

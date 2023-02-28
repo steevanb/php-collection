@@ -10,9 +10,9 @@ use Steevanb\PhpCollection\{
     ValueAlreadyExistsModeEnum
 };
 
-class FloatNullableCollection extends AbstractCollection implements ScalarCollectionInterface
+class FloatNullableCollection extends AbstractCollection implements FloatNullableCollectionInterface
 {
-    /** @param iterable<float|null> $values */
+    /** @param iterable<string|int, float|null> $values */
     public function __construct(
         iterable $values = [],
         ValueAlreadyExistsModeEnum $valueAlreadyExistsMode = ValueAlreadyExistsModeEnum::ADD
@@ -20,24 +20,38 @@ class FloatNullableCollection extends AbstractCollection implements ScalarCollec
         parent::__construct($values, $valueAlreadyExistsMode);
     }
 
-    public function current(): ?float
+    public function set(int|string $key, float|null $value): static
     {
-        return parent::current();
+        return $this->doSet($key, $value);
     }
 
-    public function offsetGet(mixed $offset): ?float
+    /** @param iterable<string|int, float|null> $values */
+    public function replace(iterable $values): static
     {
-        return parent::offsetGet($offset);
+        return $this->doReplace($values);
     }
 
-    public function merge(FloatNullableCollection|FloatCollection $collection): static
+    public function add(float|null $value): static
     {
-        parent::doMerge($collection);
-
-        return $this;
+        return $this->doAdd($value);
     }
 
-    /** @return array<float|null> */
+    public function has(float|null $value): bool
+    {
+        return $this->doHas($value);
+    }
+
+    public function get(string|int $key): float|null
+    {
+        return $this->doGet($key);
+    }
+
+    public function merge(FloatCollectionInterface|FloatNullableCollectionInterface $collection): static
+    {
+        return $this->doMerge($collection);
+    }
+
+    /** @return array<string|int, float|null> */
     public function toArray(): array
     {
         return parent::toArray();

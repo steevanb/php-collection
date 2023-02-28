@@ -7,17 +7,17 @@ namespace Steevanb\PhpCollection;
 use Steevanb\PhpCollection\{
     Exception\KeyNotFoundException,
     Exception\ReadOnlyException,
-    Exception\ValueAlreadyExistsException
+    Exception\ValueAlreadyExistsException,
+    ScalarCollection\IntegerCollection,
+    ScalarCollection\IntegerCollectionInterface,
+    ScalarCollection\StringCollection,
+    ScalarCollection\StringCollectionInterface
 };
 
 abstract class AbstractCollection implements CollectionInterface, ReadOnlyInterface
 {
-    protected int $nextIntKey = 0;
-
     /** @var array<mixed> */
     protected array $values = [];
-
-    protected bool $valid = true;
 
     protected bool $readOnly = false;
 
@@ -26,94 +26,25 @@ abstract class AbstractCollection implements CollectionInterface, ReadOnlyInterf
         iterable $values = [],
         private readonly ValueAlreadyExistsModeEnum $valueAlreadyExistsMode = ValueAlreadyExistsModeEnum::ADD
     ) {
-        $this->setValues($values);
+        $this->doReplace($values);
     }
 
-    /** @param iterable<mixed> $values */
-    public function setValues(iterable $values): static
+    public function hasKey(string|int $key): bool
+    {
+        return array_key_exists($key, $this->values);
+    }
+
+    public function remove(string|int $key): static
     {
         $this->assertIsNotReadOnly();
 
-        $this->clear();
-        foreach ($values as $key => $value) {
-            $this->offsetSet($key, $value);
+        if ($this->hasKey($key) === false) {
+            throw new KeyNotFoundException('Key "' . $key . '" not found.');
         }
-        reset($this->values);
+
+        unset($this->values[$key]);
 
         return $this;
-    }
-
-    public function key(): string|int|null
-    {
-        return $this->valid() ? key($this->values) : null;
-    }
-
-    public function valid(): bool
-    {
-        return $this->valid;
-    }
-
-    public function next(): void
-    {
-        $this->valid = next($this->values) !== false;
-    }
-
-    public function current(): mixed
-    {
-        $return = current($this->values);
-
-        return ($return === false) ? null : $return;
-    }
-
-    public function rewind(): void
-    {
-        reset($this->values);
-        $this->valid = count($this->values) > 0;
-    }
-
-    public function offsetExists(mixed $offset): bool
-    {
-        return array_key_exists($offset, $this->values);
-    }
-
-    public function offsetSet(mixed $offset, mixed $value): void
-    {
-        $this->assertIsNotReadOnly();
-
-        if (is_null($offset)) {
-            $offset = $this->nextIntKey;
-            $offsetWasNull = true;
-        } else {
-            $offsetWasNull = false;
-        }
-
-        if ($this->canAddValue($value)) {
-            if ($offsetWasNull) {
-                $this->nextIntKey++;
-            } elseif (is_int($offset) && $offset >= $this->nextIntKey) {
-                $this->nextIntKey = $offset + 1;
-            }
-
-            $this->values[$offset] = $value;
-        }
-    }
-
-    public function offsetGet(mixed $offset): mixed
-    {
-        if ($this->offsetExists($offset) === false) {
-            throw new KeyNotFoundException('Key "' . $offset . '" not found.');
-        }
-
-        return $this->values[$offset];
-    }
-
-    public function offsetUnset(mixed $offset): void
-    {
-        $this->assertIsNotReadOnly();
-
-        if ($this->offsetExists($offset)) {
-            unset($this->values[$offset]);
-        }
     }
 
     public function resetKeys(): static
@@ -121,7 +52,6 @@ abstract class AbstractCollection implements CollectionInterface, ReadOnlyInterf
         $this->assertIsNotReadOnly();
 
         $this->values = array_values($this->values);
-        $this->nextIntKey = count($this->values);
 
         return $this;
     }
@@ -143,22 +73,45 @@ abstract class AbstractCollection implements CollectionInterface, ReadOnlyInterf
         return $this->readOnly;
     }
 
-    /** @return array<mixed> */
-    public function toArray(): array
-    {
-        return $this->values;
-    }
-
     public function getValueAlreadyExistsMode(): ValueAlreadyExistsModeEnum
     {
         return $this->valueAlreadyExistsMode;
+    }
+
+    /** @return array<int, string|int> */
+    public function getKeys(): array
+    {
+        return array_keys($this->values);
+    }
+
+    public function getStringKeys(): StringCollectionInterface
+    {
+        $return = new StringCollection();
+        foreach ($this->getKeys() as $key) {
+            if (is_string($key)) {
+                $return->add($key);
+            }
+        }
+
+        return $return;
+    }
+
+    public function getIntegerKeys(): IntegerCollectionInterface
+    {
+        $return = new IntegerCollection();
+        foreach ($this->getKeys() as $key) {
+            if (is_int($key)) {
+                $return->add($key);
+            }
+        }
+
+        return $return;
     }
 
     public function clear(): static
     {
         $this->assertIsNotReadOnly();
         $this->values = [];
-        $this->nextIntKey = 0;
 
         return $this;
     }
@@ -167,7 +120,61 @@ abstract class AbstractCollection implements CollectionInterface, ReadOnlyInterf
     {
         return $this
             ->assertIsNotReadOnly()
-            ->setValues(array_change_key_case($this->toArray(), $case));
+            ->doReplace(array_change_key_case($this->toArray(), $case));
+    }
+
+    /** @return array<string|int, mixed> */
+    public function toArray(): array
+    {
+        return $this->values;
+    }
+
+    protected function doSet(string|int $key, mixed $value): static
+    {
+        $this->assertIsNotReadOnly();
+
+        if ($this->canAddValue($value)) {
+            $this->values[$key] = $value;
+        }
+
+        return $this;
+    }
+
+    /** @param iterable<mixed> $values */
+    protected function doReplace(iterable $values): static
+    {
+        $this->assertIsNotReadOnly();
+
+        $this->clear();
+        foreach ($values as $key => $value) {
+            $this->doSet($key, $value);
+        }
+        reset($this->values);
+
+        return $this;
+    }
+
+    protected function doGet(string|int $key): mixed
+    {
+        if ($this->hasKey($key) === false) {
+            throw new KeyNotFoundException('Key "' . $key . '" not found.');
+        }
+
+        return $this->values[$key];
+    }
+
+    protected function doHas(mixed $value): bool
+    {
+        return in_array($value, $this->values, true);
+    }
+
+    protected function doAdd(mixed $value): static
+    {
+        $this->assertIsNotReadOnly();
+
+        $this->values[] = $value;
+
+        return $this;
     }
 
     protected function assertIsNotReadOnly(): static
@@ -179,9 +186,9 @@ abstract class AbstractCollection implements CollectionInterface, ReadOnlyInterf
         return $this;
     }
 
-    protected function doMerge(AbstractCollection $collection): static
+    protected function doMerge(CollectionInterface $collection): static
     {
-        return $this->setValues(array_merge($this->values, $collection->toArray()));
+        return $this->doReplace(array_merge($this->values, $collection->toArray()));
     }
 
     protected function isSameValues(mixed $firstValue, mixed $secondValue): bool

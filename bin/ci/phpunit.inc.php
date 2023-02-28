@@ -16,8 +16,8 @@ function createPhpunitProcesses(string $phpVersion = null, string $symfonyVersio
     );
 
     $return = new ProcessArray();
-    foreach ($phpVersions as $loopPhpVersion) {
-        foreach ($symfonyVersions as $loopSymfonyVersion) {
+    foreach ($phpVersions->toArray() as $loopPhpVersion) {
+        foreach ($symfonyVersions->toArray() as $loopSymfonyVersion) {
             $return[] = createPhpunitProcess($loopPhpVersion, $loopSymfonyVersion);
         }
     }
