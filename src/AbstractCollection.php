@@ -209,7 +209,7 @@ abstract class AbstractCollection implements CollectionInterface, ReadOnlyInterf
                 if ($this->isSameValues($value, $internalValue)) {
                     if ($this->getValueAlreadyExistsMode() === ValueAlreadyExistsModeEnum::EXCEPTION) {
                         throw new ValueAlreadyExistsException(
-                            'Value "' . $this->castValueToString($value) . '" already exist.'
+                            'Value "' . $this->castValueToString($value) . '" already exists.'
                         );
                     }
 
