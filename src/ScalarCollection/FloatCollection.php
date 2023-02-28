@@ -43,12 +43,12 @@ class FloatCollection extends AbstractCollection implements ScalarCollectionInte
         return parent::toArray();
     }
 
-    protected function canAddValue(mixed $offset, mixed $value): bool
+    protected function canAddValue(mixed $value): bool
     {
         if (is_float($value) === false) {
             throw new InvalidTypeException('$value should be of type float.');
         }
 
-        return parent::canAddValue($offset, $value);
+        return parent::canAddValue($value);
     }
 }

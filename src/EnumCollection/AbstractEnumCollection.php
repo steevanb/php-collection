@@ -50,7 +50,7 @@ abstract class AbstractEnumCollection extends AbstractCollection
         return $this;
     }
 
-    protected function canAddValue(mixed $offset, mixed $value): bool
+    protected function canAddValue(mixed $value): bool
     {
         if (
             is_object($value) === false
@@ -59,7 +59,7 @@ abstract class AbstractEnumCollection extends AbstractCollection
             throw new InvalidTypeException('$value should be an instance of ' . $this->getClassName() . '.');
         }
 
-        return parent::canAddValue($offset, $value);
+        return parent::canAddValue($value);
     }
 
     protected function castValueToString(mixed $value): string

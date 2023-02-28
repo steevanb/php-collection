@@ -43,12 +43,12 @@ class StringCollection extends AbstractCollection implements ScalarCollectionInt
         return parent::toArray();
     }
 
-    protected function canAddValue(mixed $offset, mixed $value): bool
+    protected function canAddValue(mixed $value): bool
     {
         if (is_string($value) === false) {
             throw new InvalidTypeException('$value should be of type string.');
         }
 
-        return parent::canAddValue($offset, $value);
+        return parent::canAddValue($value);
     }
 }

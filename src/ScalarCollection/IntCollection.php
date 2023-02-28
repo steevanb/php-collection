@@ -43,12 +43,12 @@ class IntCollection extends AbstractCollection implements ScalarCollectionInterf
         return parent::toArray();
     }
 
-    protected function canAddValue(mixed $offset, mixed $value): bool
+    protected function canAddValue(mixed $value): bool
     {
         if (is_int($value) === false) {
             throw new InvalidTypeException('$value should be of type int.');
         }
 
-        return parent::canAddValue($offset, $value);
+        return parent::canAddValue($value);
     }
 }
