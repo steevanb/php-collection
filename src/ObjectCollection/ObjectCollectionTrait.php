@@ -82,12 +82,12 @@ trait ObjectCollectionTrait
 
     protected function castValueToString(mixed $value): string
     {
-        try {
-            $return = parent::castValueToString($value);
-        } catch (\Throwable) {
-            throw new PhpCollectionException('Error while converting object to string. Add __toString() to do it.');
+        if (is_object($value) && $value instanceof \Stringable === false) {
+            throw new PhpCollectionException(
+                'Error while converting an instance of ' . $value::class . ' to string. Add __toString() to do it.'
+            );
         }
 
-        return $return;
+        return parent::castValueToString($value);
     }
 }
