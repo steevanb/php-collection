@@ -87,7 +87,7 @@ abstract class AbstractCollection implements CollectionInterface, ReadOnlyInterf
             $offsetWasNull = false;
         }
 
-        if ($this->canAddValue($offset, $value)) {
+        if ($this->canAddValue($value)) {
             if ($offsetWasNull) {
                 $this->nextIntKey++;
             } elseif (is_int($offset) && $offset >= $this->nextIntKey) {
@@ -194,7 +194,7 @@ abstract class AbstractCollection implements CollectionInterface, ReadOnlyInterf
         return is_null($value) ? 'NULL' : (string) $value;
     }
 
-    protected function canAddValue(mixed $offset, mixed $value): bool
+    protected function canAddValue(mixed $value): bool
     {
         $return = true;
 
