@@ -19,7 +19,7 @@ final class StringCollectionTest extends TestCase
         $collection = new StringCollection(['4']);
 
         static::assertCount(1, $collection);
-        static::assertSame('4', $collection[0]);
+        static::assertSame('4', $collection->get(0));
     }
 
     public function testInvalidTypeInt(): void
@@ -56,10 +56,10 @@ final class StringCollectionTest extends TestCase
             ->merge(new StringCollection(['bar', 'baz']));
 
         static::assertCount(4, $collection);
-        static::assertSame('foo', $collection[0]);
-        static::assertSame('bar', $collection[1]);
-        static::assertSame('bar', $collection[2]);
-        static::assertSame('baz', $collection[3]);
+        static::assertSame('foo', $collection->get(0));
+        static::assertSame('bar', $collection->get(1));
+        static::assertSame('bar', $collection->get(2));
+        static::assertSame('baz', $collection->get(3));
     }
 
     public function testMergeValueAlreadyExistsDoNotAdd(): void
@@ -68,10 +68,10 @@ final class StringCollectionTest extends TestCase
             ->merge(new StringCollection(['bar', 'baz']));
 
         static::assertCount(3, $collection);
-        static::assertSame('foo', $collection[0]);
-        static::assertSame('bar', $collection[1]);
+        static::assertSame('foo', $collection->get(0));
+        static::assertSame('bar', $collection->get(1));
         // @see https://github.com/steevanb/php-collection/issues/15
-        static::assertSame('baz', $collection[3]);
+        static::assertSame('baz', $collection->get(3));
     }
 
     public function testMergeValueAlreadyExistsException(): void

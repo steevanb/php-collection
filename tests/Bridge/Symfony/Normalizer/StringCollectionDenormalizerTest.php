@@ -20,7 +20,7 @@ final class StringCollectionDenormalizerTest extends TestCase
         $collection = $serializer->denormalize(['string1', 'string2'], StringCollection::class);
 
         static::assertCount(2, $collection);
-        static::assertSame('string1', $collection[0]);
-        static::assertSame('string2', $collection[1]);
+        static::assertSame('string1', $collection->get(0));
+        static::assertSame('string2', $collection->get(1));
     }
 }

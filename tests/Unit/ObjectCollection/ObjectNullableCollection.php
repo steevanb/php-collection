@@ -19,4 +19,9 @@ class ObjectNullableCollection extends AbstractObjectNullableCollection
     ) {
         parent::__construct(TestObject::class, $values, $comparisonMode, $valueAlreadyExistsMode);
     }
+
+    public function get(string|int $key): object|null
+    {
+        return $this->doGet($key);
+    }
 }

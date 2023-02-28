@@ -17,10 +17,10 @@ final class ValudAlreadyExistTest extends TestCase
         $collection = new Collection([10, 11, 11, 13]);
 
         static::assertCount(4, $collection);
-        static::assertSame(10, $collection[0]);
-        static::assertSame(11, $collection[1]);
-        static::assertSame(11, $collection[2]);
-        static::assertSame(13, $collection[3]);
+        static::assertSame(10, $collection->callDoGet(0));
+        static::assertSame(11, $collection->callDoGet(1));
+        static::assertSame(11, $collection->callDoGet(2));
+        static::assertSame(13, $collection->callDoGet(3));
     }
 
     public function testValueAlreadyExistsModeDoNotAdd(): void
@@ -28,9 +28,9 @@ final class ValudAlreadyExistTest extends TestCase
         $collection = new Collection([10, 11, 11, 13], ValueAlreadyExistsModeEnum::DO_NOT_ADD);
 
         static::assertCount(3, $collection);
-        static::assertSame(10, $collection[0]);
-        static::assertSame(11, $collection[1]);
-        static::assertSame(13, $collection[3]);
+        static::assertSame(10, $collection->callDoGet(0));
+        static::assertSame(11, $collection->callDoGet(1));
+        static::assertSame(13, $collection->callDoGet(3));
     }
 
     public function testValueAlreadyExistsModeException(): void

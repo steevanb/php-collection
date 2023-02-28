@@ -20,4 +20,9 @@ class ObjectCollection extends AbstractObjectCollection
     ) {
         parent::__construct($className, $values, $comparisonMode, $valueAlreadyExistsMode);
     }
+
+    public function get(string|int $key): object
+    {
+        return $this->doGet($key);
+    }
 }

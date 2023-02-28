@@ -12,4 +12,14 @@ class DataNullableCollection extends AbstractObjectNullableCollection
     {
         parent::__construct(Data::class);
     }
+
+    public function callDoGet(string|int $key): object|null
+    {
+        return $this->doGet($key);
+    }
+
+    public function add(object|null $value): static
+    {
+        return $this->doAdd($value);
+    }
 }

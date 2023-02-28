@@ -22,7 +22,7 @@ foreach ($argv as $arg) {
     } elseif (str_starts_with($arg, '--symfony=')) {
         $symfonyVersion = substr($arg, 10);
     } else {
-        $applicationArgv[] = $arg;
+        $applicationArgv->add($arg);
     }
 }
 

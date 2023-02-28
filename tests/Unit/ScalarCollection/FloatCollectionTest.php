@@ -19,7 +19,7 @@ final class FloatCollectionTest extends TestCase
         $collection = new FloatCollection([1.0]);
 
         static::assertCount(1, $collection);
-        static::assertSame(1.0, $collection[0]);
+        static::assertSame(1.0, $collection->get(0));
     }
 
     public function testInvalidTypeString(): void
@@ -55,10 +55,10 @@ final class FloatCollectionTest extends TestCase
             ->merge(new FloatCollection([1.0, 2.0]));
 
         static::assertCount(4, $collection);
-        static::assertSame(1.0, $collection[0]);
-        static::assertSame(2.0, $collection[1]);
-        static::assertSame(1.0, $collection[2]);
-        static::assertSame(2.0, $collection[3]);
+        static::assertSame(1.0, $collection->get(0));
+        static::assertSame(2.0, $collection->get(1));
+        static::assertSame(1.0, $collection->get(2));
+        static::assertSame(2.0, $collection->get(3));
     }
 
     public function testMergeValueAlreadyExistsDoNotAdd(): void
@@ -67,10 +67,10 @@ final class FloatCollectionTest extends TestCase
             ->merge(new FloatCollection([2.0, 3.0]));
 
         static::assertCount(3, $collection);
-        static::assertSame(1.0, $collection[0]);
-        static::assertSame(2.0, $collection[1]);
+        static::assertSame(1.0, $collection->get(0));
+        static::assertSame(2.0, $collection->get(1));
         // @see https://github.com/steevanb/php-collection/issues/15
-        static::assertSame(3.0, $collection[3]);
+        static::assertSame(3.0, $collection->get(3));
     }
 
     public function testMergeValueAlreadyExistsException(): void

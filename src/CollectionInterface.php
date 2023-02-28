@@ -4,15 +4,34 @@ declare(strict_types=1);
 
 namespace Steevanb\PhpCollection;
 
-interface CollectionInterface extends \ArrayAccess, \Iterator, \Countable
+use Steevanb\PhpCollection\{
+    ScalarCollection\IntegerCollectionInterface,
+    ScalarCollection\StringCollectionInterface
+};
+
+interface CollectionInterface extends \Countable
 {
-    /** @param iterable<mixed> $values */
-    public function setValues(iterable $values): static;
+    public function setReadOnly(bool $readOnly): static;
+
+    public function isReadOnly(): bool;
+
+    public function getValueAlreadyExistsMode(): ValueAlreadyExistsModeEnum;
+
+    public function hasKey(string|int $key): bool;
+
+    /** @return array<int, mixed> */
+    public function getKeys(): array;
+
+    public function getIntegerKeys(): IntegerCollectionInterface;
+
+    public function getStringKeys(): StringCollectionInterface;
 
     public function resetKeys(): static;
 
-    /** @return array<mixed> */
-    public function toArray(): array;
+    public function remove(string|int $key): static;
 
-    public function getValueAlreadyExistsMode(): ValueAlreadyExistsModeEnum;
+    public function clear(): static;
+
+    /** @return array<string|int, mixed> */
+    public function toArray(): array;
 }

@@ -10,9 +10,9 @@ use Steevanb\PhpCollection\{
     ValueAlreadyExistsModeEnum
 };
 
-class StringNullableCollection extends AbstractCollection implements ScalarCollectionInterface
+class StringNullableCollection extends AbstractCollection implements StringNullableCollectionInterface
 {
-    /** @param iterable<string|null> $values */
+    /** @param iterable<string|int, string|null> $values */
     public function __construct(
         iterable $values = [],
         ValueAlreadyExistsModeEnum $valueAlreadyExistsMode = ValueAlreadyExistsModeEnum::ADD
@@ -20,24 +20,38 @@ class StringNullableCollection extends AbstractCollection implements ScalarColle
         parent::__construct($values, $valueAlreadyExistsMode);
     }
 
-    public function current(): ?string
+    public function set(int|string $key, string|null $value): static
     {
-        return parent::current();
+        return $this->doSet($key, $value);
     }
 
-    public function offsetGet(mixed $offset): ?string
+    /** @param iterable<string|int, string|null> $values */
+    public function replace(iterable $values): static
     {
-        return parent::offsetGet($offset);
+        return $this->doReplace($values);
     }
 
-    public function merge(StringNullableCollection|StringCollection $collection): static
+    public function add(string|null $value): static
     {
-        parent::doMerge($collection);
-
-        return $this;
+        return $this->doAdd($value);
     }
 
-    /** @return array<string|null> */
+    public function has(string|null $value): bool
+    {
+        return $this->doHas($value);
+    }
+
+    public function get(string|int $key): string|null
+    {
+        return $this->doGet($key);
+    }
+
+    public function merge(StringCollectionInterface|StringNullableCollectionInterface $collection): static
+    {
+        return $this->doMerge($collection);
+    }
+
+    /** @return array<string|int, string|null> */
     public function toArray(): array
     {
         return parent::toArray();

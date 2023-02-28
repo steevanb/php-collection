@@ -33,8 +33,6 @@ composer require steevanb/php-collection ^4.0
 
 ## Usage
 
-/!\ See [Limitations](documentation/Limitations.md) before using it, PHP have a some limitations with objects as array /!\
-
 Simple usage:
 ```php
 $intArray = new IntArray([1, 2]);
@@ -188,12 +186,6 @@ it will not return a new Collection with modifications applied like some PHP fun
 | --- | --- | --- |
 | `clear()` | _none_ | Clear all data and reset next key to `0`. Next data added with `$array[]` will have key `0`. |
 | `changeKeyCase()` | [array_change_key_case()](https://www.php.net/manual/fr/function.array-change-key-case.php) | Changes the case of all keys |
-
-## Limitations
-
-PHP as some issues or limitations with their own implementation of `\ArrayAccess`, `iterable` etc.
-
-[Limitations](documentation/Limitations.md)
 
 ## Bridges
 

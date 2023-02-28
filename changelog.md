@@ -23,6 +23,8 @@
 - [BC Break] Default comparison mode for `ObjectArray` is `HASH` (it was `STRING`)
 - [BC Break] Rename `ValueAlreadyExistException` to `ValueAlreadyExistsException` and `AbstractTypedArray::getValueAlreadyExistMode()` to `AbstractTypedArray::getValueAlreadyExistsMode()`
 - [BC Break] Remove parameter `$offset` of `AbstractTypedArray::canAddValue()`
+- [BC Break] Rename `IntCollection` to `IntegerCollection`
+- [BC Break] Remove implementations of \Iterator and \ArrayAccess, too much bugs in PHP with this interfaces
 
 ### [4.0.0](../../compare/3.3.2...4.0.0) - 2022-12-20
 

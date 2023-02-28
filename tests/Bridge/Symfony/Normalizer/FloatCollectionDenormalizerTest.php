@@ -20,7 +20,7 @@ final class FloatCollectionDenormalizerTest extends TestCase
         $collection = $serializer->denormalize([1.0, 2.2], FloatCollection::class);
 
         static::assertCount(2, $collection);
-        static::assertSame(1.0, $collection[0]);
-        static::assertSame(2.2, $collection[1]);
+        static::assertSame(1.0, $collection->get(0));
+        static::assertSame(2.2, $collection->get(1));
     }
 }
