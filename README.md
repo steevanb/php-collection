@@ -1,22 +1,22 @@
-[![Version](https://img.shields.io/badge/version-4.0.0-blueviolet.svg)](https://github.com/steevanb/php-typed-array/tree/4.0.0)
+[![Version](https://img.shields.io/badge/version-4.0.0-blueviolet.svg)](https://github.com/steevanb/php-collection/tree/4.0.0)
 [![PHP](https://img.shields.io/badge/php-^8.1-blue.svg)](https://php.net)
 ![Lines](https://img.shields.io/badge/code%20lines-4,637-blue.svg)
-![Downloads](https://poser.pugx.org/steevanb/php-typed-array/downloads)
-![GitHub workflow status](https://img.shields.io/github/actions/workflow/status/steevanb/php-typed-array/ci.yml?branch=master)
+![Downloads](https://poser.pugx.org/steevanb/php-collection/downloads)
+![GitHub workflow status](https://img.shields.io/github/actions/workflow/status/steevanb/php-collection/ci.yml?branch=master)
 ![Coverage](https://img.shields.io/badge/coverage-96%25-success.svg)
 
-## php-typed-array
+## php-collection
 
 Bored of not knowing value type in array? You are at the right spot!
 
-With `php-typed-array`, you can type your array values. How? Cause now you will use object instead of array, who can control their values.
+With `php-collection`, you can type your array values. How? Cause now you will use object instead of array, who can control their values.
 
 [Changelog](changelog.md)
 
 ## Installation
 
 ```
-composer require steevanb/php-typed-array ^4.0
+composer require steevanb/php-collection ^4.0
 ```
 
 ## Typed array available
@@ -63,7 +63,7 @@ $intArray = new IntArray([1, 2, 'foo']);
 
 ### Filter values to be uniques
 
-If you want to be sure a value is unique inside your TypedArray, you have to configure `valueAlreadyExistMode`:
+If you want to be sure a value is unique inside your Collection, you have to configure `valueAlreadyExistMode`:
 
 ```php
 // Default behavior, code here is just for the example
@@ -79,7 +79,7 @@ new IntArray([1, 2, 2], ValueAlreadyExistsModeEnum::DO_NOT_ADD);
 
 ### Read only
 
-Sometimes when you add values in your TypedArray, once you have finished you don't want this object to be modified.
+Sometimes when you add values in your Collection, once you have finished you don't want this object to be modified.
 
 You can have this behavior with read only:
 
@@ -100,7 +100,7 @@ $foo[] = 3;
 ### ObjectArray
 
 If you need to store objects in array, you have to create a classe who extends
-`Steevanb\PhpTypedArray\ObjectArray\AbstractObjectArray` or `AbstractObjectNullableArray`.
+`Steevanb\PhpCollection\ObjectArray\AbstractObjectArray` or `AbstractObjectNullableArray`.
 
 ```php
 class DateTimeArray extends AbstractObjectArray
@@ -141,7 +141,7 @@ class DateTimeArray extends AbstractObjectArray
 ### EnumArray
 
 If you need to store enums in array, 
-you can create a class who extends `Steevanb\PhpTypedArray\EnumArray\AbstractEnumArray`.
+you can create a class who extends `Steevanb\PhpCollection\EnumArray\AbstractEnumArray`.
 
 ```php
 class FooEnumArray extends AbstractEnumArray
@@ -182,7 +182,7 @@ class FooEnumArray extends AbstractEnumArray
 ## Methods to modify keys and values
 
 All methods below will directly apply modifications, 
-it will not return a new TypedArray with modifications applied like some PHP functions do.
+it will not return a new Collection with modifications applied like some PHP functions do.
 
 | Method | PHP associated function | Description |
 | --- | --- | --- |
@@ -197,6 +197,6 @@ PHP as some issues or limitations with their own implementation of `\ArrayAccess
 
 ## Bridges
 
-You can easily integrate `php-typed-array` in your projects with this bridges:
+You can easily integrate `php-collection` in your projects with these bridges:
 * [Symfony](documentation/BridgeSymfony.md)
 * [phpstan](documentation/BridgePhpstan.md)

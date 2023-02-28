@@ -1,5 +1,6 @@
 ### master
 
+- [BC Break] Rename repository, namespace and everything else from `TypedArray` to `Collection` 
 - Define PHP `8.1` as default PHP version in Docker image `steevanb/php-typed-array:ci`
 - Update Composer to `2.5.4`
 - [BC Break] Remove `AbstractTypedArray::$nullValueMode`

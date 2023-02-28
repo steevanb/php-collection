@@ -6,12 +6,12 @@ use Steevanb\ParallelProcess\{
     Process\Process,
     Process\ProcessArray
 };
-use Steevanb\PhpTypedArray\ScalarArray\StringArray;
+use Steevanb\PhpCollection\ScalarCollection\StringCollection;
 
 function createPhpunitProcesses(string $phpVersion = null, string $symfonyVersion = null): ProcessArray
 {
-    $phpVersions = new StringArray(is_string($phpVersion) ? [$phpVersion] : ['8.1', '8.2']);
-    $symfonyVersions = new StringArray(
+    $phpVersions = new StringCollection(is_string($phpVersion) ? [$phpVersion] : ['8.1', '8.2']);
+    $symfonyVersions = new StringCollection(
         is_string($symfonyVersion) ? [$symfonyVersion] : ['6.1', '6.2']
     );
 

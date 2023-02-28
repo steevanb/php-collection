@@ -4,26 +4,26 @@
 
 As PHP have a bug with `\ArrayAccess`, `offsetExists()` is not called by `array_key_exists()`:
 ```php
-$intArray = new IntArray(['foo' => 18);
+$ints = new IntCollection(['foo' => 18);
 // will always return false, although key exist
-array_key_exists('foo', $intArray);
+array_key_exists('foo', $ints);
 // use isset() instead, who call \ArrayAccess::offsetExists() properly
-isset($intArray['foo']);
+isset($ints['foo']);
 ```
 
-## BoolArray
+## BoolCollection
 
-As `\Iterator` PHP interface need `next()` method, and we have to use `next()` PHP function here, who return `false`: `BoolArray` could not exists.
+As `\Iterator` PHP interface need `next()` method, and we have to use `next()` PHP function here, who return `false`: `BoolCollection` could not exists.
 
 ## key(), prev(), current(), next() and end()
 
-PHP array functions who use internal pointer could not be used with AbstractTypedArray: `key()`, `prev()`, `current()`, `next()` and `end()`,
+PHP array functions who use internal pointer could not be used with AbstractCollection: `key()`, `prev()`, `current()`, `next()` and `end()`,
 because PHP do not provide a callback when this functions are called.
 
 ## Other php functions
 
 Some PHP functions will not work, cause they only allow `array` (it should be `iterable`).
-You can use `$typedArray->toArray()` to use them.
+You can use `$collection->toArray()` to use them.
 
 ## foreach
 
@@ -32,10 +32,10 @@ You can use `$typedArray->toArray()` to use them.
 Internal pointer of `\ArrayAccess` is modified by the seconde level of foreach and first level is impacted but should not:
 
 ```php
-$array = new IntArray([1, 2]);
-foreach ($array as $int1) {
+$collection = new IntCollection([1, 2]);
+foreach ($collection as $int1) {
     echo 'FIRST ' . $int1 . "\n";
-    foreach ($array as $int2) {
+    foreach ($collection as $int2) {
         echo 'SECOND ' . $int2 . "\n";
     }
 }
@@ -54,12 +54,12 @@ foreach ($array as $int1) {
 // SECOND 2
 ```
 
-To fix it you can use TypedArrayInterface::toArray():
+To fix it you can use CollectionInterface::toArray():
 ```php
-$array = new IntArray([1, 2]);
-foreach ($array->toArray() as $int1) {
+$collection = new IntCollection([1, 2]);
+foreach ($collection->toArray() as $int1) {
     echo 'FIRST ' . $int1 . "\n";
-    foreach ($array->toArray() as $int2) {
+    foreach ($collection->toArray() as $int2) {
         echo 'SECOND ' . $int2 . "\n";
     }
 }

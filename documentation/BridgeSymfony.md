@@ -10,11 +10,11 @@ Add this dependencies to your project:
 composer require symfony/config symfony/dependency-injection symfony/http-kernel
 ```
 
-Add `PhpTypedArrayBundle` to `config/bundles.php`:
+Add `PhpCollectionBundle` to `config/bundles.php`:
 ```php
 # config/bundles.php
 return [
-    steevanb\PhpTypedArray\Bridge\Symfony\PhpTypedArrayBundle::class => ['all' => true]
+    Steevanb\PhpCollection\Bridge\Symfony\PhpCollectionBundle::class => ['all' => true]
 ];
 ```
 
@@ -23,54 +23,46 @@ Add bridge to your autoload into `composer.json`:
 {
     "autoload": {
         "psr-4": {
-            "steevanb\\PhpTypedArray\\Bridge\\Symfony\\": "vendor/steevanb/php-typed-array/bridge/Symfony"
+            "steevanb\\PhpCollection\\Bridge\\Symfony\\": "vendor/steevanb/php-collection/bridge/Symfony"
         }
     }
 }
 ```
-## Denormalize array into TypedArray with Symfony serializer
+## Denormalize array into Collection with Symfony serializer
 
 ```php
-use ScalarArray\StringArray;
-
-// $array will be and instance of StringArray with values: 'foo', 'bar'
-$array = $serializer->denormalize(['foo', 'bar'], StringArray::class);
+// $collection will be and instance of StringCollection with values: 'foo', 'bar'
+$collection = $serializer->denormalize(['foo', 'bar'], StringCollection::class);
 ```
 
-## Create your own ObjectArrayDenormalizer
+## Create your own ObjectCollectionDenormalizer
 
 You should not need to do it as
-[ObjectArrayDenormalizer](../bridge/Symfony/Normalizer/ObjectArray/ObjectArrayDenormalizer.php)
+[ObjectCollectionDenormalizer](../bridge/Symfony/Normalizer/ObjectCollectionDenormalizer.php)
 do it for you.
 
-In case you need to change the behavior, you can create your own `ObjectArrayDenormalizer`:
+In case you need to change the behavior, you can create your own `ObjectCollectionDenormalizer`:
 
 ```php
 namespace App\Serializer;
 
-use steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\ObjectArray\AbstractObjectArrayDenormalizer;
+use Steevanb\PhpCollection\Bridge\Symfony\Normalizer\ObjectCollectionDenormalizer;
 
-class FooArrayDenormalizer extends AbstractObjectArrayDenormalizer
+class FooCollectionDenormalizer extends ObjectCollectionDenormalizer
 {
-    protected function getObjectArrayFqcn(): string
-    {
-        return FooArray::class;
-    }
+    // Do your stuff here
 }
 ```
 
-## Create your own ScalarArrayDenormalizer
+## Create your own ScalarCollectionDenormalizer
 
 ```php
 namespace App\Serializer;
 
-use steevanb\PhpTypedArray\Bridge\Symfony\Normalizer\ScalarArray\AbstractScalarArrayDenormalizer;
+use Steevanb\PhpCollection\Bridge\Symfony\Normalizer\ScalarCollectionDenormalizer;
 
-class FooArrayDenormalizer extends AbstractScalarArrayDenormalizer
+class FooCollectionDenormalizer extends ScalarCollectionDenormalizer
 {
-    protected function getObjectArrayFqcn(): string
-    {
-        return FooArray::class;
-    }
+    // Do your stuff here
 }
 ```

@@ -34,7 +34,7 @@ function updateReleaseBadge() {
 
     echo "Edit release badge in README.md"
 
-    local releaseBadge="[![Version](https:\/\/img.shields.io\/badge\/version-${version}-blueviolet.svg)](https:\/\/github.com\/steevanb\/php-typed-array\/tree\/${version})"
+    local releaseBadge="[![Version](https:\/\/img.shields.io\/badge\/version-${version}-blueviolet.svg)](https:\/\/github.com\/steevanb\/php-collection\/tree\/${version})"
     sed -i "1s/.*/${releaseBadge}/" "${rootDir}"/README.md
 }
 
@@ -67,7 +67,7 @@ function updateComposerRequire() {
 
     echo "Edit composer require in README.md"
     local majorMinor=${version%.*}
-    sed -i "s/composer require steevanb\/php-typed-array ^[[:digit:]]\+.[[:digit:]]\+/composer require steevanb\/php-typed-array ^${majorMinor}/" README.md
+    sed -i "s/composer require steevanb\/php-collection ^[[:digit:]]\+.[[:digit:]]\+/composer require steevanb\/php-collection ^${majorMinor}/" README.md
 }
 
 function updateChangelog() {

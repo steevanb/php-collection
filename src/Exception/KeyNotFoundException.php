@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Steevanb\PhpTypedArray\Exception;
+namespace Steevanb\PhpCollection\Exception;
 
-class KeyNotFoundException extends PhpTypedArrayException
+class KeyNotFoundException extends PhpCollectionException
 {
 }

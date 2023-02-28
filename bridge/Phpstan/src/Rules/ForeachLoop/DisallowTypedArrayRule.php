@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Steevanb\PhpTypedArray\Bridge\Phpstan\Rules\ForeachLoop;
+namespace Steevanb\PhpCollection\Bridge\Phpstan\Rules\ForeachLoop;
 
 use PhpParser\Node;
 use PHPStan\{
@@ -14,7 +14,7 @@ use PHPStan\{
     Type\ObjectType,
     Rules\FoundTypeResult
 };
-use Steevanb\PhpTypedArray\TypedArrayInterface;
+use Steevanb\PhpCollection\CollectionInterface;
 
 class DisallowTypedArrayRule implements Rule
 {
@@ -47,7 +47,7 @@ class DisallowTypedArrayRule implements Rule
         if (
             $typeResult instanceof FoundTypeResult
             && $typeResult->getType() instanceof ObjectType
-            && in_array(TypedArrayInterface::class, class_implements($typeResult->getType()->getClassName()))
+            && in_array(CollectionInterface::class, class_implements($typeResult->getType()->getClassName()))
         ) {
             $return[] =
                 RuleErrorBuilder::message(

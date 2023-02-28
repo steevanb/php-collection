@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Steevanb\PhpTypedArray;
+namespace Steevanb\PhpCollection;
 
 interface ReadOnlyInterface
 {
