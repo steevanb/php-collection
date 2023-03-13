@@ -25,6 +25,7 @@
 - [BC Break] Remove parameter `$offset` of `AbstractTypedArray::canAddValue()`
 - [BC Break] Rename `IntCollection` to `IntegerCollection`
 - [BC Break] Remove implementations of \Iterator and \ArrayAccess, too much bugs in PHP with this interfaces
+- [BC Break] Remove phpstan rule
 
 ### [4.0.0](../../compare/3.3.2...4.0.0) - 2022-12-20
 
