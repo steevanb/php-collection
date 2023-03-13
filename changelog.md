@@ -40,6 +40,7 @@
 - [BC Break] Add types everywhere we can
 - Add `AbstractEnumArray` to store PHP 8.1 `\UnitEnum`.
 - [BC Break] `ObjectArray` could not store instances of `\UnitEnum` anymore.
+- [BC Break] Remove ReadOnlyInterface, merged into CollectionInterface
 
 ### [3.3.2](../../compare/3.3.1...3.3.2) - 2021-12-23
 
