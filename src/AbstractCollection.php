@@ -116,11 +116,11 @@ abstract class AbstractCollection implements CollectionInterface
         return $this;
     }
 
-    public function changeKeyCase(int $case = CASE_LOWER): static
+    public function changeKeyCase(KeyCaseEnum $case = KeyCaseEnum::LOWER): static
     {
         return $this
             ->assertIsNotReadOnly()
-            ->doReplace(array_change_key_case($this->toArray(), $case));
+            ->doReplace(array_change_key_case($this->toArray(), $case->value));
     }
 
     /** @return array<string|int, mixed> */
