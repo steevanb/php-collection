@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Steevanb\PhpCollection\Tests\Unit\AbstractCollection;
 
 use PHPUnit\Framework\TestCase;
+use Steevanb\PhpCollection\KeyCaseEnum;
 
 final class ChangeKeyCaseTest extends TestCase
 {
@@ -23,7 +24,7 @@ final class ChangeKeyCaseTest extends TestCase
     {
         $collection = new Collection(['foo' => 1, 'BaR' => 2, 'BAZ' => 3]);
 
-        $collection->changeKeyCase(CASE_LOWER);
+        $collection->changeKeyCase(KeyCaseEnum::LOWER);
 
         static::assertCount(3, $collection);
         static::assertArrayHasKey('foo', $collection->toArray());
@@ -38,7 +39,7 @@ final class ChangeKeyCaseTest extends TestCase
     {
         $collection = new Collection(['foo' => 1, 'BaR' => 2, 'BAZ' => 3]);
 
-        $collection->changeKeyCase(CASE_UPPER);
+        $collection->changeKeyCase(KeyCaseEnum::UPPER);
 
         static::assertCount(3, $collection);
         static::assertArrayHasKey('FOO', $collection->toArray());
@@ -53,7 +54,7 @@ final class ChangeKeyCaseTest extends TestCase
     {
         $collection = new Collection([0 => 1, 10 => 2, 20 => 3]);
 
-        $collection->changeKeyCase(CASE_LOWER);
+        $collection->changeKeyCase(KeyCaseEnum::LOWER);
 
         static::assertCount(3, $collection);
         static::assertArrayHasKey(0, $collection->toArray());
@@ -68,7 +69,7 @@ final class ChangeKeyCaseTest extends TestCase
     {
         $collection = new Collection([0 => 1, 10 => 2, 20 => 3]);
 
-        $collection->changeKeyCase(CASE_UPPER);
+        $collection->changeKeyCase(KeyCaseEnum::UPPER);
 
         static::assertCount(3, $collection);
         static::assertArrayHasKey(0, $collection->toArray());
