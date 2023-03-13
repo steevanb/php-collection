@@ -191,4 +191,3 @@ it will not return a new Collection with modifications applied like some PHP fun
 
 You can easily integrate `php-collection` in your projects with these bridges:
 * [Symfony](documentation/BridgeSymfony.md)
-* [phpstan](documentation/BridgePhpstan.md)
