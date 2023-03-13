@@ -14,7 +14,7 @@ use Steevanb\PhpCollection\{
     ScalarCollection\StringCollectionInterface
 };
 
-abstract class AbstractCollection implements CollectionInterface, ReadOnlyInterface
+abstract class AbstractCollection implements CollectionInterface
 {
     /** @var array<mixed> */
     protected array $values = [];
