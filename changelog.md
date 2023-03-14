@@ -1,5 +1,7 @@
 ### master
 
+### [5.0.1](../../compare/5.0.0...5.0.1) - 2023-03-14
+
 - Fix `AbstractCollection::doAdd()` who was not calling `canAddValue()`
 
 ### [5.0.0](../../compare/4.0.0...5.0.0) - 2023-03-14
