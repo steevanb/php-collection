@@ -10,9 +10,9 @@ use Steevanb\PhpCollection\{
     ValueAlreadyExistsModeEnum
 };
 
-final class ValudAlreadyExistTest extends TestCase
+final class ValudAlreadyExistsTest extends TestCase
 {
-    public function testValueAlreadyExistsModeAdd(): void
+    public function testDefault(): void
     {
         $collection = new Collection([10, 11, 11, 13]);
 
@@ -23,7 +23,7 @@ final class ValudAlreadyExistTest extends TestCase
         static::assertSame(13, $collection->callDoGet(3));
     }
 
-    public function testValueAlreadyExistsModeDoNotAdd(): void
+    public function testDoNotAdd(): void
     {
         $collection = new Collection([10, 11, 11, 13], ValueAlreadyExistsModeEnum::DO_NOT_ADD);
 
@@ -33,7 +33,22 @@ final class ValudAlreadyExistTest extends TestCase
         static::assertSame(13, $collection->callDoGet(3));
     }
 
-    public function testValueAlreadyExistsModeException(): void
+    public function testDoNotAdd2(): void
+    {
+        $collection = new Collection([], ValueAlreadyExistsModeEnum::DO_NOT_ADD);
+        $collection
+            ->callDoAdd(10)
+            ->callDoAdd(11)
+            ->callDoAdd(11)
+            ->callDoAdd(13);
+
+        static::assertCount(3, $collection);
+        static::assertSame(10, $collection->callDoGet(0));
+        static::assertSame(11, $collection->callDoGet(1));
+        static::assertSame(13, $collection->callDoGet(2));
+    }
+
+    public function testException(): void
     {
         static::expectException(ValueAlreadyExistsException::class);
         new Collection([10, 11, 11, 13], ValueAlreadyExistsModeEnum::EXCEPTION);

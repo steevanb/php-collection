@@ -1,5 +1,7 @@
 ### master
 
+- Fix `AbstractCollection::doAdd()` who was not calling `canAddValue()`
+
 ### [5.0.0](../../compare/4.0.0...5.0.0) - 2023-03-14
 
 - [BC Break] Rename repository, namespace and everything else from `TypedArray` to `Collection` 

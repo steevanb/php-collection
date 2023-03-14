@@ -172,7 +172,9 @@ abstract class AbstractCollection implements CollectionInterface
     {
         $this->assertIsNotReadOnly();
 
-        $this->values[] = $value;
+        if ($this->canAddValue($value)) {
+            $this->values[] = $value;
+        }
 
         return $this;
     }
