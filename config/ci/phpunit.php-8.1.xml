@@ -1,18 +1,24 @@
+<?xml version="1.0"?>
 <phpunit
-    cacheResultFile="../../var/ci/phpunit/php-8.1/.phpunit.result.cache"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
     colors="true"
+    requireCoverageMetadata="true"
+    failOnRisky="true"
+    cacheDirectory="../../var/ci/phpunit/php-8.1"
 >
     <testsuites>
         <testsuite name="default">
             <directory>../../tests</directory>
         </testsuite>
     </testsuites>
-    <coverage
-        cacheDirectory="../../var/ci/phpunit/code-coverage"
-        processUncoveredFiles="true"
-    >
+    <coverage cacheDirectory="../../var/ci/phpunit/code-coverage">
         <include>
+            <directory suffix=".php">../../bridge</directory>
             <directory suffix=".php">../../src</directory>
         </include>
+        <exclude>
+            <file>../../bridge/Symfony/DependencyInjection/PhpCollectionExtension.php</file>
+        </exclude>
     </coverage>
 </phpunit>

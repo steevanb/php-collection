@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Steevanb\PhpCollection\Tests\Bridge\Symfony\Normalizer;
+namespace Steevanb\PhpCollection\Tests\Bridge\Symfony\Normalizer\ScalarCollectionDenormalizer;
 
 use PHPUnit\Framework\TestCase;
 use Steevanb\PhpCollection\{
@@ -11,8 +11,13 @@ use Steevanb\PhpCollection\{
 };
 use Symfony\Component\Serializer\Serializer;
 
-final class IntCollectionDenormalizerTest extends TestCase
+final class IntegerCollectionDenormalizerTest extends TestCase
 {
+    /**
+     * @covers \Steevanb\PhpCollection\Bridge\Symfony\Normalizer\ScalarCollectionDenormalizer::supportsDenormalization
+     * @covers \Steevanb\PhpCollection\Bridge\Symfony\Normalizer\ScalarCollectionDenormalizer::denormalize
+     * @covers \Steevanb\PhpCollection\Bridge\Symfony\Normalizer\ScalarCollectionDenormalizer::createScalarCollection
+     */
     public function testDenormalize(): void
     {
         $serializer = new Serializer([new ScalarCollectionDenormalizer()]);
