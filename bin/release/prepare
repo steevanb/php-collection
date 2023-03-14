@@ -62,14 +62,6 @@ function updateCoverageBadge() {
     sed -i "6s/.*/${badge}/" "${rootDir}"/README.md
 }
 
-function updateComposerRequire() {
-    trap onError ERR
-
-    echo "Edit composer require in README.md"
-    local majorMinor=${version%.*}
-    sed -i "s/composer require steevanb\/php-collection ^[[:digit:]]\+.[[:digit:]]\+/composer require steevanb\/php-collection ^${majorMinor}/" README.md
-}
-
 function updateChangelog() {
     trap onError ERR
 
@@ -81,5 +73,4 @@ initLog
 updateReleaseBadge
 updateCodeLinesBadge
 updateCoverageBadge
-updateComposerRequire
 updateChangelog
