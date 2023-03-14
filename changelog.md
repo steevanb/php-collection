@@ -1,5 +1,7 @@
 ### master
 
+### [5.0.0](../../compare/4.0.0...5.0.0) - 2023-03-14
+
 - [BC Break] Rename repository, namespace and everything else from `TypedArray` to `Collection` 
 - Define PHP `8.1` as default PHP version in Docker image `steevanb/php-typed-array:ci`
 - Update Composer to `2.5.4`

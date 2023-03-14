@@ -1,9 +1,9 @@
-[![Version](https://img.shields.io/badge/version-4.0.0-blueviolet.svg)](https://github.com/steevanb/php-collection/tree/4.0.0)
+[![Version](https://img.shields.io/badge/version-5.0.0-blueviolet.svg)](https://github.com/steevanb/php-collection/tree/5.0.0)
 [![PHP](https://img.shields.io/badge/php-^8.1-blue.svg)](https://php.net)
-![Lines](https://img.shields.io/badge/code%20lines-4,637-blue.svg)
+![Lines](https://img.shields.io/badge/code%20lines-4,481-blue.svg)
 ![Downloads](https://poser.pugx.org/steevanb/php-typed-array/downloads)
 ![GitHub workflow status](https://img.shields.io/github/actions/workflow/status/steevanb/php-collection/ci.yml?branch=master)
-![Coverage](https://img.shields.io/badge/coverage-96%25-success.svg)
+![Coverage](https://img.shields.io/badge/coverage-80%25-success.svg)
 
 ## php-collection
 
