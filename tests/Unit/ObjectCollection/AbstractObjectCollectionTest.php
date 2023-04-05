@@ -38,13 +38,13 @@ final class AbstractObjectCollectionTest extends TestCase
 
     public function testCanAddValueInvalidInstanceOf(): void
     {
-        static::expectException(InvalidTypeException::class);
+        $this->expectException(InvalidTypeException::class);
         new ObjectCollection([new \DateTime()]);
     }
 
     public function testCanAddValueInvalidValueNull(): void
     {
-        static::expectException(InvalidTypeException::class);
+        $this->expectException(InvalidTypeException::class);
         /** @phpstan-ignore-next-line */
         new ObjectCollection([null]);
     }

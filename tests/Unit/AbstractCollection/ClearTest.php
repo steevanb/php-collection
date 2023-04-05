@@ -6,11 +6,12 @@ namespace Steevanb\PhpCollection\Tests\Unit\AbstractCollection;
 
 use PHPUnit\Framework\TestCase;
 
+/** @covers \Steevanb\PhpCollection\AbstractCollection::clear */
 final class ClearTest extends TestCase
 {
     public function testEmpty(): void
     {
-        $collection = new Collection();
+        $collection = new TestCollection();
 
         static::assertCount(0, $collection);
 
@@ -25,7 +26,7 @@ final class ClearTest extends TestCase
 
     public function testOneItem(): void
     {
-        $collection = new Collection([1]);
+        $collection = new TestCollection([1]);
 
         static::assertCount(1, $collection);
 
@@ -40,7 +41,7 @@ final class ClearTest extends TestCase
 
     public function testThreeItem(): void
     {
-        $collection = new Collection([1, 2, 3]);
+        $collection = new TestCollection([1, 2, 3]);
 
         static::assertCount(3, $collection);
 

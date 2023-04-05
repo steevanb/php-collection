@@ -37,7 +37,7 @@ final class AbstractObjectNullableCollectionTest extends TestCase
 
     public function testCanAddValueInvalidInstanceOf(): void
     {
-        static::expectException(InvalidTypeException::class);
+        $this->expectException(InvalidTypeException::class);
         new ObjectNullableCollection([new \DateTime()]);
     }
 

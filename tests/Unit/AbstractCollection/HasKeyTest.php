@@ -6,31 +6,38 @@ namespace Steevanb\PhpCollection\Tests\Unit\AbstractCollection;
 
 use PHPUnit\Framework\TestCase;
 
+/** @covers \Steevanb\PhpCollection\AbstractCollection::hasKey */
 final class HasKeyTest extends TestCase
 {
-    public function testHasStringKey(): void
+    public function testStringKeys(): void
     {
-        $collection = new Collection(['foo' => 1, 'bar' => '2', 'baz' => null]);
+        $collection = new TestCollection(['foo' => 1, 'bar' => '2', 'baz' => null]);
 
         static::assertTrue($collection->hasKey('foo'));
         static::assertTrue($collection->hasKey('bar'));
         static::assertTrue($collection->hasKey('baz'));
+        static::assertFalse($collection->hasKey('qux'));
     }
 
-    public function testHasIntegerKey(): void
+    public function testIntegerKeys(): void
     {
-        $collection = new Collection([0 => 1, 1 => '2', 3 => null]);
+        $collection = new TestCollection([0 => 1, 1 => '2', 3 => null]);
 
         static::assertTrue($collection->hasKey(0));
+        static::assertFalse($collection->hasKey(2));
         static::assertTrue($collection->hasKey(1));
         static::assertTrue($collection->hasKey(3));
+        static::assertFalse($collection->hasKey(4));
     }
 
-    public function testDoNotHaveKey(): void
+    public function testMixedKeys(): void
     {
-        $collection = new Collection([0 => 1, 1 => '2', 3 => null]);
+        $collection = new TestCollection([0 => 1, 'foo' => 'bar', 3 => null]);
 
+        static::assertTrue($collection->hasKey(0));
         static::assertFalse($collection->hasKey(2));
+        static::assertTrue($collection->hasKey('foo'));
+        static::assertTrue($collection->hasKey(3));
         static::assertFalse($collection->hasKey(4));
     }
 }

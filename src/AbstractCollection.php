@@ -36,11 +36,9 @@ abstract class AbstractCollection implements CollectionInterface
 
     public function remove(string|int $key): static
     {
-        $this->assertIsNotReadOnly();
-
-        if ($this->hasKey($key) === false) {
-            throw new KeyNotFoundException('Key "' . $key . '" not found.');
-        }
+        $this
+            ->assertIsNotReadOnly()
+            ->assertHasKey($key);
 
         unset($this->values[$key]);
 
@@ -156,11 +154,18 @@ abstract class AbstractCollection implements CollectionInterface
 
     protected function doGet(string|int $key): mixed
     {
-        if ($this->hasKey($key) === false) {
-            throw new KeyNotFoundException('Key "' . $key . '" not found.');
-        }
+        $this->assertHasKey($key);
 
         return $this->values[$key];
+    }
+
+    protected function assertHasKey(string|int $key): static
+    {
+        if ($this->hasKey($key) === false) {
+            throw new KeyNotFoundException($key);
+        }
+
+        return $this;
     }
 
     protected function doHas(mixed $value): bool

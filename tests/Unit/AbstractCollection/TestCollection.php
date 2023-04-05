@@ -6,7 +6,7 @@ namespace Steevanb\PhpCollection\Tests\Unit\AbstractCollection;
 
 use Steevanb\PhpCollection\AbstractCollection;
 
-final class Collection extends AbstractCollection
+final class TestCollection extends AbstractCollection
 {
     public function callDoSet(string|int $key, mixed $value): static
     {

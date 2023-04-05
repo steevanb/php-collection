@@ -24,27 +24,27 @@ final class FloatCollectionTest extends TestCase
 
     public function testInvalidTypeString(): void
     {
-        static::expectException(InvalidTypeException::class);
+        $this->expectException(InvalidTypeException::class);
         /** @phpstan-ignore-next-line */
         new FloatCollection(['4']);
     }
 
     public function testInvalidTypeInt(): void
     {
-        static::expectException(InvalidTypeException::class);
+        $this->expectException(InvalidTypeException::class);
         new FloatCollection([1]);
     }
 
     public function testInvalidTypeBool(): void
     {
-        static::expectException(InvalidTypeException::class);
+        $this->expectException(InvalidTypeException::class);
         /** @phpstan-ignore-next-line */
         new FloatCollection([true]);
     }
 
     public function testInvalidTypeNull(): void
     {
-        static::expectException(InvalidTypeException::class);
+        $this->expectException(InvalidTypeException::class);
         /** @phpstan-ignore-next-line */
         new FloatCollection([null]);
     }
@@ -75,7 +75,7 @@ final class FloatCollectionTest extends TestCase
 
     public function testMergeValueAlreadyExistsException(): void
     {
-        static::expectException(ValueAlreadyExistsException::class);
+        $this->expectException(ValueAlreadyExistsException::class);
         (new FloatCollection([1.0, 2.0], ValueAlreadyExistsModeEnum::EXCEPTION))
             ->merge(new FloatCollection([2.0, 3.0]));
     }
