@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 use Steevanb\ParallelProcess\{
     Process\Process,
-    Process\ProcessArray
+    Process\ProcessInterfaceCollection
 };
 use Steevanb\PhpCollection\ScalarCollection\StringCollection;
 
-function createPhpunitProcesses(string $phpVersion = null, string $symfonyVersion = null): ProcessArray
+function createPhpunitProcesses(string $phpVersion = null, string $symfonyVersion = null): ProcessInterfaceCollection
 {
     $phpVersions = new StringCollection(is_string($phpVersion) ? [$phpVersion] : ['8.1', '8.2']);
     $symfonyVersions = new StringCollection(
-        is_string($symfonyVersion) ? [$symfonyVersion] : ['6.1', '6.2']
+        is_string($symfonyVersion) ? [$symfonyVersion] : ['6.1', '6.2', '6.3']
     );
 
-    $return = new ProcessArray();
+    $return = new ProcessInterfaceCollection();
     foreach ($phpVersions->toArray() as $loopPhpVersion) {
         foreach ($symfonyVersions->toArray() as $loopSymfonyVersion) {
-            $return[] = createPhpunitProcess($loopPhpVersion, $loopSymfonyVersion);
+            $return->add(createPhpunitProcess($loopPhpVersion, $loopSymfonyVersion));
         }
     }
 
