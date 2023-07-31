@@ -24,21 +24,21 @@ final class StringNullableCollectionTest extends TestCase
 
     public function testInvalidTypeInt(): void
     {
-        static::expectException(InvalidTypeException::class);
+        $this->expectException(InvalidTypeException::class);
         /** @phpstan-ignore-next-line */
         new StringNullableCollection([1]);
     }
 
     public function testInvalidTypeFloat(): void
     {
-        static::expectException(InvalidTypeException::class);
+        $this->expectException(InvalidTypeException::class);
         /** @phpstan-ignore-next-line */
         new StringNullableCollection([3.1]);
     }
 
     public function testInvalidTypeBool(): void
     {
-        static::expectException(InvalidTypeException::class);
+        $this->expectException(InvalidTypeException::class);
         /** @phpstan-ignore-next-line */
         new StringNullableCollection([true]);
     }
@@ -77,7 +77,7 @@ final class StringNullableCollectionTest extends TestCase
 
     public function testMergeValueAlreadyExistsException(): void
     {
-        static::expectException(ValueAlreadyExistsException::class);
+        $this->expectException(ValueAlreadyExistsException::class);
         (new StringNullableCollection(['foo', 'bar'], ValueAlreadyExistsModeEnum::EXCEPTION))
             ->merge(new StringNullableCollection(['bar', 'baz']));
     }

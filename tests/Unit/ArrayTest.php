@@ -6,7 +6,10 @@ namespace Steevanb\PhpCollection\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 
-/** Goal of this class is to be "sure" of the behavior of array keys */
+/**
+ * Goal of this class is to be "sure" of the behavior of array keys
+ * @coversNothing
+ */
 final class ArrayTest extends TestCase
 {
     public function testString(): void

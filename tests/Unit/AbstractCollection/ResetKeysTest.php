@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Steevanb\PhpCollection\Tests\Unit\AbstractCollection;
 
 use PHPUnit\Framework\TestCase;
+use Steevanb\PhpCollection\Exception\ReadOnlyException;
 
-final class AbstractCollectionTest extends TestCase
+/** @covers \Steevanb\PhpCollection\AbstractCollection::resetKeys */
+final class ResetKeysTest extends TestCase
 {
     public function testResetKeys(): void
     {
-        $collection = new Collection([0 => 1, 1 => '2', 2 => null, 'foo' => 'foo']);
+        $collection = new TestCollection([0 => 1, 1 => '2', 2 => null, 'foo' => 'foo']);
 
         static::assertSame([0, 1, 2, 'foo'], array_keys($collection->toArray()));
         static::assertSame(1, $collection->callDoGet(0));
@@ -27,11 +29,13 @@ final class AbstractCollectionTest extends TestCase
         static::assertSame('foo', $collection->callDoGet(3));
     }
 
-    public function testToArray(): void
+    public function testReadOnly(): void
     {
-        $data = [0 => 1, 1 => '2', 2 => null, 'foo' => 'foo'];
-        $collection = new Collection($data);
+        $collection = (new TestCollection([1, 2]))->setReadOnly();
 
-        static::assertSame($data, $collection->toArray());
+        $this->expectException(ReadOnlyException::class);
+        $this->expectExceptionMessage('This collection is read only, you cannot edit it\'s values.');
+        $this->expectExceptionCode(0);
+        $collection->resetKeys();
     }
 }

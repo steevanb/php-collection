@@ -1,6 +1,12 @@
+<?xml version="1.0"?>
 <phpunit
-    cacheResultFile="../../var/ci/phpunit/php-8.2/.phpunit.result.cache"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
     colors="true"
+    requireCoverageMetadata="true"
+    failOnRisky="true"
+    failOnWarning="true"
+    cacheDirectory="../../var/ci/phpunit/php-8.2"
 >
     <testsuites>
         <testsuite name="default">

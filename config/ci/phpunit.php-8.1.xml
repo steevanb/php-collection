@@ -1,17 +1,21 @@
+<?xml version="1.0"?>
+<!-- add requireCoverageMetadata="true" -->
 <phpunit
-    cacheResultFile="../../var/ci/phpunit/php-8.1/.phpunit.result.cache"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
     colors="true"
+    failOnRisky="true"
+    failOnWarning="true"
+    cacheDirectory="../../var/ci/phpunit/php-8.1"
 >
     <testsuites>
         <testsuite name="default">
             <directory>../../tests</directory>
         </testsuite>
     </testsuites>
-    <coverage
-        cacheDirectory="../../var/ci/phpunit/code-coverage"
-        processUncoveredFiles="true"
-    >
+    <coverage cacheDirectory="../../var/ci/phpunit/code-coverage">
         <include>
+            <directory suffix=".php">../../bridge</directory>
             <directory suffix=".php">../../src</directory>
         </include>
     </coverage>

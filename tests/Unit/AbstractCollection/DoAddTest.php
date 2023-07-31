@@ -11,30 +11,27 @@ use Steevanb\PhpCollection\{
     ValueAlreadyExistsModeEnum
 };
 
-/** @covers \Steevanb\PhpCollection\AbstractCollection::doReplace */
-final class DoReplaceTest extends TestCase
+/** @covers \Steevanb\PhpCollection\AbstractCollection::doAdd */
+final class DoAddTest extends TestCase
 {
-    public function testDoReplace(): void
+    public function testOneValue(): void
     {
         $collection = (new TestCollection())
-            ->callDoReplace([10, 11, 12, 13]);
+            ->callDoAdd('foo');
 
-        static::assertCount(4, $collection);
-        static::assertSame(10, $collection->callDoGet(0));
-        static::assertSame(11, $collection->callDoGet(1));
-        static::assertSame(12, $collection->callDoGet(2));
-        static::assertSame(13, $collection->callDoGet(3));
+        static::assertSame('foo', $collection->callDoGet(0));
     }
 
-    public function testCalledFromConstructor(): void
+    public function testTreeValue(): void
     {
-        $collection = new TestCollection([10, 11, 12, 13]);
+        $collection = (new TestCollection())
+            ->callDoAdd('foo')
+            ->callDoAdd('bar')
+            ->callDoAdd('baz');
 
-        static::assertCount(4, $collection);
-        static::assertSame(10, $collection->callDoGet(0));
-        static::assertSame(11, $collection->callDoGet(1));
-        static::assertSame(12, $collection->callDoGet(2));
-        static::assertSame(13, $collection->callDoGet(3));
+        static::assertSame('foo', $collection->callDoGet(0));
+        static::assertSame('bar', $collection->callDoGet(1));
+        static::assertSame('baz', $collection->callDoGet(2));
     }
 
     public function testReadOnly(): void
@@ -44,27 +41,34 @@ final class DoReplaceTest extends TestCase
         $this->expectException(ReadOnlyException::class);
         $this->expectExceptionMessage('This collection is read only, you cannot edit it\'s values.');
         $this->expectExceptionCode(0);
-        $collection->callDoReplace([3, 4]);
+        $collection->callDoAdd(3);
     }
 
     public function testValueAlreadyExistsDoNotAdd(): void
     {
         $collection = new TestCollection([], ValueAlreadyExistsModeEnum::DO_NOT_ADD);
-        $collection->callDoReplace([10, 11, 11, 13]);
+        $collection
+            ->callDoAdd(10)
+            ->callDoAdd(11)
+            ->callDoAdd(11)
+            ->callDoAdd(13);
 
         static::assertCount(3, $collection);
         static::assertSame(10, $collection->callDoGet(0));
         static::assertSame(11, $collection->callDoGet(1));
-        static::assertSame(13, $collection->callDoGet(3));
+        static::assertSame(13, $collection->callDoGet(2));
     }
 
     public function testException(): void
     {
         $collection = new TestCollection([], ValueAlreadyExistsModeEnum::EXCEPTION);
+        $collection
+            ->callDoAdd(10)
+            ->callDoAdd(11);
 
         $this->expectException(ValueAlreadyExistsException::class);
         $this->expectExceptionMessage('Value "11" already exists.');
         $this->expectExceptionCode(0);
-        $collection->callDoReplace([10, 11, 11]);
+        $collection->callDoAdd(11);
     }
 }

@@ -24,7 +24,7 @@ final class SetClassNameTest extends TestCase
     {
         $this->expectException(InvalidTypeException::class);
         $this->expectExceptionCode(0);
-        $this->expectDeprecationMessage(
+        $this->expectExceptionMessage(
             'Steevanb\PhpCollection\ObjectCollection\AbstractObjectCollection can not store UnitEnum or BackedEnum.'
                 . ' Use Steevanb\PhpCollection\EnumCollection\AbstractEnumCollection instead.'
         );
@@ -35,7 +35,7 @@ final class SetClassNameTest extends TestCase
     {
         $this->expectException(InvalidTypeException::class);
         $this->expectExceptionCode(0);
-        $this->expectDeprecationMessage(
+        $this->expectExceptionMessage(
             'Steevanb\PhpCollection\ObjectCollection\AbstractObjectCollection can not store UnitEnum or BackedEnum.'
                 . ' Use Steevanb\PhpCollection\EnumCollection\AbstractEnumCollection instead.'
         );

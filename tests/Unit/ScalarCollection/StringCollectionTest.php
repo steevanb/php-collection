@@ -24,28 +24,28 @@ final class StringCollectionTest extends TestCase
 
     public function testInvalidTypeInt(): void
     {
-        static::expectException(InvalidTypeException::class);
+        $this->expectException(InvalidTypeException::class);
         /** @phpstan-ignore-next-line */
         new StringCollection([1]);
     }
 
     public function testInvalidTypeFloat(): void
     {
-        static::expectException(InvalidTypeException::class);
+        $this->expectException(InvalidTypeException::class);
         /** @phpstan-ignore-next-line */
         new StringCollection([3.1]);
     }
 
     public function testInvalidTypeBool(): void
     {
-        static::expectException(InvalidTypeException::class);
+        $this->expectException(InvalidTypeException::class);
         /** @phpstan-ignore-next-line */
         new StringCollection([true]);
     }
 
     public function testInvalidTypeNull(): void
     {
-        static::expectException(InvalidTypeException::class);
+        $this->expectException(InvalidTypeException::class);
         /** @phpstan-ignore-next-line */
         new StringCollection([null]);
     }
@@ -76,7 +76,7 @@ final class StringCollectionTest extends TestCase
 
     public function testMergeValueAlreadyExistsException(): void
     {
-        static::expectException(ValueAlreadyExistsException::class);
+        $this->expectException(ValueAlreadyExistsException::class);
         (new StringCollection(['foo', 'bar'], ValueAlreadyExistsModeEnum::EXCEPTION))
             ->merge(new StringCollection(['bar', 'baz']));
     }

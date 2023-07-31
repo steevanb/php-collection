@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Steevanb\PhpCollection\Tests\Unit\AbstractEnumCollection;
+namespace Steevanb\PhpCollection\Tests\Unit\EnumCollection\AbstractEnumCollection;
 
 use PHPUnit\Framework\TestCase;
 
+/** @covers \Steevanb\PhpCollection\EnumCollection\AbstractEnumCollection::castValueToString */
 final class CastValueToStringTest extends TestCase
 {
     public function testEnum(): void
