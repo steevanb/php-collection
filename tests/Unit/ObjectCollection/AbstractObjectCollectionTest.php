@@ -17,6 +17,7 @@ final class AbstractObjectCollectionTest extends TestCase
     {
         $collection = new TestObjectCollection();
 
+        static::assertCount(0, $collection);
         static::assertSame(ComparisonModeEnum::HASH, $collection->getComparisonMode());
         static::assertSame(ValueAlreadyExistsModeEnum::ADD, $collection->getValueAlreadyExistsMode());
     }
@@ -36,15 +37,25 @@ final class AbstractObjectCollectionTest extends TestCase
 
     public function testCanAddValueInvalidInstanceOf(): void
     {
-        static::expectException(InvalidTypeException::class);
-        /** @phpstan-ignore-next-line Parameter #1 $values of class ... expects ..., array<int, DateTime> given. */
-        new TestObjectCollection([new \DateTime()]);
+        $this->expectException(InvalidTypeException::class);
+        $this->expectExceptionCode(0);
+        $this->expectExceptionMessage(
+            'Value should be an instance of Steevanb\PhpCollection\Tests\Unit\ObjectCollection\TestObject, '
+            . 'stdClass given.'
+        );
+        /** @phpstan-ignore-next-line Parameter #1 $values ... constructor expects ... array<int, stdClass> given. */
+        new TestObjectCollection([new \stdClass()]);
     }
 
     public function testCanAddValueInvalidValueNull(): void
     {
-        static::expectException(InvalidTypeException::class);
-        /** @phpstan-ignore-next-line Parameter #1 $values ... expects iterable<object>, array<int, null> given. */
+        $this->expectException(InvalidTypeException::class);
+        $this->expectExceptionCode(0);
+        $this->expectExceptionMessage(
+            'Value should be an instance of Steevanb\PhpCollection\Tests\Unit\ObjectCollection\TestObject, '
+            . 'null given.'
+        );
+        /** @phpstan-ignore-next-line Parameter #1 $values ... constructor expects ... array<int, null> given. */
         new TestObjectCollection([null]);
     }
 
@@ -56,8 +67,8 @@ final class AbstractObjectCollectionTest extends TestCase
                 new TestObject('foo'),
                 new TestObject('bar'),
             ],
-            ValueAlreadyExistsModeEnum::DO_NOT_ADD,
-            ComparisonModeEnum::STRING
+            ComparisonModeEnum::STRING,
+            ValueAlreadyExistsModeEnum::DO_NOT_ADD
         );
 
         static::assertCount(2, $collection);
@@ -74,8 +85,8 @@ final class AbstractObjectCollectionTest extends TestCase
                 new TestObject('foo'),
                 new TestObject('bar'),
             ],
-            ValueAlreadyExistsModeEnum::DO_NOT_ADD,
-            ComparisonModeEnum::HASH
+            ComparisonModeEnum::HASH,
+            ValueAlreadyExistsModeEnum::DO_NOT_ADD
         );
 
         static::assertCount(3, $collection);

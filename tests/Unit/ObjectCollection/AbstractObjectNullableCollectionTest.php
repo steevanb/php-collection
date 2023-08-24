@@ -17,6 +17,7 @@ final class AbstractObjectNullableCollectionTest extends TestCase
     {
         $collection = new TestObjectNullableCollection();
 
+        static::assertCount(0, $collection);
         static::assertSame(ComparisonModeEnum::HASH, $collection->getComparisonMode());
         static::assertSame(ValueAlreadyExistsModeEnum::ADD, $collection->getValueAlreadyExistsMode());
     }
@@ -30,15 +31,23 @@ final class AbstractObjectNullableCollectionTest extends TestCase
             ]
         );
 
-        static::assertSame('foo', $collection->get(0)?->getValue());
-        static::assertSame('bar', $collection->get(1)?->getValue());
+        static::assertInstanceOf(TestObject::class, $collection->get(0));
+        static::assertSame('foo', $collection->get(0)->getValue());
+        static::assertInstanceOf(TestObject::class, $collection->get(1));
+        static::assertSame('bar', $collection->get(1)->getValue());
     }
 
     public function testCanAddValueInvalidInstanceOf(): void
     {
-        static::expectException(InvalidTypeException::class);
-        /** @phpstan-ignore-next-line Parameter #1 $values of ... expects ..., array<int, DateTime> given. */
-        new TestObjectNullableCollection([new \DateTime()]);
+        $this->expectException(InvalidTypeException::class);
+        $this->expectExceptionCode(0);
+        $this->expectExceptionMessage(
+            'Value should be an instance of Steevanb\PhpCollection\Tests\Unit\ObjectCollection\TestObject or NULL, '
+            . 'stdClass given.'
+        );
+        /** @phpstan-ignore-next-line Parameter #1 $values ... constructor expects ... array<int, stdClass> given. */
+        new TestObjectNullableCollection([new \stdClass()]);
+        $this->addToAssertionCount(1);
     }
 
     public function testCanAddValueNull(): void
@@ -57,14 +66,16 @@ final class AbstractObjectNullableCollectionTest extends TestCase
                 new TestObject('bar'),
                 null
             ],
-            ValueAlreadyExistsModeEnum::DO_NOT_ADD,
-            ComparisonModeEnum::STRING
+            ComparisonModeEnum::STRING,
+            ValueAlreadyExistsModeEnum::DO_NOT_ADD
         );
 
         static::assertCount(3, $collection);
-        static::assertSame('foo', $collection->get(0)?->getValue());
+        static::assertInstanceOf(TestObject::class, $collection->get(0));
+        static::assertSame('foo', $collection->get(0)->getValue());
         // @see https://github.com/steevanb/php-collection/issues/15
-        static::assertSame('bar', $collection->get(2)?->getValue());
+        static::assertInstanceOf(TestObject::class, $collection->get(2));
+        static::assertSame('bar', $collection->get(2)->getValue());
         static::assertNull($collection->get(3));
     }
 
@@ -77,14 +88,17 @@ final class AbstractObjectNullableCollectionTest extends TestCase
                 new TestObject('bar'),
                 null
             ],
-            ValueAlreadyExistsModeEnum::DO_NOT_ADD,
-            ComparisonModeEnum::HASH
+            ComparisonModeEnum::HASH,
+            ValueAlreadyExistsModeEnum::DO_NOT_ADD
         );
 
         static::assertCount(4, $collection);
-        static::assertSame('foo', $collection->get(0)?->getValue());
-        static::assertSame('foo', $collection->get(1)?->getValue());
-        static::assertSame('bar', $collection->get(2)?->getValue());
+        static::assertInstanceOf(TestObject::class, $collection->get(0));
+        static::assertSame('foo', $collection->get(0)->getValue());
+        static::assertInstanceOf(TestObject::class, $collection->get(1));
+        static::assertSame('foo', $collection->get(1)->getValue());
+        static::assertInstanceOf(TestObject::class, $collection->get(2));
+        static::assertSame('bar', $collection->get(2)->getValue());
         static::assertNull($collection->get(3));
     }
 }

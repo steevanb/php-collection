@@ -13,9 +13,4 @@ class DataNullableCollection extends AbstractObjectNullableCollection
     {
         return Data::class;
     }
-
-    public function add(Data|null $value): static
-    {
-        return $this->doAdd($value);
-    }
 }

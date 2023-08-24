@@ -12,21 +12,6 @@ use Steevanb\PhpCollection\{
 /** @extends AbstractCollection<string> */
 class StringCollection extends AbstractCollection
 {
-    public function set(int|string $key, string $value): static
-    {
-        return $this->doSet($key, $value);
-    }
-
-    public function add(string $value): static
-    {
-        return $this->doAdd($value);
-    }
-
-    public function merge(StringCollection|StringNullableCollection $collection): static
-    {
-        return $this->doMerge($collection);
-    }
-
     protected function canAddValue(mixed $value): bool
     {
         if (is_string($value) === false) {

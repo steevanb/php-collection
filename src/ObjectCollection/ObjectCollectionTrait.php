@@ -9,9 +9,12 @@ use Steevanb\PhpCollection\{
     Exception\PhpCollectionException
 };
 
-/** @template T */
+/** @template TValueType of object|null */
 trait ObjectCollectionTrait
 {
+    /** @return class-string<TValueType> */
+    abstract public static function getValueFqcn(): string;
+
     abstract protected function getAssertInstanceOfError(mixed $value): string;
 
     public function getComparisonMode(): ComparisonModeEnum
@@ -23,7 +26,8 @@ trait ObjectCollectionTrait
     {
         if (
             is_object($value) === false
-            || $value instanceof ($this::getValueFqcn()) === false
+            // phpcs:ignore
+            || $value instanceof (static::getValueFqcn()) === false
         ) {
             throw new InvalidTypeException($this->getAssertInstanceOfError($value));
         }
@@ -32,41 +36,31 @@ trait ObjectCollectionTrait
     }
 
     /**
-     * @param T $firstValue
-     * @param T $secondValue
+     * @param TValueType $firstValue
+     * @param TValueType $secondValue
      */
     protected function isSameValues(mixed $firstValue, mixed $secondValue): bool
     {
         if ($this->getComparisonMode() === ComparisonModeEnum::STRING) {
-            $return = $this->castValueToString($firstValue) === $this->castValueToString($secondValue);
+            $return = parent::isSameValues(
+                // @phpstan-ignore-next-line This code will be removed in #142
+                $this->castValueToString($firstValue),
+                // @phpstan-ignore-next-line This code will be removed in #142
+                $this->castValueToString($secondValue)
+            );
         /**
          * He is right, this if is useless for now, but if one day we add a value I prefer throw the exception
          * @phpstan-ignore-next-line
          */
         } elseif ($this->getComparisonMode() === ComparisonModeEnum::HASH) {
-            $return =
-                (is_object($firstValue) ? spl_object_hash($firstValue) : null)
-                === (is_object($secondValue) ? spl_object_hash($secondValue) : null);
-        } else {
-            throw new PhpCollectionException('Unknown comparison mode "' . $this->getComparisonMode()->value . '".');
-        }
-
-        return $return;
-    }
-
-    /** @param T $value */
-    protected function castValueToString(mixed $value): string
-    {
-        if ($value instanceof \BackedEnum) {
-            $return = (string) $value->value;
-        } elseif ($value instanceof \UnitEnum) {
-            $return = $value->name;
-        } elseif (is_object($value) && $value instanceof \Stringable === false) {
-            throw new PhpCollectionException(
-                'Error while converting an instance of ' . $value::class . ' to string. Add __toString() to do it.'
+            $return = parent::isSameValues(
+                // @phpstan-ignore-next-line This code will be removed in #142
+                is_object($firstValue) ? spl_object_hash($firstValue) : null,
+                // @phpstan-ignore-next-line This code will be removed in #142
+                is_object($secondValue) ? spl_object_hash($secondValue) : null
             );
         } else {
-            $return = parent::castValueToString($value);
+            throw new PhpCollectionException('Unknown comparison mode "' . $this->getComparisonMode()->value . '".');
         }
 
         return $return;

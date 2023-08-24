@@ -13,9 +13,4 @@ class DataCollection extends AbstractObjectCollection
     {
         return Data::class;
     }
-
-    public function add(Data $value): static
-    {
-        return $this->doAdd($value);
-    }
 }
