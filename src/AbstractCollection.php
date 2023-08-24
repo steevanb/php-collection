@@ -9,24 +9,23 @@ use Steevanb\PhpCollection\{
     Exception\ReadOnlyException,
     Exception\ValueAlreadyExistsException,
     ScalarCollection\IntegerCollection,
-    ScalarCollection\IntegerCollectionInterface,
-    ScalarCollection\StringCollection,
-    ScalarCollection\StringCollectionInterface
+    ScalarCollection\StringCollection
 };
 
+/** @template T */
 abstract class AbstractCollection implements CollectionInterface
 {
-    /** @var array<mixed> */
+    /** @var array<T> */
     protected array $values = [];
 
     protected bool $readOnly = false;
 
-    /** @param iterable<mixed> $values */
+    /** @param iterable<T> $values */
     public function __construct(
         iterable $values = [],
         private readonly ValueAlreadyExistsModeEnum $valueAlreadyExistsMode = ValueAlreadyExistsModeEnum::ADD
     ) {
-        $this->doReplace($values);
+        $this->replace($values);
     }
 
     public function hasKey(string|int $key): bool
@@ -84,7 +83,7 @@ abstract class AbstractCollection implements CollectionInterface
         return array_keys($this->values);
     }
 
-    public function getStringKeys(): StringCollectionInterface
+    public function getStringKeys(): StringCollection
     {
         $return = new StringCollection();
         foreach ($this->getKeys() as $key) {
@@ -96,7 +95,7 @@ abstract class AbstractCollection implements CollectionInterface
         return $return;
     }
 
-    public function getIntegerKeys(): IntegerCollectionInterface
+    public function getIntegerKeys(): IntegerCollection
     {
         $return = new IntegerCollection();
         foreach ($this->getKeys() as $key) {
@@ -120,16 +119,17 @@ abstract class AbstractCollection implements CollectionInterface
     {
         return $this
             ->assertIsNotReadOnly()
-            ->doReplace(array_change_key_case($this->toArray(), $case->value));
+            ->replace(array_change_key_case($this->toArray(), $case->value));
     }
 
-    /** @return array<string|int, mixed> */
+    /** @return array<string|int, T> */
     public function toArray(): array
     {
         return $this->values;
     }
 
-    protected function doSet(string|int $key, mixed $value): static
+    /** @param T $value */
+    public function set(string|int $key, mixed $value): static
     {
         $this->assertIsNotReadOnly();
 
@@ -140,21 +140,22 @@ abstract class AbstractCollection implements CollectionInterface
         return $this;
     }
 
-    /** @param iterable<mixed> $values */
-    protected function doReplace(iterable $values): static
+    /** @param iterable<T> $values */
+    public function replace(iterable $values): static
     {
         $this->assertIsNotReadOnly();
 
         $this->clear();
         foreach ($values as $key => $value) {
-            $this->doSet($key, $value);
+            $this->set($key, $value);
         }
         reset($this->values);
 
         return $this;
     }
 
-    protected function doGet(string|int $key): mixed
+    /** @return T */
+    public function get(string|int $key): mixed
     {
         if ($this->hasKey($key) === false) {
             throw new KeyNotFoundException('Key "' . $key . '" not found.');
@@ -163,12 +164,14 @@ abstract class AbstractCollection implements CollectionInterface
         return $this->values[$key];
     }
 
-    protected function doHas(mixed $value): bool
+    /** @param T $value */
+    public function has(mixed $value): bool
     {
         return in_array($value, $this->values, true);
     }
 
-    protected function doAdd(mixed $value): static
+    /** @param T $value */
+    public function add(mixed $value): static
     {
         $this->assertIsNotReadOnly();
 
@@ -177,6 +180,12 @@ abstract class AbstractCollection implements CollectionInterface
         }
 
         return $this;
+    }
+
+    /** @param CollectionInterface<T> $collection */
+    public function merge(CollectionInterface $collection): static
+    {
+        return $this->replace(array_merge($this->values, $collection->toArray()));
     }
 
     protected function assertIsNotReadOnly(): static
@@ -188,16 +197,12 @@ abstract class AbstractCollection implements CollectionInterface
         return $this;
     }
 
-    protected function doMerge(CollectionInterface $collection): static
-    {
-        return $this->doReplace(array_merge($this->values, $collection->toArray()));
-    }
-
     protected function isSameValues(mixed $firstValue, mixed $secondValue): bool
     {
         return $firstValue === $secondValue;
     }
 
+    /** @param T $value */
     protected function castValueToString(mixed $value): string
     {
         return is_null($value) ? 'NULL' : (string) $value;

@@ -18,7 +18,7 @@ final class ClearTest extends TestCase
 
         static::assertCount(0, $collection);
 
-        $collection->callDoAdd(1);
+        $collection->add(1);
 
         static::assertCount(1, $collection);
     }
@@ -33,7 +33,7 @@ final class ClearTest extends TestCase
 
         static::assertCount(0, $collection);
 
-        $collection->callDoAdd(2);
+        $collection->add(2);
 
         static::assertCount(1, $collection);
     }
@@ -48,7 +48,7 @@ final class ClearTest extends TestCase
 
         static::assertCount(0, $collection);
 
-        $collection->callDoAdd(4);
+        $collection->add(4);
 
         static::assertCount(1, $collection);
     }

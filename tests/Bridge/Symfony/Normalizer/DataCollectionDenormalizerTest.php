@@ -27,13 +27,11 @@ final class DataCollectionDenormalizerTest extends TestCase
 
         static::assertCount(2, $collection);
 
-        $data1 = $collection->callDoGet(0);
-        static::assertInstanceOf(Data::class, $data1);
+        $data1 = $collection->get(0);
         static::assertSame('foo1', $data1->foo);
         static::assertSame(42, $data1->bar);
 
-        $data2 = $collection->callDoGet(1);
-        static::assertInstanceOf(Data::class, $data2);
+        $data2 = $collection->get(1);
         static::assertSame('foo2', $data2->foo);
         static::assertSame(43, $data2->bar);
     }
@@ -53,16 +51,16 @@ final class DataCollectionDenormalizerTest extends TestCase
 
         static::assertCount(3, $collection);
 
-        $data1 = $collection->callDoGet(0);
+        $data1 = $collection->get(0);
         static::assertInstanceOf(Data::class, $data1);
         static::assertSame('foo1', $data1->foo);
         static::assertSame(42, $data1->bar);
 
-        $data2 = $collection->callDoGet(1);
+        $data2 = $collection->get(1);
         static::assertInstanceOf(Data::class, $data2);
         static::assertSame('foo2', $data2->foo);
         static::assertSame(43, $data2->bar);
 
-        static::assertNull($collection->callDoGet(2));
+        static::assertNull($collection->get(2));
     }
 }

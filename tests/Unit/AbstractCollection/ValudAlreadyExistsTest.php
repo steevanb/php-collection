@@ -17,10 +17,10 @@ final class ValudAlreadyExistsTest extends TestCase
         $collection = new Collection([10, 11, 11, 13]);
 
         static::assertCount(4, $collection);
-        static::assertSame(10, $collection->callDoGet(0));
-        static::assertSame(11, $collection->callDoGet(1));
-        static::assertSame(11, $collection->callDoGet(2));
-        static::assertSame(13, $collection->callDoGet(3));
+        static::assertSame(10, $collection->get(0));
+        static::assertSame(11, $collection->get(1));
+        static::assertSame(11, $collection->get(2));
+        static::assertSame(13, $collection->get(3));
     }
 
     public function testDoNotAdd(): void
@@ -28,24 +28,24 @@ final class ValudAlreadyExistsTest extends TestCase
         $collection = new Collection([10, 11, 11, 13], ValueAlreadyExistsModeEnum::DO_NOT_ADD);
 
         static::assertCount(3, $collection);
-        static::assertSame(10, $collection->callDoGet(0));
-        static::assertSame(11, $collection->callDoGet(1));
-        static::assertSame(13, $collection->callDoGet(3));
+        static::assertSame(10, $collection->get(0));
+        static::assertSame(11, $collection->get(1));
+        static::assertSame(13, $collection->get(3));
     }
 
     public function testDoNotAdd2(): void
     {
         $collection = new Collection([], ValueAlreadyExistsModeEnum::DO_NOT_ADD);
         $collection
-            ->callDoAdd(10)
-            ->callDoAdd(11)
-            ->callDoAdd(11)
-            ->callDoAdd(13);
+            ->add(10)
+            ->add(11)
+            ->add(11)
+            ->add(13);
 
         static::assertCount(3, $collection);
-        static::assertSame(10, $collection->callDoGet(0));
-        static::assertSame(11, $collection->callDoGet(1));
-        static::assertSame(13, $collection->callDoGet(2));
+        static::assertSame(10, $collection->get(0));
+        static::assertSame(11, $collection->get(1));
+        static::assertSame(13, $collection->get(2));
     }
 
     public function testException(): void

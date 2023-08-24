@@ -11,24 +11,24 @@ final class DoSetTest extends TestCase
     public function testSetIntegerKeys(): void
     {
         $collection = new Collection();
-        $collection->callDoSet(0, 1);
-        $collection->callDoSet(1, '2');
-        $collection->callDoSet(2, null);
+        $collection->set(0, 1);
+        $collection->set(1, '2');
+        $collection->set(2, null);
 
-        static::assertSame(1, $collection->callDoGet(0));
-        static::assertSame('2', $collection->callDoGet(1));
-        static::assertNull($collection->callDoGet(2));
+        static::assertSame(1, $collection->get(0));
+        static::assertSame('2', $collection->get(1));
+        static::assertNull($collection->get(2));
     }
 
     public function testSetStringKeys(): void
     {
         $collection = new Collection();
-        $collection->callDoSet('foo', 1);
-        $collection->callDoSet('bar', '2');
-        $collection->callDoSet('baz', null);
+        $collection->set('foo', 1);
+        $collection->set('bar', '2');
+        $collection->set('baz', null);
 
-        static::assertSame(1, $collection->callDoGet('foo'));
-        static::assertSame('2', $collection->callDoGet('bar'));
-        static::assertNull($collection->callDoGet('baz'));
+        static::assertSame(1, $collection->get('foo'));
+        static::assertSame('2', $collection->get('bar'));
+        static::assertNull($collection->get('baz'));
     }
 }

@@ -5,53 +5,30 @@ declare(strict_types=1);
 namespace Steevanb\PhpCollection\ObjectCollection;
 
 use Steevanb\PhpCollection\{
-    EnumCollection\AbstractEnumCollection,
     Exception\InvalidTypeException,
     Exception\PhpCollectionException
 };
 
+/** @template T of object|null */
 trait ObjectCollectionTrait
 {
-    abstract protected function getAssertInstanceOfError(): string;
+    /** @return class-string */
+    abstract public static function getValueFqcn(): string;
 
-    public function getClassName(): string
-    {
-        return $this->className;
-    }
+    abstract protected function getAssertInstanceOfError(mixed $value): string;
 
     public function getComparisonMode(): ComparisonModeEnum
     {
         return $this->comparisonMode;
     }
 
-    protected function assertClassName(string $className): static
-    {
-        $implements = class_implements($className);
-        if ($implements === false) {
-            $implements = [];
-        }
-
-        if (
-            $className === \UnitEnum::class
-            || $className === \BackedEnum::class
-            || in_array(\UnitEnum::class, $implements, true)
-        ) {
-            throw new InvalidTypeException(
-                __CLASS__ . ' can not store ' . \UnitEnum::class . ' or ' . \BackedEnum::class
-                . '. Use ' . AbstractEnumCollection::class . ' instead.'
-            );
-        }
-
-        return $this;
-    }
-
     protected function assertInstanceOf(mixed $value): static
     {
         if (
             is_object($value) === false
-            || $value instanceof ($this->getClassName()) === false
+            || $value instanceof (static::getValueFqcn()) === false
         ) {
-            throw new InvalidTypeException($this->getAssertInstanceOfError());
+            throw new InvalidTypeException($this->getAssertInstanceOfError($value));
         }
 
         return $this;
@@ -65,7 +42,7 @@ trait ObjectCollectionTrait
                 $this->castValueToString($secondValue)
             );
         /**
-         * He is right, this is if useless for now, but if one day we add a value I prefer throw the exception
+         * He is right, this if is useless for now, but if one day we add a value I prefer throw the exception
          * @phpstan-ignore-next-line
          */
         } elseif ($this->getComparisonMode() === ComparisonModeEnum::HASH) {
@@ -78,16 +55,5 @@ trait ObjectCollectionTrait
         }
 
         return $return;
-    }
-
-    protected function castValueToString(mixed $value): string
-    {
-        if (is_object($value) && $value instanceof \Stringable === false) {
-            throw new PhpCollectionException(
-                'Error while converting an instance of ' . $value::class . ' to string. Add __toString() to do it.'
-            );
-        }
-
-        return parent::castValueToString($value);
     }
 }
