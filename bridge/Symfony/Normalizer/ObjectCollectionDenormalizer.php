@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Steevanb\PhpCollection\Bridge\Symfony\Normalizer;
 
-use Steevanb\PhpCollection\{
-    Exception\PhpCollectionException,
-    ObjectCollection\AbstractObjectCollection,
-    ObjectCollection\AbstractObjectNullableCollection
-};
 use Symfony\Component\Serializer\{
     Normalizer\DenormalizerAwareInterface,
     Normalizer\DenormalizerAwareTrait,
     Normalizer\DenormalizerInterface
+};
+use Steevanb\PhpCollection\{
+    Exception\PhpCollectionException,
+    ObjectCollection\AbstractObjectCollection,
+    ObjectCollection\AbstractObjectNullableCollection
 };
 
 class ObjectCollectionDenormalizer implements DenormalizerInterface, DenormalizerAwareInterface
@@ -26,39 +26,43 @@ class ObjectCollectionDenormalizer implements DenormalizerInterface, Denormalize
             || is_subclass_of($type, AbstractObjectNullableCollection::class);
     }
 
-    /** @param array<mixed> $context */
+    /**
+     * @param array<mixed> $context
+     * @return AbstractObjectCollection<object>|AbstractObjectNullableCollection<object|null>
+     */
     public function denormalize(
         mixed $data,
         string $type,
         string $format = null,
         array $context = []
     ): AbstractObjectCollection|AbstractObjectNullableCollection {
-        /** @var class-string<AbstractObjectCollection|AbstractObjectNullableCollection> $type */
+        /** @var class-string<AbstractObjectCollection<object>|AbstractObjectNullableCollection<object|null>> $type */
 
         if (is_array($data) === false) {
-            throw new PhpCollectionException('$data should be an array, ' . get_debug_type($data) . ' given.');
+            throw new PhpCollectionException('$data should be an array.');
         }
 
-        $values = [];
-        foreach ($data as $value) {
-            $values[] = $this->denormalizeValue($value, $type, $format, $context);
+        /** @var AbstractObjectCollection<object>|AbstractObjectNullableCollection<object|null> $collection */
+        $collection = $this->createCollection($type);
+        foreach ($data as $datum) {
+            if (is_null($datum)) {
+                $add = null;
+            } else {
+                /** @var object|null $add */
+                $add = $this->denormalizer->denormalize($datum, $collection::getValueFqcn(), $format, $context);
+            }
+            $collection->add($add);
         }
 
-        return new $type($values);
+        return $collection;
     }
 
     /**
-     * @param class-string<AbstractObjectCollection|AbstractObjectNullableCollection> $collectionFqcn
-     * @param array<mixed> $context
+     * @param class-string<AbstractObjectCollection<object>|AbstractObjectNullableCollection<object|null>> $fqcn
+     * @return AbstractObjectCollection<object>|AbstractObjectNullableCollection<object|null>
      */
-    protected function denormalizeValue(
-        mixed $value,
-        string $collectionFqcn,
-        ?string $format,
-        array $context
-    ): object|null {
-        return $value === null
-            ? null
-            : $this->denormalizer->denormalize($value, $collectionFqcn::getValueFqcn(), $format, $context);
+    protected function createCollection(string $fqcn): AbstractObjectCollection|AbstractObjectNullableCollection
+    {
+        return new $fqcn();
     }
 }

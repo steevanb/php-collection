@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 COPY --from=composer:2.7.6 /usr/bin/composer /usr/local/bin/composer
 
@@ -34,8 +34,7 @@ RUN \
     && update-alternatives --set php /usr/bin/php8.1 \
 
     # Install CI tools
-    && cd ${COMPOSER_HOME} \
-    && composer up \
+    && composer global up \
     && ln -s ${COMPOSER_HOME}/vendor/bin/composer-require-checker /usr/local/bin/composer-require-checker \
     && ln -s ${COMPOSER_HOME}/vendor/bin/phpdd /usr/local/bin/phpdd \
     && ln -s ${COMPOSER_HOME}/vendor/bin/phpcs /usr/local/bin/phpcs \

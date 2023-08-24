@@ -3,6 +3,7 @@
 - Add support for Symfony `6.3` and `6.4`
 - Add support for PHP `8.3`
 - Update CI dependencies
+- Add support for generics
 - [BC break] Remove `ObjectCollectionDenormalizer::createObjectCollection()` and `add()`
 - [BC break] Rename ObjectCollectionDenormalizer::denormalizeObject()` to `denormalizeValue()`
 - [BC break] Remove `ScalarCollectionInterface`
@@ -38,6 +39,8 @@
 - Because of generics, remove methods in `StringCollection`: `__construct()`, `replace()`, `has()`, `get()`, `merge()` and `toArray()`
 - Because of generics, remove methods in `StringNullableCollection`: `__construct()`, `replace()`, `has()`, `get()`, `merge()` and `toArray()`
 - [Edhrendal](https://github.com/Edhrendal) Add `AbstractCollection::isEmpty()`
+- [BC break] Add `CollectionInterface::isEmpty()`
+- Remove `CollectionInterface::getIntegerKeys()` and `CollectionInterface::getStringKeys()`. It still exists in `AbstractCollection`.
 
 ### [5.0.1](../../compare/5.0.0...5.0.1) - 2023-03-14
 

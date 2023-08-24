@@ -6,26 +6,27 @@ namespace Steevanb\PhpCollection\ObjectCollection;
 
 use Steevanb\PhpCollection\{
     AbstractCollection,
+    Exception\PhpCollectionException,
     ValueAlreadyExistsModeEnum
 };
 
 /**
- * @template T
- * @extends AbstractCollection<T>
+ * @template TValueType of object
+ * @extends AbstractCollection<TValueType>
  */
 abstract class AbstractObjectCollection extends AbstractCollection
 {
-    /** @use ObjectCollectionTrait<T> */
+    /** @use ObjectCollectionTrait<TValueType> */
     use ObjectCollectionTrait;
 
-    /** @return class-string<T> */
+    /** @return class-string<TValueType> */
     abstract public static function getValueFqcn(): string;
 
-    /** @param iterable<T> $values */
+    /** @param iterable<TValueType> $values */
     public function __construct(
         iterable $values = [],
-        ValueAlreadyExistsModeEnum $valueAlreadyExistsMode = ValueAlreadyExistsModeEnum::ADD,
-        private readonly ComparisonModeEnum $comparisonMode = ComparisonModeEnum::HASH
+        private readonly ComparisonModeEnum $comparisonMode = ComparisonModeEnum::HASH,
+        ValueAlreadyExistsModeEnum $valueAlreadyExistsMode = ValueAlreadyExistsModeEnum::ADD
     ) {
         parent::__construct($values, $valueAlreadyExistsMode);
     }
@@ -40,5 +41,22 @@ abstract class AbstractObjectCollection extends AbstractCollection
         $this->assertInstanceOf($value);
 
         return parent::canAddValue($value);
+    }
+
+    protected function castValueToString(mixed $value): string
+    {
+        if ($value instanceof \BackedEnum) {
+            $return = (string) $value->value;
+        } elseif ($value instanceof \UnitEnum) {
+            $return = $value->name;
+        } elseif ($value instanceof \Stringable === false) {
+            throw new PhpCollectionException(
+                'Error while converting an instance of ' . $value::class . ' to string. Add __toString() to do it.'
+            );
+        } else {
+            $return = parent::castValueToString($value);
+        }
+
+        return $return;
     }
 }

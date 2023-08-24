@@ -13,17 +13,17 @@ use Steevanb\PhpCollection\{
 };
 
 /**
- * @template T
- * @implements CollectionInterface<T>
+ * @template TValueType
+ * @implements CollectionInterface<TValueType>
  */
 abstract class AbstractCollection implements CollectionInterface
 {
-    /** @var array<T> */
+    /** @var array<TValueType> */
     protected array $values = [];
 
     protected bool $readOnly = false;
 
-    /** @param iterable<T> $values */
+    /** @param iterable<TValueType> $values */
     public function __construct(
         iterable $values = [],
         private readonly ValueAlreadyExistsModeEnum $valueAlreadyExistsMode = ValueAlreadyExistsModeEnum::ADD
@@ -130,44 +130,14 @@ abstract class AbstractCollection implements CollectionInterface
             ->replace(array_change_key_case($this->toArray(), $case->value));
     }
 
-    /** @return array<string|int, T> */
+    /** @return array<string|int, TValueType> */
     public function toArray(): array
     {
         return $this->values;
     }
 
-    /** @param iterable<T> $values */
-    public function replace(iterable $values): static
-    {
-        $this->assertIsNotReadOnly();
-
-        $this->clear();
-        foreach ($values as $key => $value) {
-            $this->doSet($key, $value);
-        }
-        reset($this->values);
-
-        return $this;
-    }
-
-    /** @return T */
-    public function get(string|int $key): mixed
-    {
-        if ($this->hasKey($key) === false) {
-            throw new KeyNotFoundException('Key "' . $key . '" not found.');
-        }
-
-        return $this->values[$key];
-    }
-
-    /** @param T $value */
-    public function contains(mixed $value): bool
-    {
-        return in_array($value, $this->values, true);
-    }
-
-    /** @param T $value */
-    protected function doSet(string|int $key, mixed $value): static
+    /** @param TValueType $value */
+    public function set(string|int $key, mixed $value): static
     {
         $this->assertIsNotReadOnly();
 
@@ -178,8 +148,39 @@ abstract class AbstractCollection implements CollectionInterface
         return $this;
     }
 
-    /** @param T $value */
-    protected function doAdd(mixed $value): static
+    /** @param iterable<TValueType> $values */
+    public function replace(iterable $values): static
+    {
+        $this->assertIsNotReadOnly();
+
+        $this->clear();
+        /** @var int|string $key */
+        foreach ($values as $key => $value) {
+            $this->set($key, $value);
+        }
+        reset($this->values);
+
+        return $this;
+    }
+
+    /** @return TValueType */
+    public function get(string|int $key): mixed
+    {
+        if ($this->hasKey($key) === false) {
+            throw new KeyNotFoundException('Key "' . $key . '" not found.');
+        }
+
+        return $this->values[$key];
+    }
+
+    /** @param TValueType $value */
+    public function contains(mixed $value): bool
+    {
+        return in_array($value, $this->values, true);
+    }
+
+    /** @param TValueType $value */
+    public function add(mixed $value): static
     {
         $this->assertIsNotReadOnly();
 
@@ -190,7 +191,8 @@ abstract class AbstractCollection implements CollectionInterface
         return $this;
     }
 
-    protected function doMerge(CollectionInterface $collection): static
+    /** @param CollectionInterface<TValueType> $collection */
+    public function merge(CollectionInterface $collection): static
     {
         return $this->replace(array_merge($this->values, $collection->toArray()));
     }
@@ -205,15 +207,15 @@ abstract class AbstractCollection implements CollectionInterface
     }
 
     /**
-     * @param T $firstValue
-     * @param T $secondValue
+     * @param TValueType $firstValue
+     * @param TValueType $secondValue
      */
     protected function isSameValues(mixed $firstValue, mixed $secondValue): bool
     {
         return $firstValue === $secondValue;
     }
 
-    /** @param T $value */
+    /** @param TValueType $value */
     protected function castValueToString(mixed $value): string
     {
         return is_null($value) ? 'NULL' : (string) $value;

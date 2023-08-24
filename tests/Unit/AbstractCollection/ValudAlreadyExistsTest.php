@@ -37,10 +37,10 @@ final class ValudAlreadyExistsTest extends TestCase
     {
         $collection = new Collection([], ValueAlreadyExistsModeEnum::DO_NOT_ADD);
         $collection
-            ->callDoAdd(10)
-            ->callDoAdd(11)
-            ->callDoAdd(11)
-            ->callDoAdd(13);
+            ->add(10)
+            ->add(11)
+            ->add(11)
+            ->add(13);
 
         static::assertCount(3, $collection);
         static::assertSame(10, $collection->get(0));

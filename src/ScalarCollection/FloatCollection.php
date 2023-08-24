@@ -12,21 +12,6 @@ use Steevanb\PhpCollection\{
 /** @extends AbstractCollection<float> */
 class FloatCollection extends AbstractCollection
 {
-    public function set(int|string $key, float $value): static
-    {
-        return $this->doSet($key, $value);
-    }
-
-    public function add(float $value): static
-    {
-        return $this->doAdd($value);
-    }
-
-    public function merge(FloatCollection $collection): static
-    {
-        return $this->doMerge($collection);
-    }
-
     protected function canAddValue(mixed $value): bool
     {
         if (is_float($value) === false) {

@@ -33,14 +33,20 @@ class ScalarCollectionDenormalizer implements DenormalizerInterface
         );
     }
 
-    /** @param array<mixed> $context */
+    /**
+     * @param array<mixed> $context
+     * @return CollectionInterface<float|integer|string|null>
+     */
     public function denormalize(
         mixed $data,
         string $type,
         string $format = null,
         array $context = []
     ): CollectionInterface {
-        /** @var class-string<CollectionInterface> $type */
+        /**
+         * @var class-string<CollectionInterface<float|integer|string|null>> $type
+         * @var array<float|int|string|null> $data
+         */
         return (new $type())->replace($data);
     }
 }

@@ -19,21 +19,21 @@ final class ReadOnlyTest extends TestCase
         $collection = new Collection([1, 2]);
         $collection->replace([3, 4]);
 
-        static::addToAssertionCount(1);
+        $this->addToAssertionCount(1);
     }
 
     public function testAddValue(): void
     {
         $collection = new Collection([1, 2]);
-        $collection->callDoAdd(3);
+        $collection->add(3);
 
-        static::addToAssertionCount(1);
+        $this->addToAssertionCount(1);
     }
 
     public function testSet(): void
     {
         $collection = new Collection([1, 2]);
-        $collection->callDoSet(0, 4);
+        $collection->set(0, 4);
 
         static::assertSame(4, $collection->get(0));
     }
@@ -51,7 +51,7 @@ final class ReadOnlyTest extends TestCase
         $collection = new Collection([1, 2]);
         $collection->resetKeys();
 
-        static::addToAssertionCount(1);
+        $this->addToAssertionCount(1);
     }
 
     public function testReadOnlyReplace(): void
@@ -67,7 +67,7 @@ final class ReadOnlyTest extends TestCase
         $collection = (new Collection([1, 2]))->setReadOnly();
 
         $this->expectException(ReadOnlyException::class);
-        $collection->callDoAdd(3);
+        $collection->add(3);
     }
 
     public function testReadOnlySet(): void
@@ -75,7 +75,7 @@ final class ReadOnlyTest extends TestCase
         $collection = (new Collection([1, 2]))->setReadOnly();
 
         $this->expectException(ReadOnlyException::class);
-        $collection->callDoSet(0, 4);
+        $collection->set(0, 4);
     }
 
     public function testReadOnlyRemove(): void

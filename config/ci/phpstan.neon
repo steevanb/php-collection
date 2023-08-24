@@ -1,5 +1,5 @@
 parameters:
-    level: 8
+    level: 9
     tmpDir: ../../var/ci/phpstan
     paths:
         - ../../bridge
@@ -7,7 +7,6 @@ parameters:
         - ../../tests
     excludePaths:
         - ../../tests/Unit/ArrayTest.php
-    checkGenericClassInNonGenericObjectType: false
 includes:
     - /composer/common/vendor/phpstan/phpstan-deprecation-rules/rules.neon
     - /composer/common/vendor/phpstan/phpstan-phpunit/extension.neon
