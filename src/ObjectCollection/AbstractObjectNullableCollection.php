@@ -9,25 +9,32 @@ use Steevanb\PhpCollection\{
     ValueAlreadyExistsModeEnum
 };
 
+/**
+ * @template T
+ * @extends AbstractCollection<T>
+ */
 abstract class AbstractObjectNullableCollection extends AbstractCollection
 {
+    /** @use ObjectCollectionTrait<T> */
     use ObjectCollectionTrait;
 
-    /** @param iterable<object|null> $values */
+    /** @return class-string<T> */
+    abstract public static function getValueFqcn(): string;
+
+    /** @param iterable<T> $values */
     public function __construct(
-        private readonly string $className,
         iterable $values = [],
         private readonly ComparisonModeEnum $comparisonMode = ComparisonModeEnum::HASH,
         ValueAlreadyExistsModeEnum $valueAlreadyExistsMode = ValueAlreadyExistsModeEnum::ADD
     ) {
-        $this->assertClassName($this->className);
-
         parent::__construct($values, $valueAlreadyExistsMode);
     }
 
-    protected function getAssertInstanceOfError(): string
+    protected function getAssertInstanceOfError(mixed $value): string
     {
-        return '$value should be an instance of ' . $this->getClassName() . ' or null.';
+        return
+            'Value should be an instance of ' . static::getValueFqcn() . ' or NULL, '
+            . get_debug_type($value) . ' given.';
     }
 
     protected function canAddValue(mixed $value): bool

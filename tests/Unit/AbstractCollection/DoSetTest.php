@@ -15,9 +15,9 @@ final class DoSetTest extends TestCase
         $collection->callDoSet(1, '2');
         $collection->callDoSet(2, null);
 
-        static::assertSame(1, $collection->callDoGet(0));
-        static::assertSame('2', $collection->callDoGet(1));
-        static::assertNull($collection->callDoGet(2));
+        static::assertSame(1, $collection->get(0));
+        static::assertSame('2', $collection->get(1));
+        static::assertNull($collection->get(2));
     }
 
     public function testSetStringKeys(): void
@@ -27,8 +27,8 @@ final class DoSetTest extends TestCase
         $collection->callDoSet('bar', '2');
         $collection->callDoSet('baz', null);
 
-        static::assertSame(1, $collection->callDoGet('foo'));
-        static::assertSame('2', $collection->callDoGet('bar'));
-        static::assertNull($collection->callDoGet('baz'));
+        static::assertSame(1, $collection->get('foo'));
+        static::assertSame('2', $collection->get('bar'));
+        static::assertNull($collection->get('baz'));
     }
 }

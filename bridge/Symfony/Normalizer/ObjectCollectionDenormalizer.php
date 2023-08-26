@@ -22,59 +22,43 @@ class ObjectCollectionDenormalizer implements DenormalizerInterface, Denormalize
     public function supportsDenormalization(mixed $data, string $type, string $format = null): bool
     {
         return
-            $type === AbstractObjectCollection::class
-            || is_subclass_of($type, AbstractObjectCollection::class)
-            || $type === AbstractObjectNullableCollection::class
+            is_subclass_of($type, AbstractObjectCollection::class)
             || is_subclass_of($type, AbstractObjectNullableCollection::class);
     }
 
-    /**
-     * @var array<mixed> $data
-     * @var array<mixed> $context
-     */
+    /** @param array<mixed> $context */
     public function denormalize(
         mixed $data,
         string $type,
         string $format = null,
         array $context = []
     ): AbstractObjectCollection|AbstractObjectNullableCollection {
-        $return = $this->createObjectCollection($type);
+        /** @var class-string<AbstractObjectCollection|AbstractObjectNullableCollection> $type */
+
+        if (is_array($data) === false) {
+            throw new PhpCollectionException('$data should be an array, ' . get_debug_type($data) . ' given.');
+        }
+
+        $values = [];
         foreach ($data as $value) {
-            $this->add(
-                $return,
-                $this->denormalizeObject($value, $return, $format, $context)
-            );
+            $values[] = $this->denormalizeValue($value, $type, $format, $context);
         }
 
-        return $return;
+        return new $type($values);
     }
 
-    protected function createObjectCollection(string $type): AbstractObjectCollection|AbstractObjectNullableCollection
-    {
-        return new $type();
-    }
-
-    protected function add(
-        AbstractObjectCollection|AbstractObjectNullableCollection $collection,
-        object|null $value
-    ): static {
-        if (method_exists($collection, 'add') === false) {
-            throw new PhpCollectionException('Unable to find how to add a value in ' . $collection::class . '.');
-        }
-
-        $collection->add($value);
-
-        return $this;
-    }
-
-    protected function denormalizeObject(
+    /**
+     * @param class-string<AbstractObjectCollection|AbstractObjectNullableCollection> $collectionFqcn
+     * @param array<mixed> $context
+     */
+    protected function denormalizeValue(
         mixed $value,
-        AbstractObjectCollection|AbstractObjectNullableCollection $objectCollection,
+        string $collectionFqcn,
         ?string $format,
         array $context
     ): object|null {
         return $value === null
             ? null
-            : $this->denormalizer->denormalize($value, $objectCollection->getClassName(), $format, $context);
+            : $this->denormalizer->denormalize($value, $collectionFqcn::getValueFqcn(), $format, $context);
     }
 }

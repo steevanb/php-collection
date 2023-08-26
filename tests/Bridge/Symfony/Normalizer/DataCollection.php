@@ -6,19 +6,15 @@ namespace Steevanb\PhpCollection\Tests\Bridge\Symfony\Normalizer;
 
 use Steevanb\PhpCollection\ObjectCollection\AbstractObjectCollection;
 
+/** @extends AbstractObjectCollection<Data> */
 class DataCollection extends AbstractObjectCollection
 {
-    public function __construct()
+    public static function getValueFqcn(): string
     {
-        parent::__construct(Data::class);
+        return Data::class;
     }
 
-    public function callDoGet(string|int $key): object
-    {
-        return $this->doGet($key);
-    }
-
-    public function add(object $value): static
+    public function add(Data $value): static
     {
         return $this->doAdd($value);
     }

@@ -18,8 +18,8 @@ final class RemoveTest extends TestCase
         $collection->remove(1);
 
         static::assertCount(2, $collection);
-        static::assertSame(1, $collection->callDoGet(0));
-        static::assertNull($collection->callDoGet(2));
+        static::assertSame(1, $collection->get(0));
+        static::assertNull($collection->get(2));
         static::assertFalse($collection->hasKey(1));
     }
 

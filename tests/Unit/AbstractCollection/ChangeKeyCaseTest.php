@@ -17,7 +17,7 @@ final class ChangeKeyCaseTest extends TestCase
 
         static::assertCount(1, $collection);
         static::assertArrayHasKey('foo', $collection->toArray());
-        static::assertSame(1, $collection->callDoGet('foo'));
+        static::assertSame(1, $collection->get('foo'));
     }
 
     public function testLowerCaseAssociativesKeys(): void
@@ -27,12 +27,9 @@ final class ChangeKeyCaseTest extends TestCase
         $collection->changeKeyCase(KeyCaseEnum::LOWER);
 
         static::assertCount(3, $collection);
-        static::assertArrayHasKey('foo', $collection->toArray());
-        static::assertSame(1, $collection->callDoGet('foo'));
-        static::assertArrayHasKey('bar', $collection->toArray());
-        static::assertSame(2, $collection->callDoGet('bar'));
-        static::assertArrayHasKey('baz', $collection->toArray());
-        static::assertSame(3, $collection->callDoGet('baz'));
+        static::assertSame(1, $collection->get('foo'));
+        static::assertSame(2, $collection->get('bar'));
+        static::assertSame(3, $collection->get('baz'));
     }
 
     public function testUpperCaseAssociativesKeys(): void
@@ -42,12 +39,9 @@ final class ChangeKeyCaseTest extends TestCase
         $collection->changeKeyCase(KeyCaseEnum::UPPER);
 
         static::assertCount(3, $collection);
-        static::assertArrayHasKey('FOO', $collection->toArray());
-        static::assertSame(1, $collection->callDoGet('FOO'));
-        static::assertArrayHasKey('BAR', $collection->toArray());
-        static::assertSame(2, $collection->callDoGet('BAR'));
-        static::assertArrayHasKey('BAZ', $collection->toArray());
-        static::assertSame(3, $collection->callDoGet('BAZ'));
+        static::assertSame(1, $collection->get('FOO'));
+        static::assertSame(2, $collection->get('BAR'));
+        static::assertSame(3, $collection->get('BAZ'));
     }
 
     public function testLowerCaseIndexedKeys(): void
@@ -57,12 +51,9 @@ final class ChangeKeyCaseTest extends TestCase
         $collection->changeKeyCase(KeyCaseEnum::LOWER);
 
         static::assertCount(3, $collection);
-        static::assertArrayHasKey(0, $collection->toArray());
-        static::assertSame(1, $collection->callDoGet(0));
-        static::assertArrayHasKey(10, $collection->toArray());
-        static::assertSame(2, $collection->callDoGet(10));
-        static::assertArrayHasKey(20, $collection->toArray());
-        static::assertSame(3, $collection->callDoGet(20));
+        static::assertSame(1, $collection->get(0));
+        static::assertSame(2, $collection->get(10));
+        static::assertSame(3, $collection->get(20));
     }
 
     public function testUpperCaseIndexedKeys(): void
@@ -72,12 +63,9 @@ final class ChangeKeyCaseTest extends TestCase
         $collection->changeKeyCase(KeyCaseEnum::UPPER);
 
         static::assertCount(3, $collection);
-        static::assertArrayHasKey(0, $collection->toArray());
-        static::assertSame(1, $collection->callDoGet(0));
-        static::assertArrayHasKey(10, $collection->toArray());
-        static::assertSame(2, $collection->callDoGet(10));
-        static::assertArrayHasKey(20, $collection->toArray());
-        static::assertSame(3, $collection->callDoGet(20));
+        static::assertSame(1, $collection->get(0));
+        static::assertSame(2, $collection->get(10));
+        static::assertSame(3, $collection->get(20));
     }
 
     public function testEmpty(): void

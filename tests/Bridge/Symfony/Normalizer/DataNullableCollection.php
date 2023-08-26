@@ -6,19 +6,15 @@ namespace Steevanb\PhpCollection\Tests\Bridge\Symfony\Normalizer;
 
 use Steevanb\PhpCollection\ObjectCollection\AbstractObjectNullableCollection;
 
+/** @extends AbstractObjectNullableCollection<Data|null> */
 class DataNullableCollection extends AbstractObjectNullableCollection
 {
-    public function __construct()
+    public static function getValueFqcn(): string
     {
-        parent::__construct(Data::class);
+        return Data::class;
     }
 
-    public function callDoGet(string|int $key): object|null
-    {
-        return $this->doGet($key);
-    }
-
-    public function add(object|null $value): static
+    public function add(Data|null $value): static
     {
         return $this->doAdd($value);
     }

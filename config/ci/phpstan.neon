@@ -2,6 +2,7 @@ parameters:
     level: 8
     tmpDir: ../../var/ci/phpstan
     paths:
+        - ../../bridge
         - ../../src
         - ../../tests
     excludePaths:
