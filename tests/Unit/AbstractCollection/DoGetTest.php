@@ -13,9 +13,9 @@ final class DoGetTest extends TestCase
     {
         $collection = new Collection([1, '2', null]);
 
-        static::assertSame(1, $collection->callDoGet(0));
-        static::assertSame('2', $collection->callDoGet(1));
-        static::assertNull($collection->callDoGet(2));
+        static::assertSame(1, $collection->get(0));
+        static::assertSame('2', $collection->get(1));
+        static::assertNull($collection->get(2));
     }
 
     public function testKeyNotFound(): void
@@ -23,6 +23,6 @@ final class DoGetTest extends TestCase
         $collection = new Collection([1, '2', null]);
 
         static::expectException(KeyNotFoundException::class);
-        static::assertFalse($collection->callDoGet(3));
+        static::assertFalse($collection->get(3));
     }
 }

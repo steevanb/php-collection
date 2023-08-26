@@ -17,15 +17,4 @@ final class Collection extends AbstractCollection
     {
         return $this->doAdd($value);
     }
-
-    public function callDoGet(string|int $key): mixed
-    {
-        return $this->doGet($key);
-    }
-
-    /** @param iterable<string|int, mixed> $values */
-    public function callDoReplace(iterable $values): static
-    {
-        return $this->doReplace($values);
-    }
 }
