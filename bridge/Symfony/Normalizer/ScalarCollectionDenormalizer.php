@@ -4,31 +4,43 @@ declare(strict_types=1);
 
 namespace Steevanb\PhpCollection\Bridge\Symfony\Normalizer;
 
-use Steevanb\PhpCollection\ScalarCollection\ScalarCollectionInterface;
+use Steevanb\PhpCollection\{
+    CollectionInterface,
+    ScalarCollection\FloatCollection,
+    ScalarCollection\FloatNullableCollection,
+    ScalarCollection\IntegerCollection,
+    ScalarCollection\IntegerNullableCollection,
+    ScalarCollection\StringCollection,
+    ScalarCollection\StringNullableCollection
+};
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class ScalarCollectionDenormalizer implements DenormalizerInterface
 {
     public function supportsDenormalization(mixed $data, string $type, string $format = null): bool
     {
-        $interfaces = class_implements($type);
-
-        return is_array($interfaces) && array_key_exists(ScalarCollectionInterface::class, $interfaces);
+        return in_array(
+            $type,
+            [
+                FloatCollection::class,
+                FloatNullableCollection::class,
+                IntegerCollection::class,
+                IntegerNullableCollection::class,
+                StringCollection::class,
+                StringNullableCollection::class
+            ],
+            true
+        );
     }
 
+    /** @param array<mixed> $context */
     public function denormalize(
         mixed $data,
         string $type,
         string $format = null,
         array $context = []
-    ): ScalarCollectionInterface {
-        return $this
-            ->createScalarCollection($type)
-            ->replace($data);
-    }
-
-    protected function createScalarCollection(string $type): ScalarCollectionInterface
-    {
-        return new $type();
+    ): CollectionInterface {
+        /** @var class-string<CollectionInterface> $type */
+        return (new $type())->replace($data);
     }
 }

@@ -15,14 +15,16 @@ final class AbstractObjectNullableCollectionTest extends TestCase
 {
     public function testConstructor(): void
     {
-        $collection = new ObjectNullableCollection();
+        $collection = new TestObjectNullableCollection();
 
-        static::assertSame(TestObject::class, $collection->getClassName());
+        static::assertCount(0, $collection);
+        static::assertSame(ComparisonModeEnum::HASH, $collection->getComparisonMode());
+        static::assertSame(ValueAlreadyExistsModeEnum::ADD, $collection->getValueAlreadyExistsMode());
     }
 
     public function testCanAddValue(): void
     {
-        $collection = new ObjectNullableCollection(
+        $collection = new TestObjectNullableCollection(
             [
                 new TestObject('foo'),
                 new TestObject('bar')
@@ -37,20 +39,27 @@ final class AbstractObjectNullableCollectionTest extends TestCase
 
     public function testCanAddValueInvalidInstanceOf(): void
     {
-        static::expectException(InvalidTypeException::class);
-        new ObjectNullableCollection([new \DateTime()]);
+        $this->expectException(InvalidTypeException::class);
+        $this->expectExceptionCode(0);
+        $this->expectExceptionMessage(
+            'Value should be an instance of Steevanb\PhpCollection\Tests\Unit\ObjectCollection\TestObject or NULL, '
+            . 'stdClass given.'
+        );
+        /** @phpstan-ignore-next-line Parameter #1 $values ... constructor expects ... array<int, stdClass> given. */
+        new TestObjectNullableCollection([new \stdClass()]);
+        $this->addToAssertionCount(1);
     }
 
     public function testCanAddValueNull(): void
     {
-        $collection = new ObjectNullableCollection([null]);
+        $collection = new TestObjectNullableCollection([null]);
 
         static::assertNull($collection->get(0));
     }
 
     public function testComparisonModeString(): void
     {
-        $collection = new ObjectNullableCollection(
+        $collection = new TestObjectNullableCollection(
             [
                 new TestObject('foo'),
                 new TestObject('foo'),
@@ -72,7 +81,7 @@ final class AbstractObjectNullableCollectionTest extends TestCase
 
     public function testComparisonModeObjectHash(): void
     {
-        $collection = new ObjectNullableCollection(
+        $collection = new TestObjectNullableCollection(
             [
                 new TestObject('foo'),
                 new TestObject('foo'),

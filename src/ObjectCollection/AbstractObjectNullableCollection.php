@@ -6,28 +6,33 @@ namespace Steevanb\PhpCollection\ObjectCollection;
 
 use Steevanb\PhpCollection\{
     AbstractCollection,
+    Exception\PhpCollectionException,
     ValueAlreadyExistsModeEnum
 };
 
+/**
+ * @template T of object|null
+ * @extends AbstractCollection<T>
+ */
 abstract class AbstractObjectNullableCollection extends AbstractCollection
 {
+    /** @use ObjectCollectionTrait<T> */
     use ObjectCollectionTrait;
 
-    /** @param iterable<object|null> $values */
+    /** @param iterable<T> $values */
     public function __construct(
-        private readonly string $className,
         iterable $values = [],
         private readonly ComparisonModeEnum $comparisonMode = ComparisonModeEnum::HASH,
         ValueAlreadyExistsModeEnum $valueAlreadyExistsMode = ValueAlreadyExistsModeEnum::ADD
     ) {
-        $this->assertClassName($this->className);
-
         parent::__construct($values, $valueAlreadyExistsMode);
     }
 
-    protected function getAssertInstanceOfError(): string
+    protected function getAssertInstanceOfError(mixed $value): string
     {
-        return '$value should be an instance of ' . $this->getClassName() . ' or null.';
+        return
+            'Value should be an instance of ' . static::getValueFqcn() . ' or NULL, '
+            . get_debug_type($value) . ' given.';
     }
 
     protected function canAddValue(mixed $value): bool
@@ -37,5 +42,22 @@ abstract class AbstractObjectNullableCollection extends AbstractCollection
         }
 
         return parent::canAddValue($value);
+    }
+
+    protected function castValueToString(mixed $value): string
+    {
+        if ($value instanceof \BackedEnum) {
+            $return = (string) $value->value;
+        } elseif ($value instanceof \UnitEnum) {
+            $return = $value->name;
+        } elseif (is_object($value) && $value instanceof \Stringable === false) {
+            throw new PhpCollectionException(
+                'Error while converting an instance of ' . $value::class . ' to string. Add __toString() to do it.'
+            );
+        } else {
+            $return = parent::castValueToString($value);
+        }
+
+        return $return;
     }
 }

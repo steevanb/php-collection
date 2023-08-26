@@ -2,6 +2,7 @@
 
 - Add Symfony 6.3 support
 - Update CI dependencies
+- Add support for generics
 
 ### [5.0.1](../../compare/5.0.0...5.0.1) - 2023-03-14
 

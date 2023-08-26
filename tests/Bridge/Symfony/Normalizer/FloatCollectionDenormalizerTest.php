@@ -23,4 +23,12 @@ final class FloatCollectionDenormalizerTest extends TestCase
         static::assertSame(1.0, $collection->get(0));
         static::assertSame(2.2, $collection->get(1));
     }
+
+    public function testMe(): void
+    {
+        $serializer = new Serializer([new ScalarCollectionDenormalizer()]);
+        /** @var FloatCollection $collection */
+        $collection = $serializer->denormalize(['foo'], FloatCollection::class);
+        throw new \Exception('This is why generics will never works :(');
+    }
 }
