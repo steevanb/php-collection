@@ -1,6 +1,7 @@
 ### master
 
-- Add Symfony 6.3 support
+- Add Symfony 6.3 and 6.4 support
+- Add PHP 8.3 support
 - Update CI dependencies
 - [BC break] Remove ObjectCollectionDenormalizer::createObjectCollection() and add()
 - [BC break] Rename ObjectCollectionDenormalizer::denormalizeObject() to denormalizeValue()

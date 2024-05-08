@@ -24,8 +24,8 @@ abstract class AbstractObjectNullableCollection extends AbstractCollection
     /** @param iterable<T> $values */
     public function __construct(
         iterable $values = [],
-        private readonly ComparisonModeEnum $comparisonMode = ComparisonModeEnum::HASH,
-        ValueAlreadyExistsModeEnum $valueAlreadyExistsMode = ValueAlreadyExistsModeEnum::ADD
+        ValueAlreadyExistsModeEnum $valueAlreadyExistsMode = ValueAlreadyExistsModeEnum::ADD,
+        private readonly ComparisonModeEnum $comparisonMode = ComparisonModeEnum::HASH
     ) {
         parent::__construct($values, $valueAlreadyExistsMode);
     }

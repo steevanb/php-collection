@@ -56,8 +56,8 @@ final class AbstractObjectCollectionTest extends TestCase
                 new TestObject('foo'),
                 new TestObject('bar'),
             ],
-            ComparisonModeEnum::STRING,
-            ValueAlreadyExistsModeEnum::DO_NOT_ADD
+            ValueAlreadyExistsModeEnum::DO_NOT_ADD,
+            ComparisonModeEnum::STRING
         );
 
         static::assertCount(2, $collection);
@@ -74,8 +74,8 @@ final class AbstractObjectCollectionTest extends TestCase
                 new TestObject('foo'),
                 new TestObject('bar'),
             ],
-            ComparisonModeEnum::HASH,
-            ValueAlreadyExistsModeEnum::DO_NOT_ADD
+            ValueAlreadyExistsModeEnum::DO_NOT_ADD,
+            ComparisonModeEnum::HASH
         );
 
         static::assertCount(3, $collection);
