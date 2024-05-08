@@ -113,7 +113,11 @@ final class ArrayTest extends TestCase
     {
         $this->expectException(\TypeError::class);
         $this->expectExceptionCode(0);
-        $this->expectExceptionMessage('Illegal offset type');
+        if (version_compare(phpversion(), '8.3.0', '>=')) {
+            $this->expectExceptionMessage('Cannot access offset of type stdClass on array');
+        } else {
+            $this->expectExceptionMessage('Illegal offset type');
+        }
         [new \stdClass() => 'foo'];
     }
 
@@ -121,7 +125,13 @@ final class ArrayTest extends TestCase
     {
         $this->expectException(\TypeError::class);
         $this->expectExceptionCode(0);
-        $this->expectExceptionMessage('Illegal offset type');
+        if (version_compare(phpversion(), '8.3.0', '>=')) {
+            $this->expectExceptionMessage(
+                'Cannot access offset of type Steevanb\\PhpCollection\\Tests\\Unit\\StringableObject on array'
+            );
+        } else {
+            $this->expectExceptionMessage('Illegal offset type');
+        }
         [new StringableObject() => 'foo'];
     }
 }

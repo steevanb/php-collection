@@ -1,11 +1,12 @@
 FROM ubuntu:22.04
 
-COPY --from=composer:2.5.8 /usr/bin/composer /usr/local/bin/composer
+COPY --from=composer:2.7.6 /usr/bin/composer /usr/local/bin/composer
 
 ENV COMPOSER_HOME=/composer/common
 ENV COMPOSER_HOME_SYMFONY_6_1=/composer/symfony-6-1
 ENV COMPOSER_HOME_SYMFONY_6_2=/composer/symfony-6-2
 ENV COMPOSER_HOME_SYMFONY_6_3=/composer/symfony-6-3
+ENV COMPOSER_HOME_SYMFONY_6_4=/composer/symfony-6-4
 ENV PHPSTAN_BIN_PATH=/usr/local/bin/phpstan
 
 COPY docker/ci/composer.json ${COMPOSER_HOME}/composer.json
@@ -22,10 +23,12 @@ RUN \
         php8.1-simplexml \
         php8.2-cli \
         php8.2-simplexml \
+        php8.3-cli \
+        php8.3-simplexml \
         # For Composer
         curl zip php8.1-curl php8.1-zip \
         # For unused-scanner and phpunit
-        php8.1-mbstring php8.2-mbstring \
+        php8.1-mbstring php8.2-mbstring php8.3-mbstring \
         # For coverage
         php8.1-xdebug \
     && update-alternatives --set php /usr/bin/php8.1 \
@@ -43,6 +46,7 @@ RUN \
     && COMPOSER_HOME=${COMPOSER_HOME_SYMFONY_6_1} composer global require symfony/serializer:6.1.* \
     && COMPOSER_HOME=${COMPOSER_HOME_SYMFONY_6_2} composer global require symfony/serializer:6.2.* \
     && COMPOSER_HOME=${COMPOSER_HOME_SYMFONY_6_3} composer global require symfony/serializer:6.3.* \
+    && COMPOSER_HOME=${COMPOSER_HOME_SYMFONY_6_4} composer global require symfony/serializer:6.4.* \
 
     # Purge
     && apt-get purge -y software-properties-common \

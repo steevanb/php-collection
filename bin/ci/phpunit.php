@@ -10,7 +10,6 @@ use Steevanb\PhpCollection\ScalarCollection\StringCollection;
 use Symfony\Component\Console\Input\ArgvInput;
 
 require $_SERVER['COMPOSER_HOME'] . '/vendor/autoload.php';
-require dirname(__DIR__, 2) . '/vendor/autoload.php';
 require __DIR__ . '/phpunit.inc.php';
 
 $phpVersion = null;

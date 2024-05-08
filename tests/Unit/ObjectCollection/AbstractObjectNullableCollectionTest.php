@@ -57,8 +57,8 @@ final class AbstractObjectNullableCollectionTest extends TestCase
                 new TestObject('bar'),
                 null
             ],
-            ComparisonModeEnum::STRING,
-            ValueAlreadyExistsModeEnum::DO_NOT_ADD
+            ValueAlreadyExistsModeEnum::DO_NOT_ADD,
+            ComparisonModeEnum::STRING
         );
 
         static::assertCount(3, $collection);
@@ -77,8 +77,8 @@ final class AbstractObjectNullableCollectionTest extends TestCase
                 new TestObject('bar'),
                 null
             ],
-            ComparisonModeEnum::HASH,
-            ValueAlreadyExistsModeEnum::DO_NOT_ADD
+            ValueAlreadyExistsModeEnum::DO_NOT_ADD,
+            ComparisonModeEnum::HASH
         );
 
         static::assertCount(4, $collection);

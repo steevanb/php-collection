@@ -9,7 +9,6 @@ use Steevanb\ParallelProcess\{
 use Symfony\Component\Console\Input\ArgvInput;
 
 require $_SERVER['COMPOSER_HOME'] . '/vendor/autoload.php';
-require dirname(__DIR__, 2) . '/vendor/autoload.php';
 
 (new ParallelProcessesApplication())
     ->addProcess(new Process([__DIR__ . '/composer-require-checker']))
