@@ -1,42 +1,42 @@
 ### master
 
-- Add Symfony 6.3 and 6.4 support
-- Add PHP 8.3 support
+- Add support for Symfony `6.3` and `6.4`
+- Add support for PHP `8.3`
 - Update CI dependencies
-- [BC break] Remove ObjectCollectionDenormalizer::createObjectCollection() and add()
-- [BC break] Rename ObjectCollectionDenormalizer::denormalizeObject() to denormalizeValue()
-- [BC break] Remove ScalarCollectionInterface
-- [BC break] Remove ScalarCollectionDenormalizer::createScalarCollection()
-- Add bridge/ to phpstan
+- [BC break] Remove `ObjectCollectionDenormalizer::createObjectCollection()` and `add()`
+- [BC break] Rename ObjectCollectionDenormalizer::denormalizeObject()` to `denormalizeValue()`
+- [BC break] Remove `ScalarCollectionInterface`
+- [BC break] Remove `ScalarCollectionDenormalizer::createScalarCollection()`
+- Add `bridge/` to phpstan
 - Add generics everywhere it's possible
-- [BC break] Remove FloatCollectionInterface and FloatNullableCollectionInterface
-- [BC break] Remove IntegerCollectionInterface and IntegerNullableCollectionInterface
-- [BC break] Remove StringCollectionInterface and StringNullableCollectionInterface
-- [BC break] AbstractCollection::getStringKeys() return StringCollection instead of StringCollectionInterface
-- [BC break] AbstractCollection::getIntegerKeys() return IntegerCollection instead of IntegerCollectionInterface
-- [BC break] Rename AbstractCollection::doReplace() to replace()
-- [BC break] Rename AbstractCollection::doGet() to get()
-- [BC break] Rename AbstractCollection::doHas() to contains()
-- [BC break] Add CollectionInterface::__construct()
-- [BC break] Change return type of CollectionInterface::getIntegerKeys() from IntegerCollectionInterface to IntegerCollection
-- [BC break] Change return type of CollectionInterface::getStringKeys() from StringCollectionInterface to StringCollection
-- [BC break] Add CollectionInterface::get()
-- [BC break] Add CollectionInterface::contains()
-- [BC break] Add CollectionInterface::replace()
-- [BC break] Remove AbstractEnumCollection, use AbstractObjectCollection instead
-- [BC break] Add AbstractObjectCollection::getValueFqcn()
-- [BC break] Add parameter $value to AbstractObjectCollection::getAssertInstanceOfError()
-- [BC break] Add AbstractObjectNullableCollection::getValueFqcn()
-- [BC break] Add parameter $value to AbstractObjectNullableCollection::getAssertInstanceOfError()
-- [BC break] Add parameter $value to ObjectCollectionTrait::getAssertInstanceOfError()
-- [BC break] Remove ObjectCollectionTrait::assertClassName()
-- ObjectCollectionTrait::castValueToString() can cast the value from \BackedEnum and \UnitEnum
-- Because of generics, remove methods in FloatCollection: __construct(), replace(), has(), get(), merge() and toArray()
-- Because of generics, remove methods in FloatNullableCollection: __construct(), replace(), has(), get(), merge() and toArray()
-- Because of generics, remove methods in IntegerCollection: __construct(), replace(), has(), get(), merge() and toArray()
-- Because of generics, remove methods in IntegerNullableCollection: __construct(), replace(), has(), get(), merge() and toArray()
-- Because of generics, remove methods in StringCollection: __construct(), replace(), has(), get(), merge() and toArray()
-- Because of generics, remove methods in StringNullableCollection: __construct(), replace(), has(), get(), merge() and toArray()
+- [BC break] Remove `FloatCollectionInterface` and `FloatNullableCollectionInterface`
+- [BC break] Remove `IntegerCollectionInterface` and `IntegerNullableCollectionInterface`
+- [BC break] Remove `StringCollectionInterface` and `StringNullableCollectionInterface`
+- [BC break] `AbstractCollection::getStringKeys()` return `StringCollection` instead of `StringCollectionInterface`
+- [BC break] `AbstractCollection::getIntegerKeys()` return `IntegerCollection` instead of `IntegerCollectionInterface`
+- [BC break] Rename AbstractCollection::`doReplace()` to `replace()`
+- [BC break] Rename AbstractCollection::`doGet()` to `get()`
+- [BC break] Rename AbstractCollection::`doHas()` to `contains()`
+- [BC break] Add `CollectionInterface::__construct()`
+- [BC break] Change return type of `CollectionInterface::getIntegerKeys()` from `IntegerCollectionInterface` to `IntegerCollection`
+- [BC break] Change return type of `CollectionInterface::getStringKeys()` from `StringCollectionInterface` to `StringCollection`
+- [BC break] Add `CollectionInterface::get()`
+- [BC break] Add `CollectionInterface::contains()`
+- [BC break] Add `CollectionInterface::replace()`
+- [BC break] Remove `AbstractEnumCollection`, use `AbstractObjectCollection` instead
+- [BC break] Add `AbstractObjectCollection::getValueFqcn()`
+- [BC break] Add parameter `$value` to `AbstractObjectCollection::getAssertInstanceOfError()`
+- [BC break] Add `AbstractObjectNullableCollection::getValueFqcn()`
+- [BC break] Add parameter `$value` to `AbstractObjectNullableCollection::getAssertInstanceOfError()`
+- [BC break] Add parameter `$value` to `ObjectCollectionTrait::getAssertInstanceOfError()`
+- [BC break] Remove `ObjectCollectionTrait::assertClassName()`
+- `ObjectCollectionTrait::castValueToString()` can cast the value from `\BackedEnum` and `\UnitEnum`
+- Because of generics, remove methods in `FloatCollection`: `__construct()`, `replace()`, `has()`, `get()`, `merge()` and `toArray()`
+- Because of generics, remove methods in `FloatNullableCollection`: `__construct()`, `replace()`, `has()`, `get()`, `merge()` and `toArray()`
+- Because of generics, remove methods in `IntegerCollection`: `__construct()`, `replace()`, `has()`, `get()`, `merge()` and `toArray()`
+- Because of generics, remove methods in `IntegerNullableCollection`: `__construct()`, `replace()`, `has()`, `get()`, `merge()` and `toArray()`
+- Because of generics, remove methods in `StringCollection`: `__construct()`, `replace()`, `has()`, `get()`, `merge()` and `toArray()`
+- Because of generics, remove methods in `StringNullableCollection`: `__construct()`, `replace()`, `has()`, `get()`, `merge()` and `toArray()`
 - [Edhrendal](https://github.com/Edhrendal) Add `AbstractCollection::isEmpty()`
 
 ### [5.0.1](../../compare/5.0.0...5.0.1) - 2023-03-14
