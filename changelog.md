@@ -37,6 +37,7 @@
 - Because of generics, remove methods in IntegerNullableCollection: __construct(), replace(), has(), get(), merge() and toArray()
 - Because of generics, remove methods in StringCollection: __construct(), replace(), has(), get(), merge() and toArray()
 - Because of generics, remove methods in StringNullableCollection: __construct(), replace(), has(), get(), merge() and toArray()
+- [Edhrendal](https://github.com/Edhrendal) Add `AbstractCollection::isEmpty()`
 
 ### [5.0.1](../../compare/5.0.0...5.0.1) - 2023-03-14
 
