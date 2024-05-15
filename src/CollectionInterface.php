@@ -23,8 +23,6 @@ interface CollectionInterface extends \Countable
 
     public function clear(): static;
 
-    public function isEmpty(): bool;
-
     /** @param TValueType $value */
     public function contains(mixed $value): bool;
 

@@ -39,7 +39,6 @@
 - Because of generics, remove methods in `StringCollection`: `__construct()`, `replace()`, `has()`, `get()`, `merge()` and `toArray()`
 - Because of generics, remove methods in `StringNullableCollection`: `__construct()`, `replace()`, `has()`, `get()`, `merge()` and `toArray()`
 - [Edhrendal](https://github.com/Edhrendal) Add `AbstractCollection::isEmpty()`
-- **[BC break]** Add `CollectionInterface::isEmpty()`
 - Remove `CollectionInterface::getIntegerKeys()` and `CollectionInterface::getStringKeys()`. It still exists in `AbstractCollection`.
 - **[BC break]** Remove parameter `$readOnly` in `CollectionInterface::setReadOnly()`
 - **[BC break]** Remove `ValueAlreadyExistsException`
