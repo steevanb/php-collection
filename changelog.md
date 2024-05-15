@@ -1,5 +1,11 @@
 ### master
 
+### [6.0.1](../../compare/6.0.0...6.0.1) - 2024-05-15
+
+- Documentation
+
+### [6.0.0](../../compare/5.0.1...6.0.0) - 2024-05-15
+
 - Add support for Symfony `6.3` and `6.4`
 - Add support for PHP `8.3`
 - Update CI dependencies
