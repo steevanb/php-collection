@@ -50,4 +50,42 @@ final class AbstractObjectNullableCollectionTest extends TestCase
 
         static::assertNull($collection->get(0));
     }
+
+    public function testNotContains(): void
+    {
+        $object1 = new TestObject('value 1');
+        $object2 = new TestObject('value 2');
+        $object3 = new TestObject('value 3');
+        $collection = new TestObjectNullableCollection([$object1, $object2]);
+
+        static::assertFalse($collection->contains($object3));
+    }
+
+    public function testContainsEquals(): void
+    {
+        $object1 = new TestObject('value 1');
+        $object2 = new TestObject('value 2');
+        $object3 = new TestObject('value 1');
+        $collection = new TestObjectNullableCollection([$object1, $object2]);
+
+        static::assertFalse($collection->contains($object3));
+    }
+
+    public function testContainsSame(): void
+    {
+        $object1 = new TestObject('value 1');
+        $object2 = new TestObject('value 2');
+        $collection = new TestObjectNullableCollection([$object1, $object2]);
+
+        static::assertTrue($collection->contains($object2));
+    }
+
+    public function testContainsNull(): void
+    {
+        $object1 = new TestObject('value 1');
+        $object2 = new TestObject('value 2');
+        $collection = new TestObjectNullableCollection([$object1, $object2, null]);
+
+        static::assertTrue($collection->contains(null));
+    }
 }

@@ -52,4 +52,33 @@ final class AbstractObjectCollectionTest extends TestCase
         /** @phpstan-ignore-next-line Parameter #1 $values ... constructor expects ... array<int, null> given. */
         new TestObjectCollection([null]);
     }
+
+    public function testNotContains(): void
+    {
+        $object1 = new TestObject('value 1');
+        $object2 = new TestObject('value 2');
+        $object3 = new TestObject('value 3');
+        $collection = new TestObjectCollection([$object1, $object2]);
+
+        static::assertFalse($collection->contains($object3));
+    }
+
+    public function testContainsEquals(): void
+    {
+        $object1 = new TestObject('value 1');
+        $object2 = new TestObject('value 2');
+        $object3 = new TestObject('value 1');
+        $collection = new TestObjectCollection([$object1, $object2]);
+
+        static::assertFalse($collection->contains($object3));
+    }
+
+    public function testContainsSame(): void
+    {
+        $object1 = new TestObject('value 1');
+        $object2 = new TestObject('value 2');
+        $collection = new TestObjectCollection([$object1, $object2]);
+
+        static::assertTrue($collection->contains($object2));
+    }
 }
