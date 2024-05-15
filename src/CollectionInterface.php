@@ -35,7 +35,7 @@ interface CollectionInterface extends \Countable
 
     public function hasKey(string|int $key): bool;
 
-    public function setReadOnly(bool $readOnly): static;
+    public function setReadOnly(): static;
 
     public function isReadOnly(): bool;
 

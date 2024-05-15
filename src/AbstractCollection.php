@@ -68,9 +68,9 @@ abstract class AbstractCollection implements CollectionInterface
         return $this->count() === 0;
     }
 
-    public function setReadOnly(bool $readOnly = true): static
+    public function setReadOnly(): static
     {
-        $this->readOnly = $readOnly;
+        $this->readOnly = true;
 
         return $this;
     }
