@@ -7,7 +7,6 @@ namespace Steevanb\PhpCollection;
 use Steevanb\PhpCollection\{
     Exception\KeyNotFoundException,
     Exception\ReadOnlyException,
-    Exception\ValueAlreadyExistsException,
     ScalarCollection\IntegerCollection,
     ScalarCollection\StringCollection
 };
@@ -18,16 +17,16 @@ use Steevanb\PhpCollection\{
  */
 abstract class AbstractCollection implements CollectionInterface
 {
+    abstract protected function assertValueType(mixed $value): static;
+
     /** @var array<TValueType> */
     protected array $values = [];
 
     protected bool $readOnly = false;
 
     /** @param iterable<TValueType> $values */
-    public function __construct(
-        iterable $values = [],
-        private readonly ValueAlreadyExistsModeEnum $valueAlreadyExistsMode = ValueAlreadyExistsModeEnum::ADD
-    ) {
+    public function __construct(iterable $values = [])
+    {
         $this->replace($values);
     }
 
@@ -78,11 +77,6 @@ abstract class AbstractCollection implements CollectionInterface
     public function isReadOnly(): bool
     {
         return $this->readOnly;
-    }
-
-    public function getValueAlreadyExistsMode(): ValueAlreadyExistsModeEnum
-    {
-        return $this->valueAlreadyExistsMode;
     }
 
     /** @return array<int, string|int> */
@@ -139,11 +133,11 @@ abstract class AbstractCollection implements CollectionInterface
     /** @param TValueType $value */
     public function set(string|int $key, mixed $value): static
     {
-        $this->assertIsNotReadOnly();
+        $this
+            ->assertIsNotReadOnly()
+            ->assertValueType($value);
 
-        if ($this->canAddValue($value)) {
-            $this->values[$key] = $value;
-        }
+        $this->values[$key] = $value;
 
         return $this;
     }
@@ -182,11 +176,11 @@ abstract class AbstractCollection implements CollectionInterface
     /** @param TValueType $value */
     public function add(mixed $value): static
     {
-        $this->assertIsNotReadOnly();
+        $this
+            ->assertIsNotReadOnly()
+            ->assertValueType($value);
 
-        if ($this->canAddValue($value)) {
-            $this->values[] = $value;
-        }
+        $this->values[] = $value;
 
         return $this;
     }
@@ -204,48 +198,5 @@ abstract class AbstractCollection implements CollectionInterface
         }
 
         return $this;
-    }
-
-    /**
-     * @param TValueType $firstValue
-     * @param TValueType $secondValue
-     */
-    protected function isSameValues(mixed $firstValue, mixed $secondValue): bool
-    {
-        return $firstValue === $secondValue;
-    }
-
-    /** @param TValueType $value */
-    protected function castValueToString(mixed $value): string
-    {
-        return is_null($value) ? 'NULL' : (string) $value;
-    }
-
-    protected function canAddValue(mixed $value): bool
-    {
-        $return = true;
-
-        if (
-            in_array(
-                $this->getValueAlreadyExistsMode(),
-                [ValueAlreadyExistsModeEnum::DO_NOT_ADD, ValueAlreadyExistsModeEnum::EXCEPTION],
-                true
-            )
-        ) {
-            foreach ($this->values as $internalValue) {
-                if ($this->isSameValues($value, $internalValue)) {
-                    if ($this->getValueAlreadyExistsMode() === ValueAlreadyExistsModeEnum::EXCEPTION) {
-                        throw new ValueAlreadyExistsException(
-                            'Value "' . $this->castValueToString($value) . '" already exists.'
-                        );
-                    }
-
-                    $return = false;
-                    break;
-                }
-            }
-        }
-
-        return $return;
     }
 }

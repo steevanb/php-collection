@@ -12,12 +12,12 @@ use Steevanb\PhpCollection\{
 /** @extends AbstractCollection<string> */
 class StringCollection extends AbstractCollection
 {
-    protected function canAddValue(mixed $value): bool
+    protected function assertValueType(mixed $value): static
     {
         if (is_string($value) === false) {
             throw new InvalidTypeException('$value should be of type string.');
         }
 
-        return parent::canAddValue($value);
+        return $this;
     }
 }

@@ -39,8 +39,6 @@ interface CollectionInterface extends \Countable
 
     public function isReadOnly(): bool;
 
-    public function getValueAlreadyExistsMode(): ValueAlreadyExistsModeEnum;
-
     /** @return array<string|int, TValueType> */
     public function toArray(): array;
 }
