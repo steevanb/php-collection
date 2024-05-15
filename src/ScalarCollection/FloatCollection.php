@@ -12,12 +12,12 @@ use Steevanb\PhpCollection\{
 /** @extends AbstractCollection<float> */
 class FloatCollection extends AbstractCollection
 {
-    protected function canAddValue(mixed $value): bool
+    protected function assertValueType(mixed $value): static
     {
         if (is_float($value) === false) {
             throw new InvalidTypeException('$value should be of type float.');
         }
 
-        return parent::canAddValue($value);
+        return $this;
     }
 }

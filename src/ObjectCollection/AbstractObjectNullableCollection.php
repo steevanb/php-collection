@@ -4,11 +4,7 @@ declare(strict_types=1);
 
 namespace Steevanb\PhpCollection\ObjectCollection;
 
-use Steevanb\PhpCollection\{
-    AbstractCollection,
-    Exception\PhpCollectionException,
-    ValueAlreadyExistsModeEnum
-};
+use Steevanb\PhpCollection\AbstractCollection;
 
 /**
  * @template TValueType of object|null
@@ -23,12 +19,9 @@ abstract class AbstractObjectNullableCollection extends AbstractCollection
     abstract public static function getValueFqcn(): string;
 
     /** @param iterable<TValueType> $values */
-    public function __construct(
-        iterable $values = [],
-        private readonly ComparisonModeEnum $comparisonMode = ComparisonModeEnum::HASH,
-        ValueAlreadyExistsModeEnum $valueAlreadyExistsMode = ValueAlreadyExistsModeEnum::ADD
-    ) {
-        parent::__construct($values, $valueAlreadyExistsMode);
+    public function __construct(iterable $values = [])
+    {
+        parent::__construct($values);
     }
 
     protected function getAssertInstanceOfError(mixed $value): string
@@ -38,29 +31,12 @@ abstract class AbstractObjectNullableCollection extends AbstractCollection
             . get_debug_type($value) . ' given.';
     }
 
-    protected function canAddValue(mixed $value): bool
+    protected function assertValueType(mixed $value): static
     {
         if (is_null($value) === false) {
             $this->assertInstanceOf($value);
         }
 
-        return parent::canAddValue($value);
-    }
-
-    protected function castValueToString(mixed $value): string
-    {
-        if ($value instanceof \BackedEnum) {
-            $return = (string) $value->value;
-        } elseif ($value instanceof \UnitEnum) {
-            $return = $value->name;
-        } elseif (is_object($value) && $value instanceof \Stringable === false) {
-            throw new PhpCollectionException(
-                'Error while converting an instance of ' . $value::class . ' to string. Add __toString() to do it.'
-            );
-        } else {
-            $return = parent::castValueToString($value);
-        }
-
-        return $return;
+        return $this;
     }
 }

@@ -12,12 +12,12 @@ use Steevanb\PhpCollection\{
 /** @extends AbstractCollection<string|null> */
 class StringNullableCollection extends AbstractCollection
 {
-    protected function canAddValue(mixed $value): bool
+    protected function assertValueType(mixed $value): static
     {
         if (is_null($value) === false && is_string($value) === false) {
             throw new InvalidTypeException('$value should be of type string or null.');
         }
 
-        return parent::canAddValue($value);
+        return $this;
     }
 }
