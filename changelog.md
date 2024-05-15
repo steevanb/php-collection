@@ -42,6 +42,13 @@
 - **[BC break]** Add `CollectionInterface::isEmpty()`
 - Remove `CollectionInterface::getIntegerKeys()` and `CollectionInterface::getStringKeys()`. It still exists in `AbstractCollection`.
 - **[BC break]** Remove parameter `$readOnly` in `CollectionInterface::setReadOnly()`
+- **[BC break]** Remove `ValueAlreadyExistsException`
+- **[BC break]** Rename `AbstractCollection::canAddValue()` to `assertValueType()`
+- **[BC break]** Remove `ValueAlreadyExistsModeEnum` and all it's usages: `AbstractCollection::__construct()`, `CollectionInterface::getValueAlreadyExistsMode()` etc
+- Remove `AbstractCollection::isSameValues()`
+- Remove `AbstractCollection::castValueToString()`, `AbstractObjectCollection::castValueToString()` and `AbstractObjectNullableCollection::castValueToString()`
+- **[BC break]** Remove `ComparisonModeEnum` and all it's usages: `ObjectCollectionTrait::getComparisonMode()`
+- Remove `ObjectCollectionTrait::isSameValues()`
 
 ### [5.0.1](../../compare/5.0.0...5.0.1) - 2023-03-14
 
