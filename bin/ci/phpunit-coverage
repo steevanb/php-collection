@@ -9,7 +9,7 @@ readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/../..")"
 echo "PHP 8.1 - Symfony 6.1"
 set +e
 XDEBUG_MODE=coverage \
-    php8.1 \
+    php8.2 \
         "${ROOT_DIR}"/vendor/bin/phpunit \
             --bootstrap "${COMPOSER_HOME_SYMFONY_6_1}"/vendor/autoload.php \
             --coverage-html "${ROOT_DIR}"/var/ci/phpunit/coverage/html \
