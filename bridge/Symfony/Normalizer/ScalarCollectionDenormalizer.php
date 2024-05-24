@@ -17,7 +17,8 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class ScalarCollectionDenormalizer implements DenormalizerInterface
 {
-    public function supportsDenormalization(mixed $data, string $type, string $format = null): bool
+    /** @param array<mixed> $context */
+    public function supportsDenormalization(mixed $data, string $type, string $format = null, array $context = []): bool
     {
         return in_array(
             $type,
@@ -31,6 +32,19 @@ class ScalarCollectionDenormalizer implements DenormalizerInterface
             ],
             true
         );
+    }
+
+    /** @return array<class-string|'*'|'object'|string, bool|null> */
+    public function getSupportedTypes(?string $format): array
+    {
+        return [
+            FloatCollection::class => false,
+            FloatNullableCollection::class => false,
+            IntegerCollection::class => false,
+            IntegerNullableCollection::class => false,
+            StringCollection::class => false,
+            StringNullableCollection::class => false
+        ];
     }
 
     /**

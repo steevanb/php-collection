@@ -1,5 +1,7 @@
 ### master
 
+- Add support for Symfony `7.0`
+
 ### [6.0.1](../../compare/6.0.0...6.0.1) - 2024-05-15
 
 - Documentation
