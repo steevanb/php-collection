@@ -191,6 +191,28 @@ abstract class AbstractCollection implements CollectionInterface
         return $this->replace(array_merge($this->values, $collection->toArray()));
     }
 
+    /** @return TValueType */
+    public function getFirst(): mixed
+    {
+        $key = array_key_first($this->values);
+        if (is_null($key)) {
+            throw new KeyNotFoundException('First key not found.');
+        }
+
+        return $this->get($key);
+    }
+
+    /** @return TValueType */
+    public function getLast(): mixed
+    {
+        $key = array_key_last($this->values);
+        if (is_null($key)) {
+            throw new KeyNotFoundException('Last key not found.');
+        }
+
+        return $this->get($key);
+    }
+
     protected function assertIsNotReadOnly(): static
     {
         if ($this->isReadOnly()) {
