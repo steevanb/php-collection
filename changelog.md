@@ -1,5 +1,7 @@
 ### master
 
+- Add `AbstractCollection::getFirst()` and `AbstractCollection::getLast()`
+
 ### [6.1.0](../../compare/6.0.1...6.1.0) - 2024-05-24
 
 - Add support for Symfony `7.0`
