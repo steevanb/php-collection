@@ -1,5 +1,7 @@
 ### master
 
+### [6.2.0](../../compare/6.1.0...6.2.0) - 2024-07-08
+
 - Add `AbstractCollection::getFirst()` and `AbstractCollection::getLast()`
 
 ### [6.1.0](../../compare/6.0.1...6.1.0) - 2024-05-24
