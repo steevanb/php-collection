@@ -4,6 +4,6 @@ set -eu
 
 readonly ROOT_PATH="$(realpath "$(dirname "$(realpath "$0")")/../..")"
 source "${ROOT_PATH}"/bin/common.inc.sh
+BIN_DIR=bin/dev COMPOSER_HOME=/app/var/composer source "${ROOT_PATH}"/bin/dockerise.inc.bash
 
-docker pull "${CI_DOCKER_IMAGE_NAME}"
-"${ROOT_PATH}"/bin/composer up
+php /app/bin/dev/generate-php-collections.php

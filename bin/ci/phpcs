@@ -2,12 +2,12 @@
 
 set -eu
 
-readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/../..")"
-. "${ROOT_DIR}"/bin/common.inc.sh
-. "${ROOT_DIR}"/bin/dockerise.inc.bash
+readonly ROOT_PATH="$(realpath "$(dirname "$(realpath "$0")")/../..")"
+. "${ROOT_PATH}"/bin/common.inc.sh
+. "${ROOT_PATH}"/bin/dockerise.inc.bash
 
-if [ ! -d "${ROOT_DIR}"/var/ci/phpcs ]; then
-    mkdir -p "${ROOT_DIR}"/var/ci/phpcs
+if [ ! -d "${ROOT_PATH}"/var/ci/phpcs ]; then
+    mkdir -p "${ROOT_PATH}"/var/ci/phpcs
 fi
 
 phpcs \
@@ -17,6 +17,6 @@ phpcs \
     --bootstrap=config/ci/phpcs.php \
     --standard="${COMPOSER_HOME}"/vendor/steevanb/php-code-sniffs/src/Steevanb/ruleset.xml \
     --report=steevanb\\PhpCodeSniffs\\Reports\\Steevanb \
-    --cache="${ROOT_DIR}"/var/ci/phpcs/cache \
+    --cache="${ROOT_PATH}"/var/ci/phpcs/cache \
     . \
     "${@}"

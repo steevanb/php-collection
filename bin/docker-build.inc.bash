@@ -20,7 +20,7 @@ function buildDockerImage() {
                 --build-arg DOCKER_UID="$(id -u)" \
                 --build-arg DOCKER_GID="$(id -g)" \
                 ${refreshArguments} \
-                "${ROOT_DIR}"
+                "${ROOT_PATH}"
 }
 
 function pushDockerImage() {

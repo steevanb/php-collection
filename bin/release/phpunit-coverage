@@ -2,21 +2,21 @@
 
 set -eu
 
-readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/../..")"
-. "${ROOT_DIR}"/bin/common.inc.sh
+readonly ROOT_PATH="$(realpath "$(dirname "$(realpath "$0")")/../..")"
+. "${ROOT_PATH}"/bin/common.inc.sh
 BIN_DIR=bin/release \
     DOCKER_IMAGE_NAME="${RELEASE_DOCKER_IMAGE_NAME}" \
-    . "${ROOT_DIR}"/bin/dockerise.inc.bash
+    . "${ROOT_PATH}"/bin/dockerise.inc.bash
 
 set +e
 XDEBUG_MODE=coverage \
     php \
         vendor/bin/phpunit \
             --bootstrap "${COMPOSER_HOME_SYMFONY_6_1}"/vendor/autoload.php \
-            --coverage-xml "${ROOT_DIR}"/var/release/phpunit/coverage/xml \
-            --configuration "${ROOT_DIR}"/config/ci/phpunit.php-8.1.xml \
+            --coverage-xml "${ROOT_PATH}"/var/release/phpunit/coverage/xml \
+            --configuration "${ROOT_PATH}"/config/ci/phpunit.php-8.1.xml \
             1>/dev/null \
             2>&1
 set -e
 
-php "${ROOT_DIR}"/bin/release/phpunit-coverage-percent.php
+php "${ROOT_PATH}"/bin/release/phpunit-coverage-percent.php

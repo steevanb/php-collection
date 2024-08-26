@@ -32,7 +32,7 @@ if ! ${isInDocker}; then
             --rm \
             --tty \
             ${interactiveParameter} \
-            --volume "${ROOT_DIR}":/app \
+            --volume "${ROOT_PATH}":/app \
             --user "$(id -u)":"$(id -g)" \
             --entrypoint "${BIN_DIR}"/"$(basename "${0}")" \
             --workdir /app \

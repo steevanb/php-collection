@@ -1,5 +1,23 @@
 ### master
 
+- Add `ObjectCollectionMaker` and `ObjectNullableCollectionMaker`
+- Add `bin/dev/generate-php-collections` and `bin/dev/generate-php-collections.php`
+- Add collections for PHP internal classes or interfaces, all in namespace `Steevanb\PhpCollection\ObjectCollection`:
+  - `BackedEnumCollection`
+  - `BackedEnumNullableCollection`
+  - `CountableCollection`
+  - `CountableNullableCollection`
+  - `DateTimeInterfaceCollection`
+  - `DateTimeInterfaceNullableCollection`
+  - `JsonSerializableCollection`
+  - `JsonSerializableNullableCollection`
+  - `SerializableCollection`
+  - `SerializableNullableCollection`
+  - `StringableCollection`
+  - `StringableNullableCollection`
+  - `UnitEnumCollection`
+  - `UnitEnumNullableCollection`
+
 ### [6.2.0](../../compare/6.1.0...6.2.0) - 2024-07-08
 
 - Add `AbstractCollection::getFirst()` and `AbstractCollection::getLast()`

@@ -2,10 +2,10 @@
 
 set -eu
 
-readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/../..")"
+readonly ROOT_PATH="$(realpath "$(dirname "$(realpath "$0")")/../..")"
 
-source "${ROOT_DIR}"/bin/common.inc.sh
-source "${ROOT_DIR}"/bin/dockerise.inc.bash
+source "${ROOT_PATH}"/bin/common.inc.sh
+source "${ROOT_PATH}"/bin/dockerise.inc.bash
 
 phpVersion=
 phpstanParameters=
@@ -20,13 +20,13 @@ for arg in "${@}"; do
     fi
 done
 
-if [ "${clearCache}" == true ] && [ -d "${ROOT_DIR}"/var/ci/phpstan ]; then
+if [ "${clearCache}" == true ] && [ -d "${ROOT_PATH}"/var/ci/phpstan ]; then
     echo "Clear cache"
-    rm -rf "${ROOT_DIR}"/var/ci/phpstan
+    rm -rf "${ROOT_PATH}"/var/ci/phpstan
 fi
 
 if [ "${phpVersion}" == "" ]; then
-    php8.2 "${ROOT_DIR}"/bin/ci/phpstan.php ${phpstanParameters}
+    php8.3 "${ROOT_PATH}"/bin/ci/phpstan.php ${phpstanParameters}
 else
     echo "PHP ${phpVersion}"
 

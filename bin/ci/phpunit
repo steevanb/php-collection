@@ -2,9 +2,9 @@
 
 set -eu
 
-readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/../..")"
-. "${ROOT_DIR}"/bin/common.inc.sh
-. "${ROOT_DIR}"/bin/dockerise.inc.bash
+readonly ROOT_PATH="$(realpath "$(dirname "$(realpath "$0")")/../..")"
+. "${ROOT_PATH}"/bin/common.inc.sh
+. "${ROOT_PATH}"/bin/dockerise.inc.bash
 
 phpVersion=
 symfonyVersion=
@@ -20,7 +20,7 @@ for arg in "${@}"; do
 done
 
 if [ "${phpVersion}" == "" ] || [ "${symfonyVersion}" == "" ]; then
-    php8.2 "${ROOT_DIR}"/bin/ci/phpunit.php "${@}"
+    php8.2 "${ROOT_PATH}"/bin/ci/phpunit.php "${@}"
 else
     echo "PHP ${phpVersion} - Symfony ${symfonyVersion}"
 
