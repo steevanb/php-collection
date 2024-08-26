@@ -3,7 +3,7 @@
 - Add support for Symfony `7.1`
 - Add `ObjectCollectionMaker` and `ObjectNullableCollectionMaker`
 - Add `bin/dev/generate-php-collections` and `bin/dev/generate-php-collections.php`
-- Add collections for PHP internal classes or interfaces, all in namespace `Steevanb\PhpCollection\ObjectCollection`:
+- Add collections for some PHP internal interfaces, all in namespace `Steevanb\PhpCollection\ObjectCollection`:
   - `BackedEnumCollection`
   - `BackedEnumNullableCollection`
   - `CountableCollection`
@@ -18,6 +18,65 @@
   - `StringableNullableCollection`
   - `UnitEnumCollection`
   - `UnitEnumNullableCollection`
+Add collections for some PHP internal classes, all in namespace `Steevanb\PhpCollection\ObjectCollection`:
+ - `DateIntervalCollection`
+ - `DateIntervalNullableCollection`
+ - `DatePeriodCollection`
+ - `DatePeriodNullableCollection`
+ - `DateTimeCollection`
+ - `DateTimeNullableCollection`
+ - `DateTimeImmutableCollection`
+ - `DateTimeImmutableNullableCollection`
+ - `DateTimeZoneCollection`
+ - `DateTimeZoneNullableCollection`
+ - `ReflectionCollection`
+ - `ReflectionNullableCollection`
+ - `ReflectionAttributeCollection`
+ - `ReflectionAttributeNullableCollection`
+ - `ReflectionClassCollection`
+ - `ReflectionClassNullableCollection`
+ - `ReflectionClassConstantCollection`
+ - `ReflectionClassConstantNullableCollection`
+ - `ReflectionEnumCollection`
+ - `ReflectionEnumNullableCollection`
+ - `ReflectionEnumBackedCaseCollection`
+ - `ReflectionEnumBackedCaseNullableCollection`
+ - `ReflectionEnumUnitCaseCollection`
+ - `ReflectionEnumUnitCaseNullableCollection`
+ - `ReflectionExtensionCollection`
+ - `ReflectionExtensionNullableCollection`
+ - `ReflectionFiberCollection`
+ - `ReflectionFiberNullableCollection`
+ - `ReflectionFunctionCollection`
+ - `ReflectionFunctionNullableCollection`
+ - `ReflectionFunctionAbstractCollection`
+ - `ReflectionFunctionAbstractNullableCollection`
+ - `ReflectionGeneratorCollection`
+ - `ReflectionGeneratorNullableCollection`
+ - `ReflectionIntersectionTypeCollection`
+ - `ReflectionIntersectionTypeNullableCollection`
+ - `ReflectionMethodCollection`
+ - `ReflectionMethodNullableCollection`
+ - `ReflectionNamedTypeCollection`
+ - `ReflectionNamedTypeNullableCollection`
+ - `ReflectionObjectCollection`
+ - `ReflectionObjectNullableCollection`
+ - `ReflectionParameterCollection`
+ - `ReflectionParameterNullableCollection`
+ - `ReflectionPropertyCollection`
+ - `ReflectionPropertyNullableCollection`
+ - `ReflectionReferenceCollection`
+ - `ReflectionReferenceNullableCollection`
+ - `ReflectionTypeCollection`
+ - `ReflectionTypeNullableCollection`
+ - `ReflectionUnionTypeCollection`
+ - `ReflectionUnionTypeNullableCollection`
+ - `SplFileInfoCollection`
+ - `SplFileInfoNullableCollection`
+ - `SplFileObjectCollection`
+ - `SplFileObjectNullableCollection`
+ - `StdClassCollection`
+ - `StdClassNullableCollection`
 
 ### [6.2.0](../../compare/6.1.0...6.2.0) - 2024-07-08
 
