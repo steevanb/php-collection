@@ -1,5 +1,6 @@
 ### master
 
+- Add support for Symfony `7.1`
 - Add `ObjectCollectionMaker` and `ObjectNullableCollectionMaker`
 - Add `bin/dev/generate-php-collections` and `bin/dev/generate-php-collections.php`
 - Add collections for PHP internal classes or interfaces, all in namespace `Steevanb\PhpCollection\ObjectCollection`:

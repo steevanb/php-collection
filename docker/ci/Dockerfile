@@ -8,6 +8,7 @@ ENV COMPOSER_HOME_SYMFONY_6_2=/composer/symfony-6-2
 ENV COMPOSER_HOME_SYMFONY_6_3=/composer/symfony-6-3
 ENV COMPOSER_HOME_SYMFONY_6_4=/composer/symfony-6-4
 ENV COMPOSER_HOME_SYMFONY_7_0=/composer/symfony-7-0
+ENV COMPOSER_HOME_SYMFONY_7_1=/composer/symfony-7-1
 ENV PHPSTAN_BIN_PATH=/usr/local/bin/phpstan
 
 COPY docker/ci/composer.json ${COMPOSER_HOME}/composer.json
@@ -50,6 +51,7 @@ RUN \
 
     && update-alternatives --set php /usr/bin/php8.2 \
     && COMPOSER_HOME=${COMPOSER_HOME_SYMFONY_7_0} composer global require symfony/serializer:7.0.* \
+    && COMPOSER_HOME=${COMPOSER_HOME_SYMFONY_7_1} composer global require symfony/serializer:7.1.* \
 
     # Purge
     && apt-get purge -y software-properties-common \
