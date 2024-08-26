@@ -2,9 +2,9 @@
 
 set -eu
 
-readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/../..")"
-source "${ROOT_DIR}"/bin/common.inc.sh
+readonly ROOT_PATH="$(realpath "$(dirname "$(realpath "$0")")/../..")"
+source "${ROOT_PATH}"/bin/common.inc.sh
 
 DOCKER_IMAGE_NAME="${CI_DOCKER_IMAGE_NAME}" \
-    DOCKER_FILE_PATH="${ROOT_DIR}"/docker/ci/Dockerfile \
-    source "${ROOT_DIR}"/bin/docker-build.inc.bash
+    DOCKER_FILE_PATH="${ROOT_PATH}"/docker/ci/Dockerfile \
+    source "${ROOT_PATH}"/bin/docker-build.inc.bash

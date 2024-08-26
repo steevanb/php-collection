@@ -2,12 +2,12 @@
 
 set -eu
 
-readonly ROOT_DIR="$(realpath "$(dirname "$(realpath "$0")")/../..")"
-source "${ROOT_DIR}"/bin/common.inc.sh
-source "${ROOT_DIR}"/bin/dockerise.inc.bash
+readonly ROOT_PATH="$(realpath "$(dirname "$(realpath "$0")")/../..")"
+source "${ROOT_PATH}"/bin/common.inc.sh
+source "${ROOT_PATH}"/bin/dockerise.inc.bash
 
 filesToCheck=()
-files=$(find "${ROOT_DIR}"/bin)
+files=$(find "${ROOT_PATH}"/bin)
 for file in ${files}; do
     if [ -f "${file}" ] && [ "${file:(-4)}" != ".php" ]; then
         filesToCheck+=("${file}")
