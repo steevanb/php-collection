@@ -167,6 +167,17 @@ abstract class AbstractCollection implements CollectionInterface
         return $this->values[$key];
     }
 
+    /**
+     * @param TValueType $default
+     * @return TValueType
+     */
+    public function getOrDefault(string|int $key, mixed $default): mixed
+    {
+        $this->assertValueType($default);
+
+        return $this->hasKey($key) ? $this->get($key) : $default;
+    }
+
     /** @param TValueType $value */
     public function contains(mixed $value): bool
     {
