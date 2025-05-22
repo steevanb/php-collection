@@ -15,12 +15,9 @@ function buildDockerImage() {
     DOCKER_BUILDKIT=1 \
         docker \
             build \
-                --file "${dockerFilePath}" \
-                --tag="${dockerImageName}" \
-                --build-arg DOCKER_UID="$(id -u)" \
-                --build-arg DOCKER_GID="$(id -g)" \
+                --tag "${dockerImageName}" \
                 ${refreshArguments} \
-                "${ROOT_PATH}"
+                "${dockerFilePath}"
 }
 
 function pushDockerImage() {
@@ -40,7 +37,7 @@ for param in "${@}"; do
     fi
 done
 
-buildDockerImage "${DOCKER_IMAGE_NAME}" "${DOCKER_FILE_PATH}"
+buildDockerImage "${DOCKER_IMAGE_NAME}" "${DOCKERFILE_PATH}"
 
 if [ "${push}" == true ]; then
     pushDockerImage "${DOCKER_IMAGE_NAME}"

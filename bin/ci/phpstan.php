@@ -14,7 +14,7 @@ require $_SERVER['COMPOSER_HOME'] . '/vendor/autoload.php';
 
 function createPhpstanProcesses(): ProcessInterfaceCollection
 {
-    $phpVersions = new StringCollection(['8.1', '8.2', '8.3']);
+    $phpVersions = new StringCollection(['8.1', '8.2', '8.3', '8.4']);
 
     $return = new ProcessInterfaceCollection();
     foreach ($phpVersions->toArray() as $loopPhpVersion) {

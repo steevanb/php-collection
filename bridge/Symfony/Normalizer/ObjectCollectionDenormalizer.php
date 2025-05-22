@@ -20,8 +20,12 @@ class ObjectCollectionDenormalizer implements DenormalizerInterface, Denormalize
     use DenormalizerAwareTrait;
 
     /** @param array<mixed> $context */
-    public function supportsDenormalization(mixed $data, string $type, string $format = null, array $context = []): bool
-    {
+    public function supportsDenormalization(
+        mixed $data,
+        string $type,
+        ?string $format = null,
+        array $context = []
+    ): bool {
         return
             is_subclass_of($type, AbstractObjectCollection::class)
             || is_subclass_of($type, AbstractObjectNullableCollection::class);
@@ -43,7 +47,7 @@ class ObjectCollectionDenormalizer implements DenormalizerInterface, Denormalize
     public function denormalize(
         mixed $data,
         string $type,
-        string $format = null,
+        ?string $format = null,
         array $context = []
     ): AbstractObjectCollection|AbstractObjectNullableCollection {
         /** @var class-string<AbstractObjectCollection<object>|AbstractObjectNullableCollection<object|null>> $type */

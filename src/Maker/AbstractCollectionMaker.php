@@ -60,7 +60,7 @@ abstract class AbstractCollectionMaker
         return $this;
     }
 
-    /** @param array<string, mixed> $parameters */
+    /** @param array<string, string|int|null> $parameters */
     protected function render(string $templatePathname, array $parameters): string
     {
         $content = file_get_contents($templatePathname);
@@ -73,7 +73,7 @@ abstract class AbstractCollectionMaker
         return $this->removeMultipleEmptyLines($content);
     }
 
-    /** @param array<string, mixed> $templateParameters */
+    /** @param array<string, string|int|null> $templateParameters */
     protected function writeCollection(
         string $collectionPath,
         string $collectionClassName,

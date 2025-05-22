@@ -19,4 +19,5 @@ require $_SERVER['COMPOSER_HOME'] . '/vendor/autoload.php';
     ->addProcess(new Process([__DIR__ . '/phpunit']))
     ->addProcess(new Process([__DIR__ . '/shellcheck']))
     ->addProcess(new Process([__DIR__ . '/unused-scanner']))
+    ->setRefreshInterval(100000)
     ->run(new ArgvInput($argv));

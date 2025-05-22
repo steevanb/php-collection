@@ -6,4 +6,4 @@ readonly ROOT_PATH="$(realpath "$(dirname "$(realpath "$0")")/../..")"
 source "${ROOT_PATH}"/bin/common.inc.sh
 BIN_DIR=bin/dev COMPOSER_HOME=/app/var/composer source "${ROOT_PATH}"/bin/dockerise.inc.bash
 
-php /app/bin/dev/generate-php-collections.php
+php8.4 /app/bin/dev/generate-php-collections.php

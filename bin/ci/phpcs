@@ -10,13 +10,4 @@ if [ ! -d "${ROOT_PATH}"/var/ci/phpcs ]; then
     mkdir -p "${ROOT_PATH}"/var/ci/phpcs
 fi
 
-phpcs \
-    -p \
-    --warning-severity=0 \
-    --ignore=/vendor/,/var/,*Enum.php \
-    --bootstrap=config/ci/phpcs.php \
-    --standard="${COMPOSER_HOME}"/vendor/steevanb/php-code-sniffs/src/Steevanb/ruleset.xml \
-    --report=steevanb\\PhpCodeSniffs\\Reports\\Steevanb \
-    --cache="${ROOT_PATH}"/var/ci/phpcs/cache \
-    . \
-    "${@}"
+phpcs --standard="${ROOT_PATH}"/config/ci/phpcs.xml "${@}"
