@@ -6,4 +6,4 @@ readonly ROOT_PATH="$(realpath "$(dirname "$(realpath "$0")")/../..")"
 . "${ROOT_PATH}"/bin/common.inc.sh
 . "${ROOT_PATH}"/bin/dockerise.inc.bash
 
-"${ROOT_PATH}"/bin/composer install
+"${ROOT_PATH}"/bin/composer install --ansi

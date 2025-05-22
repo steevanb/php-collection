@@ -1,13 +1,23 @@
 {
     "require": {
-        "steevanb/php-parallel-processes": "0.13.0",
-        "phpstan/phpstan": "1.11.0",
-        "phpstan/phpstan-deprecation-rules": "1.2.0",
-        "phpstan/phpstan-strict-rules": "1.6.0",
-        "phpstan/phpstan-phpunit": "1.4.0",
+        "insolita/unused-scanner": "2.4.0",
         "maglnet/composer-require-checker": "4.7.1",
-        "wapmorgan/php-deprecation-detector": "2.0.*",
-        "steevanb/php-code-sniffs": "4.5.1",
-        "insolita/unused-scanner": "2.4.0"
+        "phpstan/phpstan": "2.1.16",
+        "phpstan/phpstan-deprecation-rules": "2.0.3",
+        "phpstan/phpstan-phpunit": "2.0.6",
+        "phpstan/phpstan-strict-rules": "2.0.4",
+        "steevanb/php-code-sniffs": "5.0.0",
+        "steevanb/php-parallel-processes": "0.13.0",
+        "wapmorgan/php-deprecation-detector": "2.0.33"
+    },
+    "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true
+        },
+        "optimize-autoloader": true,
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
     }
 }

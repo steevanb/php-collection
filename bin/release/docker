@@ -6,5 +6,5 @@ readonly ROOT_PATH="$(realpath "$(dirname "$(realpath "$0")")/../..")"
 source "${ROOT_PATH}"/bin/common.inc.sh
 
 DOCKER_IMAGE_NAME="${RELEASE_DOCKER_IMAGE_NAME}" \
-    DOCKER_FILE_PATH="${ROOT_PATH}"/docker/release/Dockerfile \
+    DOCKERFILE_PATH="${ROOT_PATH}"/docker/release \
     source "${ROOT_PATH}"/bin/docker-build.inc.bash

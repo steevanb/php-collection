@@ -7,6 +7,9 @@ parameters:
         - ../../tests
     excludePaths:
         - ../../tests/Unit/ArrayTest.php
+    ignoreErrors:
+        # str_replace() accepts string|int|null
+        - "#Parameter \\#2 \\$replace of function str_replace expects array<string>\\|string, array<string, int\\|string\\|null> given#"
 includes:
     - /composer/common/vendor/phpstan/phpstan-deprecation-rules/rules.neon
     - /composer/common/vendor/phpstan/phpstan-phpunit/extension.neon

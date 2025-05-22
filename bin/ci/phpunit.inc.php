@@ -10,17 +10,17 @@ use Steevanb\PhpCollection\ScalarCollection\StringCollection;
 
 function createPhpunitProcesses(string $phpVersion = null, string $symfonyVersion = null): ProcessInterfaceCollection
 {
-    $phpVersions = new StringCollection(is_string($phpVersion) ? [$phpVersion] : ['8.1', '8.2', '8.3']);
+    $phpVersions = new StringCollection(is_string($phpVersion) ? [$phpVersion] : ['8.1', '8.2', '8.3', '8.4']);
     $symfonyVersions = new StringCollection(
-        is_string($symfonyVersion) ? [$symfonyVersion] : ['6.1', '6.2', '6.3', '6.4', '7.0', '7.1']
+        is_string($symfonyVersion) ? [$symfonyVersion] : ['6.1', '6.2', '6.3', '6.4', '7.0', '7.1', '7.2']
     );
 
     $return = new ProcessInterfaceCollection();
     foreach ($phpVersions->toArray() as $loopPhpVersion) {
         foreach ($symfonyVersions->toArray() as $loopSymfonyVersion) {
             if (
-                in_array($loopSymfonyVersion, ['7.0', '7.1'])
-                && in_array($loopPhpVersion, ['8.2', '8.3'], true) === false
+                in_array($loopSymfonyVersion, ['7.0', '7.1', '7.2'])
+                && in_array($loopPhpVersion, ['8.2', '8.3', '8.4'], true) === false
             ) {
                 continue;
             }
