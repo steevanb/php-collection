@@ -1,5 +1,7 @@
 ### master
 
+### [6.3.0](../../compare/6.2.0...6.3.0) - 2025-05-23
+
 - Add support for Symfony `7.1`
 - Add `ObjectCollectionMaker` and `ObjectNullableCollectionMaker`
 - Add `bin/dev/generate-php-collections` and `bin/dev/generate-php-collections.php`
