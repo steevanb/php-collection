@@ -38,8 +38,8 @@ jobs:
                 name: Merge pull request
                 uses: juliangruber/merge-pull-request-action@v1
                 with:
-                    github-token: ${{ secrets.RELEASE_TOKEN }}
-                    number: ${{ steps.create-pull-request.outputs.pull-request-number }}"
+                    github-token: ${{ secrets.GITHUB_TOKEN }}
+                    number: ${{ steps.create-pull-request.outputs.pull-request-number }}
                     method: rebase
             -
                 name: Create release
