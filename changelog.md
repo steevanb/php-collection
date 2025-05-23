@@ -2,9 +2,9 @@
 
 ### [6.3.0](../../compare/6.2.0...6.3.0) - 2025-05-23
 
-- Add support for Symfony `7.1`
+- Add support for Symfony `7.1` and `7.2`
+- Add support for PHP `8.4`
 - Add `ObjectCollectionMaker` and `ObjectNullableCollectionMaker`
-- Add `bin/dev/generate-php-collections` and `bin/dev/generate-php-collections.php`
 - Add collections for some PHP internal interfaces, all in namespace `Steevanb\PhpCollection\ObjectCollection`:
   - `BackedEnumCollection`
   - `BackedEnumNullableCollection`
