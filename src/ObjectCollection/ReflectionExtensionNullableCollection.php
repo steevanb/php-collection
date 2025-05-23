@@ -7,6 +7,7 @@ namespace Steevanb\PhpCollection\ObjectCollection;
 /** @extends AbstractObjectNullableCollection<\ReflectionExtension|null> */
 class ReflectionExtensionNullableCollection extends AbstractObjectNullableCollection
 {
+    /** @codeCoverageIgnore */
     public static function getValueFqcn(): string
     {
         return \ReflectionExtension::class;

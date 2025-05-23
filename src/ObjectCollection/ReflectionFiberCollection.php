@@ -7,6 +7,7 @@ namespace Steevanb\PhpCollection\ObjectCollection;
 /** @extends AbstractObjectCollection<\ReflectionFiber> */
 class ReflectionFiberCollection extends AbstractObjectCollection
 {
+    /** @codeCoverageIgnore */
     public static function getValueFqcn(): string
     {
         return \ReflectionFiber::class;
