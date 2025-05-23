@@ -17,4 +17,3 @@ See [documentation](https://php-collection.readthedocs.io/).
 
 See [changelog](changelog.md).
 
-test
