@@ -7,6 +7,7 @@ namespace Steevanb\PhpCollection\ObjectCollection;
 /** @extends AbstractObjectNullableCollection<\Stringable|null> */
 class StringableNullableCollection extends AbstractObjectNullableCollection
 {
+    /** @codeCoverageIgnore */
     public static function getValueFqcn(): string
     {
         return \Stringable::class;

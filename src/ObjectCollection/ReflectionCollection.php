@@ -7,6 +7,7 @@ namespace Steevanb\PhpCollection\ObjectCollection;
 /** @extends AbstractObjectCollection<\Reflection> */
 class ReflectionCollection extends AbstractObjectCollection
 {
+    /** @codeCoverageIgnore */
     public static function getValueFqcn(): string
     {
         return \Reflection::class;

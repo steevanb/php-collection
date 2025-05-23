@@ -8,6 +8,7 @@ $$VALUE_USE$$
 /** @extends AbstractObjectCollection<$$VALUE_CLASS_NAME$$> */
 class $$COLLECTION_CLASS_NAME$$ extends AbstractObjectCollection
 {
+    /** @codeCoverageIgnore */
     public static function getValueFqcn(): string
     {
         return $$VALUE_CLASS_NAME$$::class;
