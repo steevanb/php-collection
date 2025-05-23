@@ -16,3 +16,5 @@ The goal of this library is to remove array as much as possible to have typed da
 See [documentation](https://php-collection.readthedocs.io/).
 
 See [changelog](changelog.md).
+
+test
